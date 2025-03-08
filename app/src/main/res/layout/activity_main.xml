@@ -9,4 +9,17 @@
     android:background="@color/my_dark_color"
     tools:context=".MainActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/detailPokemonFragment"
+        android:name="com.pokemon_app.ui.view.DetailPokemonFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_detail_pokemon" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/listPokemonFragment"
+        android:name="com.pokemon_app.ui.view.ListPokemonFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_list_pokemon" />
 </RelativeLayout>

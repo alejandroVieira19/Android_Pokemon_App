@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/my_color_brown"/> <!-- Cor de fundo -->
+    <corners android:radius="16dp"/> <!-- Bordas arredondadas -->
+
+</shape>
