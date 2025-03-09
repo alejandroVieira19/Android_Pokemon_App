@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="false"
         app:cardElevation="10dp"
+        android:clickable="true"
         app:cardBackgroundColor="@color/my_color_brown"
         app:cardCornerRadius="20dp"
         android:layout_margin="10dp">
