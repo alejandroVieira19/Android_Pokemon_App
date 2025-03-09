@@ -4,4 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_description">content_description</string>
     <string name="pikachu">Pikachu</string>
+    <string name="home_page_logo">home page logo</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="logo_name">PokeExplorer</string>
+    <string name="get_started">get started</string>
+    <string name="my_favorites">my favorites</string>
+    <string name="intro_text">Discover and learn about your favorite Pokémon! Explore all their details, types, abilities, and more.</string>
+    <string name="version_app">v.1.0.1</string>
 </resources>
