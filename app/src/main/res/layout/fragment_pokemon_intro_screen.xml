@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium"
             android:text="@string/welcome_to"
             android:layout_gravity="center_vertical"
@@ -90,11 +90,13 @@
 
         <ImageView
             android:id="@+id/ivpokeball"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/pokeball" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/another_image"
+            app:srcCompat="@mipmap/pokeball_foreground" />
 
         <TextView
             android:id="@+id/tvVersion"
@@ -102,12 +104,10 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:layout_marginBottom="40dp"
             android:text="@string/version_app" />
-
-
     </LinearLayout>
+
+
 
 </LinearLayout>

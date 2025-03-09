@@ -3,11 +3,9 @@ package com.pokemon_app;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
@@ -20,8 +18,7 @@ import com.pokemon_app.ui.view.ListPokemonFragment;
 public class MainActivity extends AppCompatActivity implements ListPokemonFragment.OnButtonClicked {
 
     FragmentManager fragmentManager;
-    View detailPokemonFragment;
-    View listPokemonFragment;
+    Fragment detailPokemonFragment, listPokemonFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,62 +27,85 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
         setContentView(R.layout.activity_main);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            // Ajustando o padding para a área segura da tela
+            v.setPadding(insets.getInsets(WindowInsetsCompat.Type.systemBars()).left,
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).right,
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom);
             return insets;
         });
 
         fragmentManager = getSupportFragmentManager();
-        detailPokemonFragment = findViewById(R.id.detailPokemonFragment);
-        listPokemonFragment = findViewById(R.id.listPokemonFragment);
+        listPokemonFragment = new ListPokemonFragment();
+        detailPokemonFragment = new DetailPokemonFragment();
 
-       replaceFragment(R.id.listPokemonFragment, new ListPokemonFragment(), false);
+        pokeExplorerSetup();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        getSupportActionBar().setTitle("Pokemon Search List");
+        changeActionBarTitle("PokeExplorer App", false);
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void pokeExplorerSetup() {
+        // Adicionando o fragmento da lista de pokémons ao início
+        replaceFragment(R.id.main, listPokemonFragment, false);
+    }
+
+    private void changeActionBarTitle(String newTile, boolean isArrowBackToShow) {
+        getSupportActionBar().setTitle(newTile);
+        if (isArrowBackToShow) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+
     @Override
     public void onButtonClickedToChangeFragment() {
-        // Atualizando a visibilidade
+        // Atualizando a visibilidade dos fragmentos com hide e show
         showFragment(detailPokemonFragment, listPokemonFragment);
-
-        replaceFragment(R.id.detailPokemonFragment, new DetailPokemonFragment(), true);
-
-        getSupportActionBar().setTitle("Pokemon Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        replaceFragment(R.id.mainFrag, detailPokemonFragment, true);
+        changeActionBarTitle("Pokemon Detail", true);
     }
 
     private void replaceFragment(int containerViewId, Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-
         transaction.replace(containerViewId, fragment);
 
-        if (addToBackStack) {transaction.addToBackStack(null);}
+        if (addToBackStack) {
+            transaction.addToBackStack(null); // Adiciona à pilha de volta
+        }
 
-        // Executa a transação
         transaction.commit();
     }
 
+    // Função para gerenciar a visibilidade dos fragmentos usando hide/show
+    private void showFragment(Fragment fragmentToShow, Fragment fragmentToHide) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-    // Função para gerenciar a visibilidade dos fragmentos
-    private void showFragment(View fragmentToShow, View fragmentToHide) {
-        fragmentToShow.setVisibility(View.VISIBLE);
-        fragmentToHide.setVisibility(View.GONE);
+        // Esconde o fragmento atual
+        transaction.hide(fragmentToHide);
+
+        // Exibe o fragmento desejado
+        transaction.show(fragmentToShow);
+
+        // Commit da transação
+        transaction.commit();
     }
 
     // Tratando o clique no botão de voltar (ActionBar)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            fragmentManager.popBackStack();
+            fragmentManager.popBackStack(); // Volta para o fragmento anterior
 
-            // Atualizando a visibilidade
+            // Atualizando a visibilidade ao voltar
             showFragment(listPokemonFragment, detailPokemonFragment);
+
+            changeActionBarTitle("PokeExplorer App", false);
 
             return true;
         }
