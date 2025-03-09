@@ -2,6 +2,7 @@
 <resources>
     <style name="Theme.Pokemon_App" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="colorPrimary">@color/my_color_brown</item>
+
     </style>
 
 
