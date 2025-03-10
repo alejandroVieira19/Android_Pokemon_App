@@ -20,10 +20,10 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFrag"
-        android:name="com.pokemon_app.ui.view.ListPokemonFragment"
+        android:name="com.pokemon_app.ui.view.PokemonIntroductionScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_list_pokemon" />
+        tools:layout="@layout/fragment_pokemon_intro_screen" />
 
    <!-- <androidx.fragment.app.FragmentContainerView
         android:id="@+id/detailPokemonFragment"
