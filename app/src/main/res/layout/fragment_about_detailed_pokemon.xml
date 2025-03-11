@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.view.AboutMeDetailedPokemonFragment"
-
     >
 
     <LinearLayout
@@ -36,7 +35,7 @@
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="8.5 KG" />
+            tools:text="300 KG" />
     </LinearLayout>
 
     <LinearLayout
@@ -96,11 +95,11 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center_horizontal"
 
-            android:text="Grass/Poison"
+            android:text="Water/Normal"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            tools:text="Grass/Poison " />
+            tools:text="Fire / Flying " />
 
     </LinearLayout>
 
@@ -120,6 +119,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/pokemon_type_1"
             android:src="@drawable/circle_shape" />
+
 
         <ImageView
             android:id="@+id/ivType2"
