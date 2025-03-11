@@ -21,5 +21,7 @@
     <color name="pikachu_red_cheek">#F55648</color>
     <color name="pikachu_black">#1C1C1C</color>
 
+    <color name="transparent">#00000000</color>
+    <color name="blur">#40FFFFFF</color>
 
 </resources>

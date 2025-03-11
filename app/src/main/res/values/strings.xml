@@ -12,4 +12,13 @@
     <string name="intro_text">Discover and learn about your favorite Pokémon! Explore all their details, types, abilities, and more.</string>
     <string name="version_app">v.1.0.1</string>
     <string name="another_image">another image</string>
+    <string name="favorite_star">favorite star</string>
+    <string name="pokemon_type_1">pokemon_type_1</string>
+    <string name="pokemon_type_2">pokemon_type_2</string>
+    <string name="pokemon_image">pokemon image</string>
+    <string name="about_me">About me</string>
+    <string name="moves">Moves</string>
+    <string name="height">Height: </string>
+    <string name="type">Type: </string>
+    <string name="weight">Weight: </string>
 </resources>
