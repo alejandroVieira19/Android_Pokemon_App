@@ -1,4 +1,9 @@
+
+@file:JvmName("PokemonUtils")
 package com.pokemon_app.utils
+
+import android.util.Log
+import androidx.compose.ui.text.toLowerCase
 
 val colours = mapOf(
     "normal" to "#A8A77A",
@@ -22,5 +27,5 @@ val colours = mapOf(
 )
 
 fun getColorForPokemonByType(type: String) : String {
-    return colours[type] ?: "#777"
+    return colours[type.lowercase()] ?: "#777"
 }
