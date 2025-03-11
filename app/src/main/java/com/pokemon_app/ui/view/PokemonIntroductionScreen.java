@@ -57,9 +57,7 @@ public class PokemonIntroductionScreen extends Fragment {
      * Substitui o fragmento atual pelo fragmento de lista de Pokémon.
      */
     public void onGetStartedClick() {
-        boolean isToAddInStack = true;
-        fragmentHelper.replaceFragment(R.id.mainFrag, new ListPokemonFragment(), isToAddInStack, FragmentsTags.TAG_FRAGMENT_LIST);
-        actionBarHelper.changeActionBarTitleAndShowArrowBack("Pokemon List", isToAddInStack);
+        fragmentReplaceAndActionBarTitleChangeRequest(R.id.mainFrag, new ListPokemonFragment(), true, FragmentsTags.TAG_FRAGMENT_LIST, "PokeList");
     }
 
     /**
@@ -67,8 +65,14 @@ public class PokemonIntroductionScreen extends Fragment {
      * Substitui o fragmento atual pelo fragmento de favoritos de Pokémon.
      */
     public void onMyFavoritesClick() {
-        boolean isToAddInStack = true;
-        fragmentHelper.replaceFragment(R.id.mainFrag, new MyFavoritesPokemonFragment(), isToAddInStack, FragmentsTags.TAG_FRAGMENTS_FAVORITES);
-        actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeFavorites", isToAddInStack);
+        fragmentReplaceAndActionBarTitleChangeRequest(R.id.mainFrag, new MyFavoritesPokemonFragment(), true, FragmentsTags.TAG_FRAGMENTS_FAVORITES, "PokeFavorites");
+    }
+
+    // TODO ----> TALVEZ TERÁ QUE SER ALGO MAIS GENERICO
+    private void fragmentReplaceAndActionBarTitleChangeRequest(int id, Fragment classToUse, boolean isToAddInStack, String fragmentTag, String newActionBarTitle) {
+        fragmentHelper.replaceFragment(id, classToUse, isToAddInStack, fragmentTag);
+        if(isToAddInStack) {
+            actionBarHelper.changeActionBarTitleAndShowArrowBack(newActionBarTitle, isToAddInStack);
+        }
     }
 }
