@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <!-- TODO. USO DE DATABINDING. -->
+
+    <data>
+        <variable
+            name="introScreenFrag"
+            type="com.pokemon_app.ui.view.PokemonIntroductionScreen" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:background="@color/my_color_light"
+        tools:context=".ui.view.PokemonIntroductionScreen"
+        tools:background="@color/my_color_light">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/home_page_logo"
+            app:srcCompat="@drawable/pokemon_2"
+            tools:srcCompat="@drawable/pokemon_2"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/welcomeTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/welcome_to"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/my_color_brown"
+                android:textSize="28sp"/>
+
+            <TextView
+                android:id="@+id/appName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/logo_name"
+                android:textColor="@color/my_color_brown"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- Descrição da Aplicação -->
+            <TextView
+                android:id="@+id/appDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/intro_text"
+                android:textColor="@color/my_color_brown"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="20dp"/>
+
+            <!-- TODO. ASSOCIADO O DATABINDING COM O FRAGMENTO E USAR O ONCLICK PARA ASSOCIAR AOS METODOS DO FRAGMENTO-->
+
+            <Button
+                android:id="@+id/getStartedBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:onClick="@{() -> introScreenFrag.onGetStartedClick()}"
+                android:textSize="16sp"
+                android:textColor="@color/my_color_light"
+                android:background="@drawable/buttons_style"
+                android:text="@string/get_started"/>
+
+            <Button
+                android:id="@+id/myFavBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:onClick="@{() -> introScreenFrag.onMyFavoritesClick()}"
+                android:textColor="@color/my_color_light"
+                android:background="@drawable/buttons_style"
+                android:text="@string/my_favorites" />
+
+            <ImageView
+                android:id="@+id/ivpokeball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/another_image"
+                app:srcCompat="@mipmap/pokeball_foreground" />
+
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:text="@string/version_app" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
