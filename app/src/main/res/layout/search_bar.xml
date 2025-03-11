@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <!-- TODO: PEDIR AJUDA EM RELAÇÃO AOS STYLES NÃO SEREM OBEDECIDAS -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:queryHint="Search for Pokemons"
+        android:iconifiedByDefault="true"
+        style="@style/SearchViewCustom"
+    tools:iconifiedByDefault="false" />
+
+    <!-- Barra de pesquisa -->
+
+
+</LinearLayout>

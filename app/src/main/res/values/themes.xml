@@ -2,5 +2,16 @@
 <resources>
     <style name="Theme.Pokemon_App" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="colorPrimary">@color/my_color_brown</item>
+
     </style>
+
+
+    <!-- Definindo o estilo personalizado para a SearchView -->
+    <style name="SearchViewCustom">
+        <item name="android:background">@drawable/searchview_bar</item>
+        <item name="android:textColor">@color/my_color_light</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+
 </resources>

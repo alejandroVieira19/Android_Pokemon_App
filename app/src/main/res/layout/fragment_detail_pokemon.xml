@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+        <variable
+            name="detailPokemonFragment"
+            type="com.pokemon_app.ui.view.DetailPokemonFragment" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/detailFragmentLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:background="#EE8130"
+    tools:context=".ui.view.DetailPokemonFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvDetailPokemonPower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="3"
+            android:fontFamily="sans-serif-medium"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            tools:text="2100 CP" />
+
+        <ImageView
+            android:id="@+id/ivDetailFavoritePokemonIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="@{() -> detailPokemonFragment.onFavoritePokemonToggle()}"
+            android:contentDescription="@string/favorite_star"
+            app:srcCompat="@android:drawable/star_off"
+            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck"
+            tools:srcCompat="@android:drawable/btn_star_big_on" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivDetailPokemonImage"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="4"
+            android:contentDescription="@string/pokemon_image"
+            android:src="@drawable/charizard"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvDetailPokemonName"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center_horizontal"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            tools:ignore="TextContrastCheck"
+            tools:text="Charizard" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp">
+
+
+            <!-- Fundo interno com blur/sombra simulada -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/card_background_blur"
+                android:orientation="vertical">
+
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentContainerView"
+                    android:name="com.pokemon_app.ui.view.AboutMeDetailedPokemonFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout="@layout/fragment_about_detailed_pokemon" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:id="@+id/textAboutMe"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center"
+                        android:paddingVertical="12dp"
+                        android:background="@drawable/card_background_blur"
+                        android:text="@string/about_me"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:onClick="@{() -> detailPokemonFragment.onAboutMeClick()}"
+                        android:foreground="?attr/selectableItemBackground"
+                        />
+
+                    <TextView
+                        android:id="@+id/movesBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center"
+                        android:paddingVertical="12dp"
+                        android:background="@color/transparent"
+                        android:text="@string/moves"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:onClick="@{() -> detailPokemonFragment.onMovesClick()}"
+                        android:foreground="?attr/selectableItemBackground"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+</layout>
