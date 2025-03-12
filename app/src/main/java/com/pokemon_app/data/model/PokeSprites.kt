@@ -1,248 +1,247 @@
-package com.pokemon_app.data.model
+import com.google.gson.annotations.SerializedName
 
 data class PokeSprites(
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?,
-    val other: OtherSprites,
-    val versions: Versions
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?,
+    @SerializedName("other") val other: OtherSprites?,
+    @SerializedName("versions") val versions: Versions?
 )
 
 data class OtherSprites(
-    val dream_world: DreamWorldSprites,
-    val home: HomeSprites,
-    val official_artwork: OfficialArtworkSprites,
-    val showdown: ShowdownSprites
+    @SerializedName("dream_world") val dreamWorld: DreamWorld?,
+    @SerializedName("home") val home: Home?,
+    @SerializedName("official-artwork") val officialArtwork: OfficialArtwork?,
+    @SerializedName("showdown") val showdown: ShowdownSprites?
 )
 
-data class DreamWorldSprites(
-    val front_default: String?,
-    val front_female: String?
+data class DreamWorld(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?
 )
 
-data class HomeSprites(
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class Home(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class OfficialArtworkSprites(
-    val front_default: String?,
-    val front_shiny: String?
+data class OfficialArtwork(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?
 )
 
 data class ShowdownSprites(
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
 data class Versions(
-    val generation_i: GenerationISprites,
-    val generation_ii: GenerationIISprites,
-    val generation_iii: GenerationIIISprites,
-    val generation_iv: GenerationIVSprites,
-    val generation_v: GenerationVSprites,
-    val generation_vi: GenerationVISprites,
-    val generation_vii: GenerationVIISprites,
-    val generation_viii: GenerationVIIISprites
+    @SerializedName("generation-i") val generationI: GenerationI?,
+    @SerializedName("generation-ii") val generationII: GenerationII?,
+    @SerializedName("generation-iii") val generationIII: GenerationIII?,
+    @SerializedName("generation-iv") val generationIV: GenerationIV?,
+    @SerializedName("generation-v") val generationV: GenerationV?,
+    @SerializedName("generation-vi") val generationVI: GenerationVI?,
+    @SerializedName("generation-vii") val generationVII: GenerationVII?,
+    @SerializedName("generation-viii") val generationVIII: GenerationVIII?
 )
 
-data class GenerationISprites(
-    val red_blue: RedBlueSprites,
-    val yellow: YellowSprites
+data class GenerationI(
+    @SerializedName("red-blue") val redBlue: RedBlue?,
+    @SerializedName("yellow") val yellow: Yellow?
 )
 
-data class RedBlueSprites(
-    val back_default: String?,
-    val back_gray: String?,
-    val back_transparent: String?,
-    val front_default: String?,
-    val front_gray: String?,
-    val front_transparent: String?
+data class RedBlue(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_gray") val backGray: String?,
+    @SerializedName("back_transparent") val backTransparent: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_gray") val frontGray: String?,
+    @SerializedName("front_transparent") val frontTransparent: String?
 )
 
-data class YellowSprites(
-    val back_default: String?,
-    val back_gray: String?,
-    val back_transparent: String?,
-    val front_default: String?,
-    val front_gray: String?,
-    val front_transparent: String?
+data class Yellow(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_gray") val backGray: String?,
+    @SerializedName("back_transparent") val backTransparent: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_gray") val frontGray: String?,
+    @SerializedName("front_transparent") val frontTransparent: String?
 )
 
-data class GenerationIISprites(
-    val crystal: CrystalSprites,
-    val gold: GoldSprites,
-    val silver: SilverSprites
+data class GenerationII(
+    @SerializedName("crystal") val crystal: Crystal?,
+    @SerializedName("gold") val gold: Gold?,
+    @SerializedName("silver") val silver: Silver?
 )
 
-data class CrystalSprites(
-    val back_default: String?,
-    val back_shiny: String?,
-    val back_shiny_transparent: String?,
-    val back_transparent: String?,
-    val front_default: String?,
-    val front_shiny: String?,
-    val front_shiny_transparent: String?,
-    val front_transparent: String?
+data class Crystal(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_transparent") val backShinyTransparent: String?,
+    @SerializedName("back_transparent") val backTransparent: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_transparent") val frontShinyTransparent: String?,
+    @SerializedName("front_transparent") val frontTransparent: String?
 )
 
-data class GoldSprites(
-    val back_default: String?,
-    val back_shiny: String?,
-    val front_default: String?,
-    val front_shiny: String?,
-    val front_transparent: String?
+data class Gold(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_transparent") val frontTransparent: String?
 )
 
-data class SilverSprites(
-    val back_default: String?,
-    val back_shiny: String?,
-    val front_default: String?,
-    val front_shiny: String?,
-    val front_transparent: String?
+data class Silver(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_transparent") val frontTransparent: String?
 )
 
-data class GenerationIIISprites(
-    val emerald: EmeraldSprites,
-    val firered_leafgreen: FireredLeafgreenSprites,
-    val ruby_sapphire: RubySapphireSprites
+data class GenerationIII(
+    @SerializedName("emerald") val emerald: Emerald?,
+    @SerializedName("firered-leafgreen") val fireredLeafgreen: FireredLeafgreen?,
+    @SerializedName("ruby-sapphire") val rubySapphire: RubySapphire?
 )
 
-data class EmeraldSprites(
-    val front_default: String?,
-    val front_shiny: String?
+data class Emerald(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?
 )
 
-data class FireredLeafgreenSprites(
-    val back_default: String?,
-    val back_shiny: String?,
-    val front_default: String?,
-    val front_shiny: String?
+data class FireredLeafgreen(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?
 )
 
-data class RubySapphireSprites(
-    val back_default: String?,
-    val back_shiny: String?,
-    val front_default: String?,
-    val front_shiny: String?
+data class RubySapphire(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_shiny") val frontShiny: String?
 )
 
-data class GenerationIVSprites(
-    val diamond_pearl: DiamondPearlSprites,
-    val heartgold_soulsilver: HeartgoldSoulsilverSprites,
-    val platinum: PlatinumSprites
+data class GenerationIV(
+    @SerializedName("diamond-pearl") val diamondPearl: DiamondPearl?,
+    @SerializedName("heartgold-soulsilver") val heartgoldSoulsilver: HeartgoldSoulsilver?,
+    @SerializedName("platinum") val platinum: Platinum?
 )
 
-data class DiamondPearlSprites(
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class DiamondPearl(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class HeartgoldSoulsilverSprites(
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class HeartgoldSoulsilver(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class PlatinumSprites(
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class Platinum(
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class GenerationVSprites(
-    val black_white: BlackWhiteSprites
+data class GenerationV(
+    @SerializedName("black-white") val blackWhite: BlackWhite?
 )
 
-data class BlackWhiteSprites(
-    val animated: AnimatedSprites,
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class BlackWhite(
+    @SerializedName("animated") val animated: AnimatedSprites?,
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
 data class AnimatedSprites(
-    val back_default: String?,
-    val back_female: String?,
-    val back_shiny: String?,
-    val back_shiny_female: String?,
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+    @SerializedName("back_default") val backDefault: String?,
+    @SerializedName("back_female") val backFemale: String?,
+    @SerializedName("back_shiny") val backShiny: String?,
+    @SerializedName("back_shiny_female") val backShinyFemale: String?,
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class GenerationVISprites(
-    val omegaruby_alphasapphire: OmegarubyAlphasapphireSprites,
-    val x_y: XYSprites
+data class GenerationVI(
+    @SerializedName("omegaruby-alphasapphire") val omegarubyAlphasapphire: OmegaRubyAlphaSapphire?,
+    @SerializedName("x-y") val xY: XY?
 )
 
-data class OmegarubyAlphasapphireSprites(
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class OmegaRubyAlphaSapphire(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class XYSprites(
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class XY(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class GenerationVIISprites(
-    val icons: IconsSprites,
-    val ultra_sun_ultra_moon: UltraSunUltraMoonSprites
+data class GenerationVII(
+    @SerializedName("icons") val icons: Icons?,
+    @SerializedName("ultra-sun-ultra-moon") val ultraSunUltraMoon: UltraSunUltraMoon?
 )
 
-data class IconsSprites(
-    val front_default: String?,
-    val front_female: String?
+data class Icons(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?
 )
 
-data class UltraSunUltraMoonSprites(
-    val front_default: String?,
-    val front_female: String?,
-    val front_shiny: String?,
-    val front_shiny_female: String?
+data class UltraSunUltraMoon(
+    @SerializedName("front_default") val frontDefault: String?,
+    @SerializedName("front_female") val frontFemale: String?,
+    @SerializedName("front_shiny") val frontShiny: String?,
+    @SerializedName("front_shiny_female") val frontShinyFemale: String?
 )
 
-data class GenerationVIIISprites(
-    val icons: IconsSprites
+data class GenerationVIII(
+    @SerializedName("icons") val icons: Icons?
 )
-

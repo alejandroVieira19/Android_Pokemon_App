@@ -1,6 +1,7 @@
 package com.pokemon_app;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,11 +11,22 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.pokemon_app.data.network.PokeApiService;
+import com.pokemon_app.data.network.RetrofitInstance;
+import com.pokemon_app.data.repository.PokemonRepository;
+import com.pokemon_app.domain.model.Pokemon;
+import com.pokemon_app.domain.repository.IPokemonRepository;
 import com.pokemon_app.presentation.ui.view.DetailPokemonFragment;
 import com.pokemon_app.presentation.ui.view.ListPokemonFragment;
 import com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen;
+import com.pokemon_app.presentation.viewmodel.PokemonViewModel;
+import com.pokemon_app.presentation.viewmodel.PokemonViewModelFactory;
 import com.pokemon_app.utils.FragmentHelper;
+import com.pokemon_app.utils.PokemonService;
+
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements ListPokemonFragment.OnButtonClicked {
 
@@ -44,11 +56,7 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
         listPokemonFragment = new ListPokemonFragment();
         detailPokemonFragment = new DetailPokemonFragment();
         pokemonIntroScreen = new PokemonIntroductionScreen();
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
         changeActionBarTitle("PokeExplorer App", false);
         return super.onCreateOptionsMenu(menu);
     }
-
-
 
     private void changeActionBarTitle(String newTile, boolean isArrowBackToShow) {
         getSupportActionBar().setTitle(newTile);
