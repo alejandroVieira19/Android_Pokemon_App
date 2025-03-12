@@ -23,14 +23,20 @@ import com.pokemon_app.presentation.ui.view.ListPokemonFragment;
 import com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen;
 import com.pokemon_app.presentation.viewmodel.PokemonViewModel;
 import com.pokemon_app.presentation.viewmodel.PokemonViewModelFactory;
+import com.pokemon_app.utils.ActionBarHelper;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.PokemonService;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Retrofit;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements ListPokemonFragment.OnButtonClicked {
-
+    PokemonViewModel pokemonViewModel;
     FragmentManager fragmentManager;
+    ActionBarHelper actionBarHelper;
     Fragment detailPokemonFragment, listPokemonFragment, pokemonIntroScreen;
 
     FragmentHelper fragmentHelper;
@@ -50,43 +56,55 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
             return insets;
         });
 
+        actionBarHelper = new ActionBarHelper(this);
         fragmentManager = getSupportFragmentManager();
+        pokemonViewModel =  new ViewModelProvider(this).get(PokemonViewModel.class);
         fragmentHelper = new FragmentHelper(fragmentManager);
 
         listPokemonFragment = new ListPokemonFragment();
         detailPokemonFragment = new DetailPokemonFragment();
         pokemonIntroScreen = new PokemonIntroductionScreen();
+
+
+
+        // Observar a lista de Pokémons
+        pokemonViewModel.getPokemons().observe(this, pokemons -> {
+            // Buscar Pokémon específico
+            Pokemon pikachu = pokemonViewModel.getPokemonByName("Pikachu");
+            if (pikachu != null) {
+                Log.d("PokemonFound", "Pikachu encontrado: " + pikachu.getPokemonName());
+            } else {
+                Log.d("PokemonFound", "Pikachu não encontrado!");
+            }
+        });
+
+        pokemonViewModel.getError().observe(this, error -> {
+            Log.e("PokemonError", error);
+        });
+
+        // Iniciar o fetch dos pokémons
+        pokemonViewModel.fetchAllPokemons(151);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        changeActionBarTitle("PokeExplorer App", false);
+        actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeExplorer App", false);
         return super.onCreateOptionsMenu(menu);
     }
-
-    private void changeActionBarTitle(String newTile, boolean isArrowBackToShow) {
-        getSupportActionBar().setTitle(newTile);
-        if (isArrowBackToShow) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
 
     @Override
     public void onButtonClickedToChangeFragment() {
         fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, "DetailScreen");
     }
 
-
-
     // Tratando o clique no botão de voltar (ActionBar)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            fragmentManager.popBackStack(); // Volta para o fragmento anterior
-
-            return true;
+           actionBarHelper.changeActionBarTitleAndPopStackBack("PokeExplorer App", fragmentManager);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,6 +1,4 @@
 package com.pokemon_app.data.model
-
-import PokeSprites
 import androidx.resourceinspection.annotation.Attribute.IntMap
 import com.google.gson.annotations.SerializedName
 
