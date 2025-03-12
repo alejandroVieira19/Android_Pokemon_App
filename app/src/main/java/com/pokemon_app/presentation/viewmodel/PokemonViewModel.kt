@@ -8,10 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.utils.PokemonService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PokemonViewModel(private val pokemonService: PokemonService) : ViewModel() {
-
+@HiltViewModel
+class PokemonViewModel @Inject constructor(
+    private val pokemonService: PokemonService
+) : ViewModel() {
     // LiveData para a lista de Pokémons
     private val _pokemons = MutableLiveData<List<Pokemon>>()
     val pokemons: LiveData<List<Pokemon>> = _pokemons

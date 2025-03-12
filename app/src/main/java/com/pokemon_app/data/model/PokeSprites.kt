@@ -1,4 +1,7 @@
+
+package com.pokemon_app.data.model
 import com.google.gson.annotations.SerializedName
+
 
 data class PokeSprites(
     @SerializedName("back_default") val backDefault: String?,

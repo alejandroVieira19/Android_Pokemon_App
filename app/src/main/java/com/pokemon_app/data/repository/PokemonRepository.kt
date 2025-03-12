@@ -14,8 +14,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.await
+import javax.inject.Inject
 
-public class PokemonRepository(val pokeApiService: PokeApiService) : IPokemonRepository {
+class PokemonRepository @Inject constructor(
+    private val pokeApiService: PokeApiService
+) : IPokemonRepository {
 
 
     override suspend fun retrievePokemonList(limit: Int): PokemonResponse {

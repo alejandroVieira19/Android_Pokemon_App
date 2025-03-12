@@ -5,8 +5,11 @@ import com.pokemon_app.data.model.PokemonResponse
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.domain.model.mapper.PokeMapper
 import com.pokemon_app.domain.repository.IPokemonRepository
+import javax.inject.Inject
 
-class PokemonService(private val pokemonRepository: IPokemonRepository) {
+class PokemonService @Inject constructor(
+    private val pokemonRepository: IPokemonRepository
+) {
 
     private val allPokemonsList = mutableListOf<Pokemon>()
 
@@ -22,6 +25,7 @@ class PokemonService(private val pokemonRepository: IPokemonRepository) {
 
     private suspend fun createPokemonObjects(limit: Int = 151) {
         try {
+
             val allPokemons = getAllPokemonByGeneration(limit)
 
             allPokemons?.results?.forEach { pokemonSummary ->
