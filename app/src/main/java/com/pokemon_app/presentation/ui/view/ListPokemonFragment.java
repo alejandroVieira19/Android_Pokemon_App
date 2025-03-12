@@ -1,4 +1,4 @@
-package com.pokemon_app.ui.view;
+package com.pokemon_app.presentation.ui.view;
 
 import android.content.Context;
 import android.os.Bundle;
