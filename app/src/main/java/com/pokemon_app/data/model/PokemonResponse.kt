@@ -7,13 +7,9 @@ data class PokemonResponse(
     @SerializedName("count") val count : Int,
     @SerializedName("next") val next : String,
     @SerializedName("previous") val previous : String?=null,
-    @SerializedName("results") val results: List<Pokemon>
+    @SerializedName("results") val results: List<PokeNameAndUrl>
 )
 
-// Data class para mapear os dados de cada Pokémon
-data class Pokemon(
-    @SerializedName("name") val name: String,
-    @SerializedName("url") val url: String
-)
+
 
 

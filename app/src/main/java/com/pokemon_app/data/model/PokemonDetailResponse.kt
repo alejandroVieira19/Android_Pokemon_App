@@ -1,5 +1,6 @@
 package com.pokemon_app.data.model
 
+import PokeSprites
 import androidx.resourceinspection.annotation.Attribute.IntMap
 import com.google.gson.annotations.SerializedName
 
@@ -33,7 +34,7 @@ data class PokemonDetailResponse(
     @SerializedName("cries") val cries: PokeCries,
     @SerializedName("forms") val forms: List<PokeNameAndUrl>,
     @SerializedName("game_indices") val game_indices: List<PokeGameIndices>,
-    @SerializedName("height") val height: Int?,
+    @SerializedName("height") val height: Double?,
     @SerializedName("held_items") val heldItems: List<PokeHeldItem>,
     @SerializedName("id") val id: Int?,
     @SerializedName("is_default") val is_default: Boolean?,
@@ -47,7 +48,7 @@ data class PokemonDetailResponse(
     @SerializedName("sprites") val sprites_images: PokeSprites,
     @SerializedName("stats") val stats: List<PokeStats>,
     @SerializedName("types") val types: List<PokeTypes>,
-    @SerializedName("weight") val weight: Int?
+    @SerializedName("weight") val weight: Double?
 )
 
 /**
@@ -71,7 +72,7 @@ data class PokeStats(
  */
 data class PokeTypes(
     @SerializedName("slot") val slot: Int?,
-    @SerializedName("types") val type: PokeNameAndUrl
+    @SerializedName("type") val type: PokeNameAndUrl
 )
 
 /**
