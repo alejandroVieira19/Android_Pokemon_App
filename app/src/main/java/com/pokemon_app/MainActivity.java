@@ -1,7 +1,6 @@
 package com.pokemon_app;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,11 +10,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.pokemon_app.ui.view.DetailPokemonFragment;
-import com.pokemon_app.ui.view.ListPokemonFragment;
-import com.pokemon_app.ui.view.PokemonIntroductionScreen;
+import com.pokemon_app.presentation.ui.view.DetailPokemonFragment;
+import com.pokemon_app.presentation.ui.view.ListPokemonFragment;
+import com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen;
 import com.pokemon_app.utils.FragmentHelper;
 
 public class MainActivity extends AppCompatActivity implements ListPokemonFragment.OnButtonClicked {

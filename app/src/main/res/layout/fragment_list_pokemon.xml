@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/my_dark_color_secondary"
-    tools:context=".ui.view.ListPokemonFragment">
+    tools:context=".presentation.ui.view.ListPokemonFragment">
 
     <LinearLayout
         android:id="@+id/searchBarContainer"

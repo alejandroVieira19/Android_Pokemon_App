@@ -5,7 +5,7 @@
     <data>
         <variable
             name="detailPokemonFragment"
-            type="com.pokemon_app.ui.view.DetailPokemonFragment" />
+            type="com.pokemon_app.presentation.ui.view.DetailPokemonFragment" />
     </data>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,7 +17,7 @@
 
     android:orientation="vertical"
     tools:background="#EE8130"
-    tools:context=".ui.view.DetailPokemonFragment">
+    tools:context=".presentation.ui.view.DetailPokemonFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:id="@+id/ivDetailFavoritePokemonIcon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="@{() -> detailPokemonFragment.onFavoritePokemonToggle()}"
@@ -105,7 +105,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentContainerView"
-                    android:name="com.pokemon_app.ui.view.AboutMeDetailedPokemonFragment"
+                    android:name="com.pokemon_app.presentation.ui.view.AboutMeDetailedPokemonFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout="@layout/fragment_about_detailed_pokemon" />
