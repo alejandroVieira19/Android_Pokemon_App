@@ -1,8 +1,6 @@
 package com.pokemon_app.presentation.ui.view;
-
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,49 +8,32 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.appcompat.widget.SearchView;
-
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.pokemon_app.R;
 import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.viewmodel.PokemonViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ListPokemonFragment extends Fragment {
-
     PokeCardAdapter pokeCardAdapter;
     PokemonViewModel pokemonViewModel;
     SearchView searchBar;
     TextView tvNoPokemonFound;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    OnButtonClicked activity;
-
-    public interface OnButtonClicked {
-        void onButtonClickedToChangeFragment();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        activity = (OnButtonClicked) context;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
 
         searchBar = (SearchView) view.findViewById(R.id.searchBarView);
@@ -63,14 +44,13 @@ public class ListPokemonFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-
         setRecyclerViewLayout(view);
 
         setPokemonLifeObserver();
-
     }
+
     private void setSuggestionsInSearchBar(List<Pokemon> pokemons) {
 
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
