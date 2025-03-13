@@ -7,6 +7,7 @@
     android:background="@color/my_color_light"
     tools:context=".presentation.ui.view.ListPokemonFragment">
 
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchBarView"
         android:layout_width="wrap_content"
@@ -19,12 +20,21 @@
         tools:iconifiedByDefault="false"
         />
 
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:visibility="visible" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemonRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        tools:visibility="gone">
+        tools:visibility="visible">
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
@@ -36,7 +46,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="20sp"
         android:textColor="#FF0000"
-        tools:visibility="visible"/>
+        tools:visibility="gone"/>
 
 
 

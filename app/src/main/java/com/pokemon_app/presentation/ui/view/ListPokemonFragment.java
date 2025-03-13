@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.SearchView;
+
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.pokemon_app.R;
@@ -27,6 +29,7 @@ public class ListPokemonFragment extends Fragment {
     PokemonViewModel pokemonViewModel;
     SearchView searchBar;
     TextView tvNoPokemonFound;
+    ProgressBar progressBar;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
@@ -36,11 +39,27 @@ public class ListPokemonFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
 
+        initializate(view);
+
+
+
+        return view;
+    }
+
+    private void initializate(View view) {
         searchBar = (SearchView) view.findViewById(R.id.searchBarView);
+
+        progressBar = view.findViewById(R.id.loading_progress);
 
         tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
 
-        return view;
+        recyclerView = view.findViewById(R.id.pokemonRecyclerView);
+
+        layoutManager = new LinearLayoutManager(this.getActivity());
+
+        // Initialize ViewModel
+        pokemonViewModel = new ViewModelProvider(requireActivity()).get(PokemonViewModel.class);
+
     }
 
     @Override
@@ -87,40 +106,41 @@ public class ListPokemonFragment extends Fragment {
 
     }
     private void setPokemonLifeObserver() {
-        // Initialize ViewModel
-        pokemonViewModel = new ViewModelProvider(requireActivity()).get(PokemonViewModel.class);
-
         pokemonViewModel.getPokemonsData().observe(getViewLifecycleOwner(), pokemonData -> {
 
             if (pokemonData != null) {
                 if (pokemonData.isLoading()) {
-                    // TODO ----> COLOCAR O LOADING PROGRESSOR
+                    showLoading(true);
                 } else {
+                    showLoading(false);
                     if (pokemonData.getPokemons() != null) {
                         // associar a lista ao PokeCardAdapter
                         pokeCardAdapter = new PokeCardAdapter(getContext(), (ArrayList<Pokemon>) pokemonData.getPokemons());
                         recyclerView.setAdapter(pokeCardAdapter);
                         setSuggestionsInSearchBar(pokemonData.getPokemons());
                     } else if (pokemonData.getError() != null) {
-                        // Show error if exists
                         Toast.makeText(getContext(), pokemonData.getError(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-
         pokemonViewModel.fetchAllPokemons(10); // Fetch 151 pokemons
     }
+
+    private void showLoading(boolean isLoading) {
+        if(isLoading) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
     private void setRecyclerViewLayout(@NonNull View view) {
-        recyclerView = view.findViewById(R.id.pokemonRecyclerView);
+
         recyclerView.setHasFixedSize(true);
 
         // definir que o layout será em grid ( em 2)
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-
-        // criar um layoutManager para definir como os dados serão exibidos na tela
-        //usando o this.getActivity, que simplesmente passa o contexto da actividade ( a tela onde esta o recycler view (list_frag.xml)).
-        layoutManager = new LinearLayoutManager(this.getActivity());
 
         recyclerView.setLayoutManager(gridLayoutManager);
     }
