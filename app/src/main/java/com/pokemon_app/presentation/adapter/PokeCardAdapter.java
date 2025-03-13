@@ -15,6 +15,7 @@ import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.utils.PokemonUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHolder> {
 
@@ -55,7 +56,13 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
         }
     }
 
-        @NonNull
+    public void updateList(List<Pokemon> newList) {
+        pokemonsList = (ArrayList<Pokemon>) newList;
+        notifyDataSetChanged();  // Notifica o RecyclerView que a lista foi atualizada
+    }
+
+
+    @NonNull
         @Override
     public PokeCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RowPokemonCardBinding binding = RowPokemonCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);

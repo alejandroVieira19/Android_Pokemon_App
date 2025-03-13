@@ -7,16 +7,17 @@
     android:background="@color/my_color_light"
     tools:context=".presentation.ui.view.ListPokemonFragment">
 
-    <LinearLayout
-        android:id="@+id/searchBarContainer"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBarView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:style="">
 
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:queryHint="Search for Pokemons"
+        android:iconifiedByDefault="true"
+        style="@style/SearchViewCustom"
+        tools:iconifiedByDefault="false" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemonRecyclerView"
