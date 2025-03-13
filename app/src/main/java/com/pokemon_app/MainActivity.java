@@ -11,16 +11,32 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.pokemon_app.ui.view.DetailPokemonFragment;
-import com.pokemon_app.ui.view.ListPokemonFragment;
-import com.pokemon_app.ui.view.PokemonIntroductionScreen;
+import com.pokemon_app.data.network.PokeApiService;
+import com.pokemon_app.data.network.RetrofitInstance;
+import com.pokemon_app.data.repository.PokemonRepository;
+import com.pokemon_app.domain.model.Pokemon;
+import com.pokemon_app.domain.repository.IPokemonRepository;
+import com.pokemon_app.presentation.ui.view.DetailPokemonFragment;
+import com.pokemon_app.presentation.ui.view.ListPokemonFragment;
+import com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen;
+import com.pokemon_app.presentation.viewmodel.PokemonViewModel;
+import com.pokemon_app.presentation.viewmodel.PokemonViewModelFactory;
+import com.pokemon_app.utils.ActionBarHelper;
 import com.pokemon_app.utils.FragmentHelper;
+import com.pokemon_app.utils.PokemonService;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import retrofit2.Retrofit;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements ListPokemonFragment.OnButtonClicked {
-
+    PokemonViewModel pokemonViewModel;
     FragmentManager fragmentManager;
+    ActionBarHelper actionBarHelper;
     Fragment detailPokemonFragment, listPokemonFragment, pokemonIntroScreen;
 
     FragmentHelper fragmentHelper;
@@ -40,12 +56,16 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
             return insets;
         });
 
+        actionBarHelper = new ActionBarHelper(this);
         fragmentManager = getSupportFragmentManager();
+        //pokemonViewModel =  new ViewModelProvider(this).get(PokemonViewModel.class);
         fragmentHelper = new FragmentHelper(fragmentManager);
 
         listPokemonFragment = new ListPokemonFragment();
         detailPokemonFragment = new DetailPokemonFragment();
         pokemonIntroScreen = new PokemonIntroductionScreen();
+
+
 
 
 
@@ -55,34 +75,20 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        changeActionBarTitle("PokeExplorer App", false);
+        actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeExplorer App", false);
         return super.onCreateOptionsMenu(menu);
     }
-
-
-
-    private void changeActionBarTitle(String newTile, boolean isArrowBackToShow) {
-        getSupportActionBar().setTitle(newTile);
-        if (isArrowBackToShow) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
 
     @Override
     public void onButtonClickedToChangeFragment() {
         fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, "DetailScreen");
     }
 
-
-
     // Tratando o clique no botão de voltar (ActionBar)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            fragmentManager.popBackStack(); // Volta para o fragmento anterior
-
-            return true;
+           actionBarHelper.changeActionBarTitleAndPopStackBack("PokeExplorer App", fragmentManager);
         }
         return super.onOptionsItemSelected(item);
     }

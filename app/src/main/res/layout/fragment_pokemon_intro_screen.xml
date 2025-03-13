@@ -6,7 +6,7 @@
     <data>
         <variable
             name="introScreenFrag"
-            type="com.pokemon_app.ui.view.PokemonIntroductionScreen" />
+            type="com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:layout_height="match_parent"
         android:background="@color/my_color_light"
-        tools:context=".ui.view.PokemonIntroductionScreen"
+        tools:context=".presentation.ui.view.PokemonIntroductionScreen"
         tools:background="@color/my_color_light">
 
         <ImageView
