@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements PokeCardAdapter.O
     FragmentManager fragmentManager;
     ActionBarHelper actionBarHelper;
     Fragment detailPokemonFragment, listPokemonFragment, pokemonIntroScreen;
-
+    Bundle bundle;
     FragmentHelper fragmentHelper;
 
     @Override
@@ -46,15 +46,18 @@ public class MainActivity extends AppCompatActivity implements PokeCardAdapter.O
             return insets;
         });
 
+        initializateMainMenu();
+    }
+    private void initializateMainMenu() {
         actionBarHelper = new ActionBarHelper(this);
         fragmentManager = getSupportFragmentManager();
         fragmentHelper = new FragmentHelper(fragmentManager);
+        bundle = new Bundle();
 
         listPokemonFragment = new ListPokemonFragment();
         detailPokemonFragment = new DetailPokemonFragment();
         pokemonIntroScreen = new PokemonIntroductionScreen();
         fragmentHelper.replaceFragment(R.id.mainFrag, pokemonIntroScreen, false,FragmentsTags.TAG_FRAGMENTS_INTRO);
-
     }
 
     @Override
@@ -65,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements PokeCardAdapter.O
     }
 
     @Override
-    public void onPokemonCardClickToDetailFragment() {
+    public void onPokemonCardClickToDetailFragment(String pokeName) {
+        bundle.putString("pokeName", pokeName);
+        detailPokemonFragment.setArguments(bundle);
         fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, FragmentsTags.TAG_FRAGMENT_DETAILS);
         actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeDetails", true);
     }

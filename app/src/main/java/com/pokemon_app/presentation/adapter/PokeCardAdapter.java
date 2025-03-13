@@ -2,6 +2,7 @@ package com.pokemon_app.presentation.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.List;
 public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHolder> {
 
     public interface OnPokemonCardClicked {
-        void onPokemonCardClickToDetailFragment();
+        void onPokemonCardClickToDetailFragment(String pokeId);
     }
     private ArrayList<Pokemon> pokemonsList;
     private OnPokemonCardClicked activity;
@@ -48,9 +49,13 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
         }
         public void bind(Pokemon pokemon) {
             binding.setPokemon(pokemon);
+
             binding.executePendingBindings();
+
             tvPokemonName.setText(pokemon.getPokemonName());
+
             pokeCardView.setCardBackgroundColor(Color.parseColor(PokemonUtils.getColorForPokemonByType(pokemon.getPokemonType().get(0))));
+
             Glide.with(ivPokemonImage)
                     .load(pokemon.getPokemonImageUrlCard())
                     .centerCrop()
@@ -58,9 +63,9 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
         }
     }
 
-    public void onCardClick() {
+    public void onCardClick(Pokemon pokemon) {
         Log.d("OnCardClick", "TOCOU");
-        activity.onPokemonCardClickToDetailFragment();
+        activity.onPokemonCardClickToDetailFragment(pokemon.getPokemonName());
     }
     public void updateList(List<Pokemon> newList) {
         pokemonsList = (ArrayList<Pokemon>) newList;

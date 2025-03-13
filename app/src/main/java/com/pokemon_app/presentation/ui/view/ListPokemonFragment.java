@@ -28,9 +28,11 @@ public class ListPokemonFragment extends Fragment {
     PokeCardAdapter pokeCardAdapter;
     PokemonViewModel pokemonViewModel;
     SearchView searchBar;
-    TextView tvNoPokemonFound;
+    TextView tvNoPokemonFound, tvLoadingData;
     ProgressBar progressBar;
     RecyclerView recyclerView;
+
+    Bundle bundle;
     RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -41,21 +43,24 @@ public class ListPokemonFragment extends Fragment {
 
         initializate(view);
 
-
-
         return view;
     }
 
     private void initializate(View view) {
+
         searchBar = (SearchView) view.findViewById(R.id.searchBarView);
 
         progressBar = view.findViewById(R.id.loading_progress);
 
         tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
 
+        tvLoadingData = view.findViewById(R.id.tvLoadingData);
+
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
 
         layoutManager = new LinearLayoutManager(this.getActivity());
+
+        bundle = new Bundle();
 
         // Initialize ViewModel
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(PokemonViewModel.class);
@@ -65,6 +70,7 @@ public class ListPokemonFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+
         setRecyclerViewLayout(view);
 
         setPokemonLifeObserver();
@@ -124,17 +130,19 @@ public class ListPokemonFragment extends Fragment {
                 }
             }
         });
-        pokemonViewModel.fetchAllPokemons(10); // Fetch 151 pokemons
+        pokemonViewModel.fetchAllPokemons(50); // Fetch 151 pokemons
     }
 
     private void showLoading(boolean isLoading) {
         if(isLoading) {
             progressBar.setVisibility(View.VISIBLE);
+            tvLoadingData.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);
+            tvLoadingData.setVisibility(View.GONE);
+            searchBar.setVisibility(View.VISIBLE);
         }
     }
-
     private void setRecyclerViewLayout(@NonNull View view) {
 
         recyclerView.setHasFixedSize(true);

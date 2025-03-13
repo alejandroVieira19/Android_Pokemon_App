@@ -26,7 +26,7 @@
             app:cardUseCompatPadding="false"
             app:cardElevation="10dp"
             android:clickable="true"
-            android:onClick="@{() -> pokeCard.onCardClick()}"
+            android:onClick="@{() -> pokeCard.onCardClick(pokemon)}"
             app:cardBackgroundColor="@color/my_color_brown"
             app:cardCornerRadius="20dp"
             android:foreground="?attr/selectableItemBackground"
