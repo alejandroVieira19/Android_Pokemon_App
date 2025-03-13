@@ -41,7 +41,7 @@ public class DetailPokemonFragment extends Fragment {
 
     LinearLayout detailFragmentLayout;
 
-    @SuppressLint("ResourceAsColor")
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,7 +50,11 @@ public class DetailPokemonFragment extends Fragment {
        // GARANTIR QUE O FRAGMENTO ESTEJA VINCULADO AO LAYOUT!!!!!
        binding.setDetailPokemonFragment(this);
 
-       Log.d("Fragment", "Created");
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String pokemonName = bundle.getString("pokeName");
+            Log.d("DETAIL", pokemonName);
+        }
 
        fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
 

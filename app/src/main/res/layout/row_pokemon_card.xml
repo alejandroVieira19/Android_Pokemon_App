@@ -8,6 +8,10 @@
         <variable
             name="pokemon"
             type="com.pokemon_app.domain.model.Pokemon" />
+
+        <variable
+            name="pokeCard"
+            type="com.pokemon_app.presentation.adapter.PokeCardAdapter" />
     </data>
 
     <LinearLayout
@@ -22,6 +26,7 @@
             app:cardUseCompatPadding="false"
             app:cardElevation="10dp"
             android:clickable="true"
+            android:onClick="@{() -> pokeCard.onCardClick(pokemon)}"
             app:cardBackgroundColor="@color/my_color_brown"
             app:cardCornerRadius="20dp"
             android:foreground="?attr/selectableItemBackground"

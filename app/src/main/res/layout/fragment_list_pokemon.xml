@@ -7,26 +7,57 @@
     android:background="@color/my_color_light"
     tools:context=".presentation.ui.view.ListPokemonFragment">
 
-    <LinearLayout
-        android:id="@+id/searchBarContainer"
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:style="">
 
-    </LinearLayout>
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBarView"
+        style="@style/SearchViewCustom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:iconifiedByDefault="true"
+        android:visibility="gone"
+
+        android:queryHint="Search for Pokemons"
+        tools:iconifiedByDefault="false" />
+
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvLoadingData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_pokemons_found"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textColor="@color/my_dark_color_secondary"
+        tools:visibility="visible"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemonRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp">
-
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        tools:visibility="gone">
     </androidx.recyclerview.widget.RecyclerView>
 
-
-
+    <TextView
+        android:id="@+id/tvNoPokemonFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_pokemons_found"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textColor="#FF0000"
+        tools:visibility="gone"/>
 </LinearLayout>
