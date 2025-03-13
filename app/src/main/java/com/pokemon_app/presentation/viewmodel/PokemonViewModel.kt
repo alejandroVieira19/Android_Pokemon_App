@@ -27,23 +27,27 @@ class PokemonViewModel @Inject constructor(
         val error: String ? = null
     )
 
-    // Função pública para buscar todos os Pokémons
+
     fun fetchAllPokemons(limit: Int = 151) {
-        _pokemonsData.value = PokemonData(isLoading = true)
-        viewModelScope.launch {
-            try {
-                val result = pokemonService.getAllPokemons(limit)
-                _pokemonsData.value = PokemonData(
-                    isLoading = false,
-                    pokemons = result,
-                    error = null
-                )
-            } catch (e: Exception) {
-                Log.e("ViewModel", e.message.toString())
-                _pokemonsData.value = PokemonData(
-                    isLoading = false,
-                    error = e.message
-                )
+        // para evitar duplicação na lista
+        if(_pokemonsData.value?.pokemons == null) {
+
+            _pokemonsData.value = PokemonData(isLoading = true)
+            viewModelScope.launch {
+                try {
+                    val result = pokemonService.getAllPokemons(limit)
+                    _pokemonsData.value = PokemonData(
+                        isLoading = false,
+                        pokemons = result,
+                        error = null
+                    )
+                } catch (e: Exception) {
+                    Log.e("ViewModel", e.message.toString())
+                    _pokemonsData.value = PokemonData(
+                        isLoading = false,
+                        error = e.message
+                    )
+                }
             }
         }
     }

@@ -36,11 +36,18 @@ public class ListPokemonFragment extends Fragment {
     RecyclerView recyclerView;
 
     RecyclerView.LayoutManager layoutManager;
-    Button changeFragmentBtn;
+
     OnButtonClicked activity;
 
    public interface OnButtonClicked {
         void onButtonClickedToChangeFragment();
+   }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        activity = (OnButtonClicked) context;
     }
 
     @Override
@@ -89,14 +96,5 @@ public class ListPokemonFragment extends Fragment {
 
 
         return view;
-    }
-
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        activity = (OnButtonClicked) context;
     }
 }
