@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.SearchView;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pokemon_app.R;
@@ -33,7 +33,8 @@ public class ListPokemonFragment extends Fragment {
 
     PokeCardAdapter pokeCardAdapter;
     PokemonViewModel pokemonViewModel;
-    SearchView searchBarContainer;
+    SearchView searchBar;
+    TextView tvNoPokemonFound;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     OnButtonClicked activity;
@@ -54,7 +55,9 @@ public class ListPokemonFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
 
-        searchBarContainer = (SearchView) view.findViewById(R.id.searchBarView);
+        searchBar = (SearchView) view.findViewById(R.id.searchBarView);
+
+        tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
 
         return view;
     }
@@ -68,10 +71,9 @@ public class ListPokemonFragment extends Fragment {
         setPokemonLifeObserver();
 
     }
-
     private void setSuggestionsInSearchBar(List<Pokemon> pokemons) {
 
-        searchBarContainer.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -82,7 +84,6 @@ public class ListPokemonFragment extends Fragment {
                 filterPokemon(newText, pokemons);
                 return true;
             }
-
             private void filterPokemon(String text, List<Pokemon> pokemons) {
                 List<Pokemon> filteredPokemons = new ArrayList<>();
                 for (Pokemon pokemon : pokemons) {
@@ -90,12 +91,21 @@ public class ListPokemonFragment extends Fragment {
                         filteredPokemons.add(pokemon);
                     }
                 }
+                checkIfFilteredListIsEmpty(filteredPokemons);
                 pokeCardAdapter.updateList(filteredPokemons);
+            }
+            private void checkIfFilteredListIsEmpty(List<Pokemon> filteredPokemons) {
+                if(filteredPokemons.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    tvNoPokemonFound.setVisibility(View.VISIBLE);
+                } else {
+                    tvNoPokemonFound.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
 
     }
-
     private void setPokemonLifeObserver() {
         // Initialize ViewModel
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(PokemonViewModel.class);
