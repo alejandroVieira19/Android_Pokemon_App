@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
 
         actionBarHelper = new ActionBarHelper(this);
         fragmentManager = getSupportFragmentManager();
-        pokemonViewModel =  new ViewModelProvider(this).get(PokemonViewModel.class);
+        //pokemonViewModel =  new ViewModelProvider(this).get(PokemonViewModel.class);
         fragmentHelper = new FragmentHelper(fragmentManager);
 
         listPokemonFragment = new ListPokemonFragment();
@@ -67,23 +67,7 @@ public class MainActivity extends AppCompatActivity implements ListPokemonFragme
 
 
 
-        // Observar a lista de Pokémons
-        pokemonViewModel.getPokemons().observe(this, pokemons -> {
-            // Buscar Pokémon específico
-            Pokemon pikachu = pokemonViewModel.getPokemonByName("Pikachu");
-            if (pikachu != null) {
-                Log.d("PokemonFound", "Pikachu encontrado: " + pikachu.getPokemonName());
-            } else {
-                Log.d("PokemonFound", "Pikachu não encontrado!");
-            }
-        });
 
-        pokemonViewModel.getError().observe(this, error -> {
-            Log.e("PokemonError", error);
-        });
-
-        // Iniciar o fetch dos pokémons
-        pokemonViewModel.fetchAllPokemons(151);
 
     }
 

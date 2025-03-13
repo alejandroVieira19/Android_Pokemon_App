@@ -14,7 +14,7 @@ object PokeMapper {
             pokemonHeight = pokemonDetailResponse.height ?: 0.0,
             pokemonType = types,
             pokemonDetailImageUrlBackground = pokemonDetailResponse.sprites_images.other?.officialArtwork?.frontDefault ?: "error_url",
-            pokemonImageUrlCard = pokemonDetailResponse.sprites_images.frontDefault ?: "error_url"
+            pokemonImageUrlCard = pokemonDetailResponse.sprites_images.other?.home?.frontDefault ?: "error_url"
         )
     }
 }

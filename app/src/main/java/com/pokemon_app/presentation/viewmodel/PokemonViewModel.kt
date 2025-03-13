@@ -17,28 +17,39 @@ class PokemonViewModel @Inject constructor(
     private val pokemonService: PokemonService
 ) : ViewModel() {
     // LiveData para a lista de Pokémons
-    private val _pokemons = MutableLiveData<List<Pokemon>>()
-    val pokemons: LiveData<List<Pokemon>> = _pokemons
+    private val _pokemonsData = MutableLiveData<PokemonData>()
 
-    // LiveData para erros
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+    val pokemonsData: LiveData<PokemonData> get() =  _pokemonsData
+
+    data class PokemonData(
+        var isLoading: Boolean = true,
+        val pokemons : List<Pokemon> ? = null,
+        val error: String ? = null
+    )
 
     // Função pública para buscar todos os Pokémons
     fun fetchAllPokemons(limit: Int = 151) {
+        _pokemonsData.value = PokemonData(isLoading = true)
         viewModelScope.launch {
             try {
                 val result = pokemonService.getAllPokemons(limit)
-                _pokemons.postValue(result)
+                _pokemonsData.value = PokemonData(
+                    isLoading = false,
+                    pokemons = result,
+                    error = null
+                )
             } catch (e: Exception) {
                 Log.e("ViewModel", e.message.toString())
-                _error.postValue(e.message ?: "Erro desconhecido")
+                _pokemonsData.value = PokemonData(
+                    isLoading = false,
+                    error = e.message
+                )
             }
         }
     }
 
     // Função para buscar Pokémon específico
     fun getPokemonByName(name: String): Pokemon? {
-        return _pokemons.value?.find { it.pokemonName.equals(name, ignoreCase = true) }
+        return _pokemonsData.value?.pokemons?.find { it.pokemonName.equals(name, ignoreCase = true) }
     }
 }
