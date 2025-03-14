@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".presentation.ui.view.AboutMeDetailedPokemonFragment"
+    tools:background="@color/teal_700"
     >
 
     <LinearLayout
@@ -118,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/pokemon_type_1"
-            android:src="@drawable/circle_shape" />
+            android:src="@drawable/battrio_dark_type" />
 
 
         <ImageView
@@ -127,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/pokemon_type_2"
-            android:src="@drawable/circle_shape" />
+            android:src="@drawable/battrio_dragon_type" />
 
     </LinearLayout>
 

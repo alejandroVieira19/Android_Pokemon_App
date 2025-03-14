@@ -33,7 +33,7 @@
         android:id="@+id/tvLoadingData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_pokemons_found"
+        android:text="Loading data"
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
