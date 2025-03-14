@@ -2,8 +2,6 @@ package com.pokemon_app.presentation.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,7 +20,7 @@ import java.util.List;
 public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHolder> {
 
     public interface OnPokemonCardClicked {
-        void onPokemonCardClickToDetailFragment(String pokeId);
+        void onClick(String pokeId);
     }
     private ArrayList<Pokemon> pokemonsList;
     private OnPokemonCardClicked activity;
@@ -64,17 +62,15 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
     }
 
     public void onCardClick(Pokemon pokemon) {
-        Log.d("OnCardClick", "TOCOU");
-        activity.onPokemonCardClickToDetailFragment(pokemon.getPokemonName());
+        activity.onClick(pokemon.getPokemonName());
     }
     public void updateList(List<Pokemon> newList) {
         pokemonsList = (ArrayList<Pokemon>) newList;
-        notifyDataSetChanged();  // Notifica o RecyclerView que a lista foi atualizada
+        notifyDataSetChanged();
     }
 
-
     @NonNull
-        @Override
+    @Override
     public PokeCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RowPokemonCardBinding binding = RowPokemonCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);

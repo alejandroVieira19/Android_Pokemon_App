@@ -1,9 +1,7 @@
 
 @file:JvmName("PokemonUtils")
 package com.pokemon_app.utils
-
-import android.util.Log
-import androidx.compose.ui.text.toLowerCase
+import com.pokemon_app.R
 
 val colours = mapOf(
     "normal" to "#A8A77A",
@@ -26,6 +24,32 @@ val colours = mapOf(
     "fairy" to "#D685AD"
 )
 
+val typeIcons = mapOf(
+    "normal" to R.drawable.battrio_normal_type,
+    "fire" to R.drawable.battrio_fire_type,
+    "water" to R.drawable.battrio_water_type,
+    "electric" to R.drawable.battrio_electric_type,
+    "grass" to R.drawable.battrio_grass_type,
+    "ice" to R.drawable.battrio_ice_type,
+    "fighting" to R.drawable.battrio_fighting_type,
+    "poison" to R.drawable.battrio_poison_type,
+    "ground" to R.drawable.battrio_ground_type,
+    "flying" to R.drawable.battrio_flying_type,
+    "psychic" to R.drawable.battrio_psychic_type,
+    "bug" to R.drawable.battrio_bug_type,
+    "rock" to R.drawable.battrio_rock_type,
+    "ghost" to R.drawable.battrio_ghost_type,
+    "dragon" to R.drawable.battrio_dragon_type,
+    "dark" to R.drawable.battrio_dark_type,
+    "steel" to R.drawable.battrio_steel_type,
+    "fairy" to R.drawable.fairy_icon_sleep
+)
+
+
 fun getColorForPokemonByType(type: String) : String {
     return colours[type.lowercase()] ?: "#777"
+}
+
+fun getPokemonTypeImage(types:List<String>) : List<Int> {
+    return types.mapNotNull { type -> typeIcons[type.lowercase()] }
 }
