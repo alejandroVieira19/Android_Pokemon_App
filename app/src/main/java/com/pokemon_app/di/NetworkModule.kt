@@ -1,5 +1,6 @@
 package com.pokemon_app.di
 import com.pokemon_app.data.network.PokeApiService
+import com.pokemon_app.data.network.RetrofitClient
 import com.pokemon_app.utils.Config
 import dagger.Module
 import dagger.Provides
@@ -17,13 +18,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Config.POKEMON_BASE_URL) // Base URL da API
-            .addConverterFactory(GsonConverterFactory.create()) // Converter JSON para objetos Kotlin
-            .build()
+        return RetrofitClient.createRetrofit(Config.POKEMON_BASE_URL)
     }
 
-    // Fornece a instância do PokeApiService a partir do Retrofit
     @Provides
     @Singleton
     fun providePokeApiService(retrofit: Retrofit): PokeApiService {

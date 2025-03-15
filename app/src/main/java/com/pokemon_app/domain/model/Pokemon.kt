@@ -1,5 +1,8 @@
 package com.pokemon_app.domain.model
 
+import java.io.Serializable
+
+
 data class Pokemon(
     val pokemonId: Int,
     val pokemonName: String,
@@ -9,8 +12,4 @@ data class Pokemon(
     val pokemonDetailImageUrlBackground: String,
     val pokemonImageUrlCard: String,
     var isPokemonFavorite: Boolean?=false
-){
-    fun favoritePokemon() {
-        isPokemonFavorite = true;
-    }
-}
+): Serializable

@@ -48,7 +48,5 @@ class PokemonService @Inject constructor(
        return allPokemonsList;
     }
 
-    fun getSelectedPokemon(pokemonName: String): Pokemon? {
-        return allPokemonsList.find { it.pokemonName.equals(pokemonName, ignoreCase = true) }
-    }
+
 }

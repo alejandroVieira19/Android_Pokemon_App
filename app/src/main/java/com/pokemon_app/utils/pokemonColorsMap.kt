@@ -50,6 +50,6 @@ fun getColorForPokemonByType(type: String) : String {
     return colours[type.lowercase()] ?: "#777"
 }
 
-fun getPokemonTypeImage(types:List<String>) : List<Int> {
+fun getPokemonDetailTypeImage(types:List<String>) : List<Int> {
     return types.mapNotNull { type -> typeIcons[type.lowercase()] }
 }
