@@ -1,7 +1,8 @@
 package com.pokemon_app;
 
+import static com.pokemon_app.utils.Config.POKEMON_NAME_KEY;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +17,6 @@ import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.ui.view.DetailPokemonFragment;
 import com.pokemon_app.presentation.ui.view.ListPokemonFragment;
 import com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen;
-import com.pokemon_app.presentation.viewmodel.PokemonViewModel;
 import com.pokemon_app.utils.ActionBarHelper;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
@@ -24,7 +24,7 @@ import com.pokemon_app.utils.FragmentsTags;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MainActivity extends AppCompatActivity implements PokeCardAdapter.OnPokemonCardClicked {
+public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     ActionBarHelper actionBarHelper;
     Fragment detailPokemonFragment, listPokemonFragment, pokemonIntroScreen;
@@ -67,13 +67,7 @@ public class MainActivity extends AppCompatActivity implements PokeCardAdapter.O
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void onPokemonCardClickToDetailFragment(String pokeName) {
-        bundle.putString("pokeName", pokeName);
-        detailPokemonFragment.setArguments(bundle);
-        fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, FragmentsTags.TAG_FRAGMENT_DETAILS);
-        actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeDetails", true);
-    }
+
 
     // Tratando o clique no botão de voltar (ActionBar)
     // TODO -----> TRATAR DO ERRO DO LIST

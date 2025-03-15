@@ -23,9 +23,9 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
         void onClick(String pokeId);
     }
     private ArrayList<Pokemon> pokemonsList;
-    private OnPokemonCardClicked activity;
-    public PokeCardAdapter(Context context, ArrayList<Pokemon> list) {
-        this.activity = (OnPokemonCardClicked) context;
+    private OnPokemonCardClicked callback;
+    public PokeCardAdapter(OnPokemonCardClicked callback, ArrayList<Pokemon> list) {
+        this.callback =  callback;
         pokemonsList = list;
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +62,7 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
     }
 
     public void onCardClick(Pokemon pokemon) {
-        activity.onClick(pokemon.getPokemonName());
+        callback.onClick(pokemon.getPokemonName());
     }
     public void updateList(List<Pokemon> newList) {
         pokemonsList = (ArrayList<Pokemon>) newList;

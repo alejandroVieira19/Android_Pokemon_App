@@ -1,0 +1,56 @@
+package com.pokemon_app.presentation.viewmodel
+
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.util.Log
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.ViewTarget
+import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.interactions.GenericAction
+import com.pokemon_app.interactions.GenericStates
+import com.pokemon_app.utils.PokemonService
+import com.pokemon_app.utils.getColorForPokemonByType
+import com.pokemon_app.utils.getPokemonDetailTypeImage
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class DetailPokemonViewModel @Inject constructor(private val pokemonService: PokemonService) :
+    GenericPokemonViewModel(pokemonService) {
+
+
+    override fun interaction(action: GenericAction) {
+        when (action) {
+            is GenericAction.DetailPokemonAction.PokemonDetail -> showPokemonDetail(action.pokemon)
+            else -> super.interaction(action)
+        }
+    }
+
+    private fun showPokemonDetail(pokemon: Pokemon) {
+        _state.value = GenericStates.PokemonDetail(
+            pokemon.getPokemonTypesImage(pokemon.pokemonType),
+            pokemon.concatenateTypes(pokemon.pokemonType),
+            pokemon.getPokemonBackgroundColor(pokemon.pokemonType.get(0)),
+        )
+
+    }
+
+    private fun Pokemon.getPokemonBackgroundColor(type: String?): Int {
+        return Color.parseColor(type?.let { getColorForPokemonByType(it) })
+    }
+
+    private fun Pokemon.getPokemonTypesImage(pokemonType: List<String?>): List<Int> {
+        return getPokemonDetailTypeImage(pokemonType as List<String>)
+    }
+
+    // NO MAXIMO UM POKEMON TEM 2 TIPOS
+    private fun Pokemon.concatenateTypes(pokemonType: List<String?>): String {
+        return if (pokemonType.size == 2) {
+            "${pokemonType[0] ?: "Unknown"} / ${pokemonType[1] ?: "Unknown"}"
+        } else {
+            pokemonType[0] ?: "Unknown"
+        }
+    }
+
+}

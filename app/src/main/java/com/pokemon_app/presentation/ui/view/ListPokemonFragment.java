@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListPokemonFragment extends Fragment {
-
+public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnPokemonCardClicked {
     private PokeCardAdapter pokeCardAdapter;
     private ListPokemonViewModel pokemonViewModel;
     private SearchView searchBar;
@@ -77,6 +78,7 @@ public class ListPokemonFragment extends Fragment {
 
             } else if (state instanceof GenericStates.ListPokemons) {
                 GenericStates.ListPokemons listState = (GenericStates.ListPokemons) state;
+
                 showPokemonsList(listState.getPokemons(), listState.getError());
 
             } else if (state instanceof GenericStates.SearchPokemons) {
@@ -107,7 +109,9 @@ public class ListPokemonFragment extends Fragment {
         if ((pokemons == null || pokemons.isEmpty()) && error != null) {
             Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
         } else {
-            pokeCardAdapter = new PokeCardAdapter(getContext(), new ArrayList<>(pokemons));
+
+            pokeCardAdapter = new PokeCardAdapter(this, new ArrayList<>(pokemons));
+
             recyclerView.setAdapter(pokeCardAdapter);
             setSuggestionsInSearchBar(pokemons);
         }
@@ -150,5 +154,10 @@ public class ListPokemonFragment extends Fragment {
             actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeList", true);
         }
         super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onClick(String pokeId) {
+
     }
 }
