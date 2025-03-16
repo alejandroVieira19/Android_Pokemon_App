@@ -11,4 +11,8 @@ object Config {
 
     const val POKEMON_NAME_KEY = "POKEMON_NAME"
 
+    const val POKEMON_DIALOG_CONFIRM = "YES"
+
+    const val POKEMON_DIALOG_NEGATIVE = "NO"
+
 }
