@@ -16,8 +16,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="20dp"
         android:iconifiedByDefault="true"
-        android:visibility="gone"
-
+        android:visibility="visible"
         android:queryHint="Search for Pokemons"
         tools:iconifiedByDefault="false" />
 
