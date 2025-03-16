@@ -36,5 +36,8 @@ sealed class GenericStates {
     data class PokemonDetail(
         val pokemonTypesImage : List<Int> ? = emptyList(),
         val pokemonTypeText: String ? = null,
-        val pokemonBackgroundColor: Int ? = 0) : GenericStates()
+        val pokemonBackgroundColor: Int ? = 0,
+        val pokemonWeight: String ? = null,
+        val pokemonHeight: String?= null,
+        ) : GenericStates()
 }

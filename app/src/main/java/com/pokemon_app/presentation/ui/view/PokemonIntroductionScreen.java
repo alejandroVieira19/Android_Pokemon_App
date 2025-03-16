@@ -57,7 +57,7 @@ public class PokemonIntroductionScreen extends Fragment {
      * Substitui o fragmento atual pelo fragmento de lista de Pokémon.
      */
     public void onGetStartedClick() {
-        fragmentReplaceAndActionBarTitleChangeRequest(R.id.mainFrag, new ListPokemonFragment(), true, FragmentsTags.TAG_FRAGMENT_LIST, "PokeList");
+        AddArrowBackInFragment(R.id.mainFrag, new ListPokemonFragment(), true, FragmentsTags.TAG_FRAGMENT_LIST);
     }
 
     /**
@@ -65,14 +65,14 @@ public class PokemonIntroductionScreen extends Fragment {
      * Substitui o fragmento atual pelo fragmento de favoritos de Pokémon.
      */
     public void onMyFavoritesClick() {
-        fragmentReplaceAndActionBarTitleChangeRequest(R.id.mainFrag, new MyFavoritesPokemonFragment(), true, FragmentsTags.TAG_FRAGMENTS_FAVORITES, "PokeFavorites");
+        AddArrowBackInFragment(R.id.mainFrag, new MyFavoritesPokemonFragment(), true, FragmentsTags.TAG_FRAGMENTS_FAVORITES);
     }
 
     // TODO ----> TALVEZ TERÁ QUE SER ALGO MAIS GENERICO
-    private void fragmentReplaceAndActionBarTitleChangeRequest(int id, Fragment classToUse, boolean isToAddInStack, String fragmentTag, String newActionBarTitle) {
+    private void AddArrowBackInFragment(int id, Fragment classToUse, boolean isToAddInStack, String fragmentTag) {
         fragmentHelper.replaceFragment(id, classToUse, isToAddInStack, fragmentTag);
         if(isToAddInStack) {
-            actionBarHelper.changeActionBarTitleAndShowArrowBack(newActionBarTitle, isToAddInStack);
+            actionBarHelper.addArrowBackInFragment(isToAddInStack);
         }
     }
 }

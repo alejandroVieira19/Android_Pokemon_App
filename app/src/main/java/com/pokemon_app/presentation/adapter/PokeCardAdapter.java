@@ -20,7 +20,7 @@ import java.util.List;
 public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHolder> {
 
     public interface OnPokemonCardClicked {
-        void onClick(String pokeId);
+        void onClick(Pokemon pokemon);
     }
     private ArrayList<Pokemon> pokemonsList;
     private OnPokemonCardClicked callback;
@@ -62,7 +62,7 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
     }
 
     public void onCardClick(Pokemon pokemon) {
-        callback.onClick(pokemon.getPokemonName());
+        callback.onClick(pokemon);
     }
     public void updateList(List<Pokemon> newList) {
         pokemonsList = (ArrayList<Pokemon>) newList;
