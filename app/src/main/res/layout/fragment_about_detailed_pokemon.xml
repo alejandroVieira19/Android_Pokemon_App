@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="weight"
+            type="String" />
+
+        <variable
+            name="height"
+            type="String" />
+
+        <variable
+            name="types"
+            type="String" />
+    </data>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,7 +47,7 @@
             android:layout_marginStart="5dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center_horizontal"
-            android:text=""
+            android:text="@{weight}"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -63,7 +78,7 @@
             android:layout_marginStart="5dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center_horizontal"
-            android:text=""
+            android:text="@{height}"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -96,7 +111,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center_horizontal"
 
-            android:text="Water/Normal"
+            android:text="@{types}"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -133,3 +148,5 @@
     </LinearLayout>
 
 </LinearLayout>
+
+</layout>

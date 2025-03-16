@@ -9,8 +9,7 @@ public class ActionBarHelper {
         this.activity = activity;
     }
 
-    public void changeActionBarTitleAndShowArrowBack(String newTitle, boolean isArrowBackToShow) {
-        activity.getSupportActionBar().setTitle(newTitle);
+    public void addArrowBackInFragment(boolean isArrowBackToShow) {
         if (isArrowBackToShow) {
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
