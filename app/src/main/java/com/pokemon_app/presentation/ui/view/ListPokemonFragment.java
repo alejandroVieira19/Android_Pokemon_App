@@ -2,6 +2,7 @@ package com.pokemon_app.presentation.ui.view;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,6 +26,9 @@ import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
 import com.pokemon_app.utils.ActionBarHelper;
+import com.pokemon_app.utils.Config;
+import com.pokemon_app.utils.FragmentHelper;
+import com.pokemon_app.utils.FragmentsTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,9 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private ActionBarHelper actionBarHelper;
+
+    DetailPokemonFragment detailPokemonFragment;
+    private FragmentHelper fragmentHelper;
     private Bundle bundle;
 
     @Override
@@ -53,6 +60,8 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
         tvLoadingData = view.findViewById(R.id.tvLoadingData);
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
+        fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
+        detailPokemonFragment = new DetailPokemonFragment();
         actionBarHelper = new ActionBarHelper((AppCompatActivity) getActivity());
         bundle = new Bundle();
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(ListPokemonViewModel.class);
@@ -88,7 +97,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         });
 
         // Iniciar carregamento dos pokémons
-        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(10));
+        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(30));
     }
 
     private void showLoading(boolean isLoading) {
@@ -147,17 +156,24 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         });
     }
 
-    // Atualizar ActionBar ao exibir Fragment
+
+
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {
-            actionBarHelper.changeActionBarTitleAndShowArrowBack("PokeList", true);
-        }
-        super.onHiddenChanged(hidden);
+    public void onClick(Pokemon pokemon) {
+        bundle.putSerializable(Config.POKEMON_NAME_KEY, pokemon);
+
+        detailPokemonFragment.setArguments(bundle);
+
+        fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, FragmentsTags.TAG_FRAGMENT_DETAILS);
     }
 
     @Override
-    public void onClick(String pokeId) {
+    public void onStart() {
+        super.onStart();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
+        if (actionBar != null) {
+            actionBar.setTitle(Config.LIST_POKEMON_APP_NAME);
+        }
     }
 }

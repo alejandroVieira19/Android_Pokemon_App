@@ -32,8 +32,13 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
             pokemon.getPokemonTypesImage(pokemon.pokemonType),
             pokemon.concatenateTypes(pokemon.pokemonType),
             pokemon.getPokemonBackgroundColor(pokemon.pokemonType.get(0)),
+            pokemon.getPokemonDoubleForView(pokemon.pokemonWeight, "KG"),
+            pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M")
         )
+    }
 
+    private fun Pokemon.getPokemonDoubleForView(double: Double, string: String): String {
+        return "$double $string"
     }
 
     private fun Pokemon.getPokemonBackgroundColor(type: String?): Int {

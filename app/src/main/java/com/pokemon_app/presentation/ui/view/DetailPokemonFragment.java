@@ -1,78 +1,108 @@
 package com.pokemon_app.presentation.ui.view;
 
-import android.annotation.SuppressLint;
+import static com.pokemon_app.utils.Config.POKEMON_NAME_KEY;
+
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.pokemon_app.R;
 import com.pokemon_app.databinding.FragmentDetailPokemonBinding;
-import com.pokemon_app.utils.FragmentHelper;
+import com.pokemon_app.domain.model.Pokemon;
+import com.pokemon_app.interactions.GenericAction;
+import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
+import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
+import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.PokemonUtils;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class DetailPokemonFragment extends Fragment {
-
     private FragmentDetailPokemonBinding binding;
-
-    AboutMeDetailedPokemonFragment aboutMeDetailedPokemonFragment;
-
     TextView aboutMeBtn, movesBtn;
-
     ImageView ivFavoritePokemonIcon;
-    FragmentHelper fragmentHelper;
-
     LinearLayout detailFragmentLayout;
+    Pokemon pokemon;
+    DetailPokemonViewModel pokemonViewModel;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        binding = FragmentDetailPokemonBinding.inflate(inflater, container, false);
 
        // GARANTIR QUE O FRAGMENTO ESTEJA VINCULADO AO LAYOUT!!!!!
        binding.setDetailPokemonFragment(this);
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String pokemonName = bundle.getString("pokeName");
-            Log.d("DETAIL", pokemonName);
-        }
+        initializateDetailFrag();
 
-       fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
-
-       aboutMeBtn = binding.textAboutMe;
-
-       detailFragmentLayout = binding.detailFragmentLayout;
-
-       movesBtn = binding.movesBtn;
-
-       ivFavoritePokemonIcon = binding.ivDetailFavoritePokemonIcon;
-
-       // TODO ---> verificar quantos types são e depois colocar lógica para apresentar as imagens na UI
-        detailFragmentLayout.setBackgroundColor(Color.parseColor(PokemonUtils.getColorForPokemonByType("grass")));
-
-       return binding.getRoot();
+        return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
 
+        if (bundle != null) {
+            pokemon = (Pokemon) bundle.getSerializable(POKEMON_NAME_KEY);
+            setPokemonViewModelObserver(pokemon);}
+    }
+
+    private void setPokemonViewModelObserver(Pokemon pokemon) {
+
+        pokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+
+           if(state instanceof GenericStates.PokemonDetail) {
+
+               GenericStates.PokemonDetail pokemonDetailState = (GenericStates.PokemonDetail) state;
+
+               updateDetailView(pokemonDetailState);
+           }
+       });
+        pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.PokemonDetail(pokemon));
+    }
+
+    private void updateDetailView(GenericStates.PokemonDetail pokemonDetailState) {
+
+        binding.detailFragmentLayout.setBackgroundColor(pokemonDetailState.getPokemonBackgroundColor());
+
+        Glide.with(binding.ivDetailPokemonImage)
+                .load(pokemon.getPokemonDetailImageUrlBackground())
+                .centerCrop().into(binding.ivDetailPokemonImage);
+
+        binding.tvPokemonName.setText(pokemon.getPokemonName());
+    }
+
+    private void initializateDetailFrag() {
+
+        aboutMeBtn = binding.textAboutMe;
+
+        detailFragmentLayout = binding.detailFragmentLayout;
+
+        movesBtn = binding.movesBtn;
+
+        ivFavoritePokemonIcon = binding.ivDetailFavoritePokemonIcon;
+
+        pokemonViewModel = new ViewModelProvider(requireActivity()).get(DetailPokemonViewModel.class);
+
+    }
 
     public void onMovesClick() {
         aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
@@ -85,10 +115,19 @@ public class DetailPokemonFragment extends Fragment {
     }
 
     public void onFavoritePokemonToggle() {
+
         ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
 
         // ter uma variavel no meu objecto que será IsFavorite, se tiver a false, entao coloca a estrela e fará o codigo de adicionar a DB
-
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(Config.DETAIL_POKEMON_APP_NAME);
+        }
+    }
 }
