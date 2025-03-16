@@ -71,6 +71,47 @@
             tools:ignore="ImageContrastCheck" />
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textAboutMe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:background="@drawable/card_background_blur"
+                android:text="@string/about_me"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:onClick="@{() -> detailPokemonFragment.onAboutMeClick()}"
+                android:foreground="?attr/selectableItemBackground"
+                />
+
+            <TextView
+                android:id="@+id/movesBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:paddingVertical="12dp"
+                android:background="@color/transparent"
+                android:text="@string/moves"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:onClick="@{() -> detailPokemonFragment.onMovesClick()}"
+                android:foreground="?attr/selectableItemBackground"
+                />
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -80,6 +121,8 @@
             android:layout_marginBottom="20dp"
             app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="12dp">
+
+
 
 
             <!-- Fundo interno com blur/sombra simulada -->
@@ -92,10 +135,9 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentContainerView"
-                    android:name="com.pokemon_app.presentation.ui.view.AboutMeDetailedPokemonFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_about_detailed_pokemon" />
+                    tools:layout="@layout/fragment_pokemon_moves_detailed" />
 
 
                 <LinearLayout
@@ -108,41 +150,7 @@
                     android:orientation="horizontal"
                     >
 
-                    <TextView
-                        android:id="@+id/textAboutMe"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center"
-                        android:paddingVertical="12dp"
-                        android:background="@drawable/card_background_blur"
-                        android:text="@string/about_me"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:clickable="true"
-                        android:onClick="@{() -> detailPokemonFragment.onAboutMeClick()}"
-                        android:foreground="?attr/selectableItemBackground"
-                        />
 
-                    <TextView
-                        android:id="@+id/movesBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center"
-                        android:paddingVertical="12dp"
-                        android:background="@color/transparent"
-                        android:text="@string/moves"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:clickable="true"
-                        android:onClick="@{() -> detailPokemonFragment.onMovesClick()}"
-                        android:foreground="?attr/selectableItemBackground"
-                        />
 
                 </LinearLayout>
 
