@@ -1,8 +1,4 @@
 package com.pokemon_app.interactions
-
-import android.graphics.drawable.Drawable
-import android.widget.ImageView
-import com.bumptech.glide.request.target.ViewTarget
 import com.pokemon_app.domain.model.Pokemon
 
 
@@ -13,14 +9,16 @@ sealed class GenericAction {
     }
 
     sealed class ListPokemonAction {
-        data class SearchPokemons(
-            val query: String,
-            var pokemons: MutableList<Pokemon>
-        ) : GenericAction()
+        data class SearchPokemons(val query: String, var pokemons: MutableList<Pokemon>) : GenericAction()
     }
 
     sealed class DetailPokemonAction {
+
         data class PokemonDetail(val pokemon: Pokemon) : GenericAction()
+
+        data class SaveFavoritePokemon(val pokemon: Pokemon) : GenericAction()
+
+       // data class RemoveFavoritePokemon(val pokemon: Pokemon, val message: String?= null)
     }
 }
 
@@ -31,6 +29,8 @@ sealed class GenericStates {
 
     data class ListPokemons(val pokemons: List<Pokemon> = emptyList(), val error: String? = null) : GenericStates()
 
+    data class PokemonFavorite(val pokemon : Pokemon) : GenericStates()
+
     data class SearchPokemons(var filteredPokemons: List<Pokemon> = emptyList()): GenericStates()
 
     data class PokemonDetail(
@@ -39,5 +39,6 @@ sealed class GenericStates {
         val pokemonBackgroundColor: Int ? = 0,
         val pokemonWeight: String ? = null,
         val pokemonHeight: String?= null,
+        val pokemonMovesList : List<String>?= null
         ) : GenericStates()
 }

@@ -11,5 +11,6 @@ data class Pokemon(
     val pokemonType: List<String?>,
     val pokemonDetailImageUrlBackground: String,
     val pokemonImageUrlCard: String,
-    var isPokemonFavorite: Boolean?=false
+    val pokemonMovesList : List<String>,
+    var isPokemonFavorite: Boolean
 ): Serializable
