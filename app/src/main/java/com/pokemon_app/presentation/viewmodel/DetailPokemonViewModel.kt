@@ -1,11 +1,6 @@
 package com.pokemon_app.presentation.viewmodel
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.util.Log
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.ViewTarget
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
@@ -23,8 +18,16 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     override fun interaction(action: GenericAction) {
         when (action) {
             is GenericAction.DetailPokemonAction.PokemonDetail -> showPokemonDetail(action.pokemon)
+            is GenericAction.DetailPokemonAction.SaveFavoritePokemon -> savePokemonAsFavorite(action.pokemon)
             else -> super.interaction(action)
         }
+    }
+
+    private fun savePokemonAsFavorite(pokemon: Pokemon) {
+        pokemon.isPokemonFavorite = !pokemon.isPokemonFavorite
+
+        _state.value = GenericStates.PokemonFavorite(pokemon)
+        // TODO ----> GRAVAR NA DB USANDO ROOM.
     }
 
     private fun showPokemonDetail(pokemon: Pokemon) {
@@ -33,7 +36,8 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
             pokemon.concatenateTypes(pokemon.pokemonType),
             pokemon.getPokemonBackgroundColor(pokemon.pokemonType.get(0)),
             pokemon.getPokemonDoubleForView(pokemon.pokemonWeight, "KG"),
-            pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M")
+            pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
+            pokemon.pokemonMovesList
         )
     }
 

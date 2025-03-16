@@ -2,7 +2,6 @@ package com.pokemon_app.presentation.ui.view;
 
 import static com.pokemon_app.utils.Config.POKEMON_NAME_KEY;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pokemon_app.R;
@@ -29,18 +27,24 @@ import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
-import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
 import com.pokemon_app.utils.Config;
-import com.pokemon_app.utils.PokemonUtils;
+import com.pokemon_app.utils.FragmentHelper;
+import com.pokemon_app.utils.FragmentsTags;
+import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 
-public class DetailPokemonFragment extends Fragment {
+public class DetailPokemonFragment extends Fragment implements PokemonAlertDialogUtils.ConfirmationCallback {
     private FragmentDetailPokemonBinding binding;
     TextView aboutMeBtn, movesBtn;
     ImageView ivFavoritePokemonIcon;
     LinearLayout detailFragmentLayout;
     Pokemon pokemon;
     DetailPokemonViewModel pokemonViewModel;
+
+    FragmentHelper fragmentHelper;
+
+    PokemonAlertDialogUtils pokemonAlertDialogUtils;
+
 
 
     @Override
@@ -49,6 +53,10 @@ public class DetailPokemonFragment extends Fragment {
 
        // GARANTIR QUE O FRAGMENTO ESTEJA VINCULADO AO LAYOUT!!!!!
        binding.setDetailPokemonFragment(this);
+
+       fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
+
+        fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
 
         initializateDetailFrag();
 
@@ -60,9 +68,21 @@ public class DetailPokemonFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
 
+
         if (bundle != null) {
             pokemon = (Pokemon) bundle.getSerializable(POKEMON_NAME_KEY);
+            updatePokemonIsFavoriteImage();
             setPokemonViewModelObserver(pokemon);}
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(Config.DETAIL_POKEMON_APP_NAME);
+        }
     }
 
     private void setPokemonViewModelObserver(Pokemon pokemon) {
@@ -74,8 +94,12 @@ public class DetailPokemonFragment extends Fragment {
                GenericStates.PokemonDetail pokemonDetailState = (GenericStates.PokemonDetail) state;
 
                updateDetailView(pokemonDetailState);
+           } else if (state instanceof GenericStates.PokemonFavorite) {
+               Log.d("setPokemonViewModelObserver","o Pokemon foi marcado na db");
+               Log.d("setPokemonViewModelObserver", String.valueOf(pokemon.isPokemonFavorite()));
            }
        });
+
         pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.PokemonDetail(pokemon));
     }
 
@@ -100,6 +124,8 @@ public class DetailPokemonFragment extends Fragment {
 
         ivFavoritePokemonIcon = binding.ivDetailFavoritePokemonIcon;
 
+        pokemonAlertDialogUtils = new PokemonAlertDialogUtils(getContext(), this);
+
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(DetailPokemonViewModel.class);
 
     }
@@ -107,27 +133,40 @@ public class DetailPokemonFragment extends Fragment {
     public void onMovesClick() {
         aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
         movesBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
+        fragmentHelper.replaceFragment(R.id.fragmentContainerView, new PokemonMovesDetailedFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_MOVES);
     }
 
     public void onAboutMeClick() {
         movesBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
         aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
+        fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
     }
 
     public void onFavoritePokemonToggle() {
-
-        ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
-
-        // ter uma variavel no meu objecto que será IsFavorite, se tiver a false, entao coloca a estrela e fará o codigo de adicionar a DB
+        if(!pokemon.isPokemonFavorite()) {
+            pokemonAlertDialogUtils.showAlertDialog("Are you sure you want to save " + pokemon.getPokemonName() + " as your pokefavorite");
+        } else {
+            pokemonAlertDialogUtils.showAlertDialog("Are you sure you want to remove " + pokemon.getPokemonName() + " as your pokefavorite");
+        }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+    public void onConfirm() {
+        if(!pokemon.isPokemonFavorite()) {
+            pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.SaveFavoritePokemon(pokemon));
+        } else {
+            // TODO ----> PARA APAGAR
+            //pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.SaveFavoritePokemon(pokemon));
+        }
 
-        if (actionBar != null) {
-            actionBar.setTitle(Config.DETAIL_POKEMON_APP_NAME);
+        updatePokemonIsFavoriteImage();
+    }
+
+    private void updatePokemonIsFavoriteImage() {
+        if(pokemon.isPokemonFavorite()) {
+            ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            ivFavoritePokemonIcon.setImageResource(android.R.drawable.star_off);
         }
     }
 }
