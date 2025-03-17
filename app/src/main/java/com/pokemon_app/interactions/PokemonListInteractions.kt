@@ -8,8 +8,9 @@ sealed class GenericAction {
 
     sealed class PokemonAction {
         data class LoadPokemons(val limit: Int = 151) : GenericAction()
-
         data class NetworkConnection(val context: Context) : GenericAction()
+        data class SaveFavoritePokemon(val pokemon: Pokemon) : GenericAction()
+        data class DeleteFavoritePokemon(val pokemon: Pokemon) : GenericAction()
     }
 
     sealed class ListPokemonAction {
@@ -17,12 +18,13 @@ sealed class GenericAction {
     }
 
     sealed class DetailPokemonAction {
-
         data class PokemonDetail(val pokemon: Pokemon) : GenericAction()
 
-        data class SaveFavoritePokemon(val pokemon: Pokemon) : GenericAction()
+        // data class RemoveFavoritePokemon(val pokemon: Pokemon, val message: String?= null)
+    }
 
-       // data class RemoveFavoritePokemon(val pokemon: Pokemon, val message: String?= null)
+    sealed class FavoritePokemonAction {
+        object GetAllPokemons: GenericAction()
     }
 }
 

@@ -3,10 +3,9 @@ package com.pokemon_app.database.repository
 import androidx.lifecycle.LiveData
 import com.pokemon_app.database.PokemonEntity
 import com.pokemon_app.database.room.PokemonDB
-import com.pokemon_app.database.room.PokemonDbDao
 import com.pokemon_app.domain.repository.IPokemonDbRepository
 
-class PokemonRepository(private val pokemonDb: PokemonDB) : IPokemonDbRepository {
+class PokemonDbRepository(private val pokemonDb: PokemonDB) : IPokemonDbRepository {
     override suspend fun insertPokemon(pokemon: PokemonEntity): Int {
         return pokemonDb.pokemonDao().insertPokemon(pokemon)
     }

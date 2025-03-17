@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.domain.service.ConnectivityObserver
 import com.pokemon_app.interactions.GenericAction
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class GenericPokemonViewModel @Inject constructor(
-    private val pokemonService: PokemonService // Injeção de dependência do PokemonService
+    private val pokemonService: PokemonService,
+    private val pokemonDbRepository: PokemonDbRepository? = null
 ) : ViewModel() {
 
 
@@ -37,9 +39,24 @@ open class GenericPokemonViewModel @Inject constructor(
         when(action) {
             is GenericAction.PokemonAction.LoadPokemons -> loadPokemons(action.limit)
             is GenericAction.PokemonAction.NetworkConnection -> internetConnection(action.context)
+            is GenericAction.PokemonAction.SaveFavoritePokemon -> savePokemonAsFavorite(action.pokemon)
+            is GenericAction.PokemonAction.DeleteFavoritePokemon -> deletePokemonAsFavorite(action.pokemon)
             else -> {}
         }
    }
+
+    private fun deletePokemonAsFavorite(pokemon: Pokemon) {
+
+    }
+
+    private fun savePokemonAsFavorite(pokemon: Pokemon) {
+        pokemon.isPokemonFavorite = !pokemon.isPokemonFavorite
+
+        _state.value = GenericStates.PokemonFavorite(pokemon)
+        // TODO ----> GRAVAR NA DB USANDO ROOM.
+    }
+
+
 
     private fun internetConnection(context: Context) {
         // Inicia a coleta de dados no viewModelScope
