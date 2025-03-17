@@ -18,16 +18,8 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     override fun interaction(action: GenericAction) {
         when (action) {
             is GenericAction.DetailPokemonAction.PokemonDetail -> showPokemonDetail(action.pokemon)
-            is GenericAction.DetailPokemonAction.SaveFavoritePokemon -> savePokemonAsFavorite(action.pokemon)
             else -> super.interaction(action)
         }
-    }
-
-    private fun savePokemonAsFavorite(pokemon: Pokemon) {
-        pokemon.isPokemonFavorite = !pokemon.isPokemonFavorite
-
-        _state.value = GenericStates.PokemonFavorite(pokemon)
-        // TODO ----> GRAVAR NA DB USANDO ROOM.
     }
 
     private fun showPokemonDetail(pokemon: Pokemon) {

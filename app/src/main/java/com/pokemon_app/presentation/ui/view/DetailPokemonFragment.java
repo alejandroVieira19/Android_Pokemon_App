@@ -153,7 +153,7 @@ public class DetailPokemonFragment extends Fragment implements PokemonAlertDialo
     @Override
     public void onConfirm() {
         if(!pokemon.isPokemonFavorite()) {
-            pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.SaveFavoritePokemon(pokemon));
+            pokemonViewModel.interaction(new GenericAction.PokemonAction.SaveFavoritePokemon(pokemon));
         } else {
             // TODO ----> PARA APAGAR
             //pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.SaveFavoritePokemon(pokemon));
