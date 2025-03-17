@@ -10,13 +10,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.domain.model.mapper.PokeMapper
 import com.pokemon_app.domain.service.ConnectivityObserver
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.utils.NetworkConnectivityObserver
 import com.pokemon_app.utils.PokemonService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,10 +54,45 @@ open class GenericPokemonViewModel @Inject constructor(
     }
 
     private fun savePokemonAsFavorite(pokemon: Pokemon) {
-        pokemon.isPokemonFavorite = !pokemon.isPokemonFavorite
+        viewModelScope.launch(Dispatchers.IO){
+            try {
 
-        _state.value = GenericStates.PokemonFavorite(pokemon)
-        // TODO ----> GRAVAR NA DB USANDO ROOM.
+                if (pokemonDbRepository == null) {
+                    withContext(Dispatchers.Main) {
+                        Log.e("RESULT", "Database repository not available.")
+                        _state.value = GenericStates.ShowMessage("Database repository not available.")
+                    }
+                    return@launch
+                }
+
+                val exists = pokemonDbRepository.checkIfPokemonExists(pokemon.pokemonId) ?: 0
+                if(exists > 0) {
+                    withContext(Dispatchers.Main) {
+                        _state.value = GenericStates.ShowMessage("Pokemon ${pokemon.pokemonName} already in your database.")
+                    }
+
+                } else {
+                    pokemon.isPokemonFavorite = true
+                    pokemonDbRepository.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon))
+
+                    withContext(Dispatchers.Main) {
+                        _state.value = GenericStates.ShowMessage("Pokemon ${pokemon.pokemonName} saved in database.")
+                        _state.value = GenericStates.PokemonFavorite(pokemon)
+                    }
+
+                }
+            }catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _state.value = GenericStates.ShowMessage("Error saving Pokemon in database.\n" +
+                            " Error: ${e.message}")
+                }
+            }finally {
+                withContext(Dispatchers.Main) {
+                    _state.value = GenericStates.ShowLoading(false)
+                }
+
+            }
+        }
     }
 
 

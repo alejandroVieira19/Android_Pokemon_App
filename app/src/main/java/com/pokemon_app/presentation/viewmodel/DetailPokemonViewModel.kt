@@ -1,6 +1,8 @@
 package com.pokemon_app.presentation.viewmodel
 
 import android.graphics.Color
+import com.pokemon_app.database.repository.PokemonDbRepository
+import com.pokemon_app.database.room.PokemonDB
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
@@ -11,8 +13,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailPokemonViewModel @Inject constructor(private val pokemonService: PokemonService) :
-    GenericPokemonViewModel(pokemonService) {
+class DetailPokemonViewModel @Inject constructor(private val pokemonService: PokemonService,
+    private val pokemonDbRepository: PokemonDbRepository) :
+    GenericPokemonViewModel(pokemonService, pokemonDbRepository) {
 
 
     override fun interaction(action: GenericAction) {
