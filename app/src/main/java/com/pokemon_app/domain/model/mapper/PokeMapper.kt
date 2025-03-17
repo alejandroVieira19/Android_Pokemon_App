@@ -3,6 +3,7 @@ package com.pokemon_app.domain.model.mapper
 import android.util.Log
 import com.pokemon_app.data.model.PokeMoves
 import com.pokemon_app.data.model.PokemonDetailResponse
+import com.pokemon_app.database.PokemonEntity
 import com.pokemon_app.domain.model.Pokemon
 
 object PokeMapper {
@@ -21,6 +22,34 @@ object PokeMapper {
             pokemonImageUrlCard = pokemonDetailResponse.sprites_images.other?.home?.frontDefault ?: "error_url",
             pokemonMovesList = pokeMoves,
             isPokemonFavorite = false
+        )
+    }
+
+    fun mapFromDomainToEntity(pokemon: Pokemon): PokemonEntity {
+        return PokemonEntity(
+            pokemon.pokemonId,
+            pokemon.pokemonName,
+            pokemon.pokemonHeight,
+            pokemon.pokemonWeight,
+            pokemon.pokemonType,
+            pokemon.pokemonDetailImageUrlBackground,
+            pokemon.pokemonImageUrlCard,
+            pokemon.pokemonMovesList,
+            pokemon.isPokemonFavorite
+        )
+    }
+
+    fun mapFromEntityToDomain(pokemon: PokemonEntity): Pokemon {
+        return Pokemon(
+            pokemon.pokemonId,
+            pokemon.pokemonName,
+            pokemon.pokemonHeight,
+            pokemon.pokemonWeight,
+            pokemon.pokemonType,
+            pokemon.pokemonDetailImageUrlBackground,
+            pokemon.pokemonImageUrlCard,
+            pokemon.pokemonMovesList,
+            pokemon.isPokemonFavorite
         )
     }
 

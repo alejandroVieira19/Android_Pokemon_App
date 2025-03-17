@@ -35,6 +35,8 @@ sealed class GenericStates {
 
     data class ShowLoading(var isLoading: Boolean ? = false) : GenericStates()
 
+    data class ShowMessage(var message: String ? = null) : GenericStates()
+
     data class ListPokemons(val pokemons: List<Pokemon> = emptyList(), val error: String? = null) : GenericStates()
 
     data class PokemonFavorite(val pokemon : Pokemon) : GenericStates()
