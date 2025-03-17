@@ -1,7 +1,6 @@
 package com.pokemon_app.presentation.ui.view;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +26,6 @@ import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 
 /**
@@ -87,7 +83,7 @@ public class PokemonIntroductionScreen extends Fragment {
 
     private void checkAppNetworkConnectionState(ConnectivityObserver.NetworkStatus status) {
         if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
-            PokemonAlertDialogUtils.showConnectionLostAlertDialog(getContext());
+            PokemonAlertDialogUtils.showMessageAlert(getContext(), Config.CONNECTION_LOST_MESSAGE);
             setVisibilityInGetStartedBtn(View.GONE);
         } else {
             setVisibilityInGetStartedBtn(View.VISIBLE);

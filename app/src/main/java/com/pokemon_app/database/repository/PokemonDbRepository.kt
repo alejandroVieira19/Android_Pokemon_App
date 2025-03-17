@@ -22,4 +22,9 @@ class PokemonDbRepository @Inject constructor(private val pokemonDb: PokemonDB) 
     override suspend fun getAllPokemon(): LiveData<List<PokemonEntity>> {
         return pokemonDb.pokemonDao().getAllPokemon()
     }
+
+    override suspend fun checkIfPokemonExists(pokeId: Int): Int {
+
+        return pokemonDb.pokemonDao().checkIfPokemonExists(pokeId)
+    }
 }
