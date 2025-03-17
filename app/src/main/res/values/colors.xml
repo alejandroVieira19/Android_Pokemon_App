@@ -24,4 +24,10 @@
     <color name="transparent">#00000000</color>
     <color name="blur">#40FFFFFF</color>
 
+    <!-- Cor para online -->
+    <color name="colorOnline">#4CAF50</color>
+
+    <!-- Cor para offline -->
+    <color name="colorOffline">#F44336</color>
+
 </resources>
