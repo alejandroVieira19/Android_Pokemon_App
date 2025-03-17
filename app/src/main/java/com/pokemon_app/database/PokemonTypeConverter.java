@@ -6,9 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-class PokemonTypeConverter {
+public class PokemonTypeConverter {
 
     private static final Gson gson = new Gson();
     @TypeConverter

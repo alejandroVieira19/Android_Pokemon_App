@@ -44,4 +44,76 @@ public class PokemonEntity {
         this.pokemonMovesList = pokemonMovesList;
         this.isPokemonFavorite = isPokemonFavorite;
     }
+
+    public boolean isPokemonFavorite() {
+        return isPokemonFavorite;
+    }
+
+    public void setPokemonFavorite(boolean pokemonFavorite) {
+        isPokemonFavorite = pokemonFavorite;
+    }
+
+    public String getPokemonDetailImageUrlBackground() {
+        return pokemonDetailImageUrlBackground;
+    }
+
+    public void setPokemonDetailImageUrlBackground(String pokemonDetailImageUrlBackground) {
+        this.pokemonDetailImageUrlBackground = pokemonDetailImageUrlBackground;
+    }
+
+    public double getPokemonHeight() {
+        return pokemonHeight;
+    }
+
+    public void setPokemonHeight(double pokemonHeight) {
+        this.pokemonHeight = pokemonHeight;
+    }
+
+    public int getPokemonId() {
+        return pokemonId;
+    }
+
+    public void setPokemonId(int pokemonId) {
+        this.pokemonId = pokemonId;
+    }
+
+    public String getPokemonImageUrlCard() {
+        return pokemonImageUrlCard;
+    }
+
+    public void setPokemonImageUrlCard(String pokemonImageUrlCard) {
+        this.pokemonImageUrlCard = pokemonImageUrlCard;
+    }
+
+    public List<String> getPokemonMovesList() {
+        return pokemonMovesList;
+    }
+
+    public void setPokemonMovesList(List<String> pokemonMovesList) {
+        this.pokemonMovesList = pokemonMovesList;
+    }
+
+    public String getPokemonName() {
+        return pokemonName;
+    }
+
+    public void setPokemonName(String pokemonName) {
+        this.pokemonName = pokemonName;
+    }
+
+    public List<String> getPokemonType() {
+        return pokemonType;
+    }
+
+    public void setPokemonType(List<String> pokemonType) {
+        this.pokemonType = pokemonType;
+    }
+
+    public double getPokemonWeight() {
+        return pokemonWeight;
+    }
+
+    public void setPokemonWeight(double pokemonWeight) {
+        this.pokemonWeight = pokemonWeight;
+    }
 }
