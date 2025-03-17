@@ -3,17 +3,29 @@ package com.pokemon_app.presentation.ui.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pokemon_app.R;
 import com.pokemon_app.databinding.FragmentPokemonIntroScreenBinding;
+import com.pokemon_app.domain.service.ConnectivityObserver;
+import com.pokemon_app.interactions.GenericAction;
+import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.utils.ActionBarHelper;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
+import com.pokemon_app.utils.PokemonAlertDialogUtils;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 
 /**
@@ -21,11 +33,15 @@ import com.pokemon_app.utils.FragmentsTags;
  * Ele contém dois botões: "Get Started" e "My Favorites".
  * Ao clicar em cada um, ele substitui o fragmento atual com novos fragmentos.
  */
+
 public class PokemonIntroductionScreen extends Fragment {
     private FragmentPokemonIntroScreenBinding binding;
     FragmentHelper fragmentHelper;
 
     ActionBarHelper actionBarHelper;
+
+    GenericPokemonViewModel genericPokemonViewModel;
+
 
     /**
      * Cria e retorna a vista do fragmento, configurando os botões e o FragmentHelper.
@@ -41,15 +57,45 @@ public class PokemonIntroductionScreen extends Fragment {
 
         binding = FragmentPokemonIntroScreenBinding.inflate(inflater, container, false);
 
-        // serve para vincular a lógica do Fragmento com o layout de maneira dinâmica,
         binding.setIntroScreenFrag(this);
 
-        // buscar a actividade para usar o actionBarHelper
         actionBarHelper = new ActionBarHelper((AppCompatActivity) getActivity());
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
 
+        genericPokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
+
+
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d("YO", "1");
+        genericPokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            Log.d("YO", "2");
+            if (state instanceof GenericStates.NetworkConnection) {
+                Log.d("YO", "3");
+                checkAppNetworkConnectionState(((GenericStates.NetworkConnection) state).getStatus());
+            }
+        });
+        genericPokemonViewModel.interaction(new GenericAction.PokemonAction.NetworkConnection(getContext()));
+    }
+
+    private void checkAppNetworkConnectionState(ConnectivityObserver.NetworkStatus status) {
+        Log.d("NETWORK IS", status.toString());
+        if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
+            PokemonAlertDialogUtils.showConnectionLostAlertDialog(getContext());
+            setVisibilityInGetStartedBtn(View.GONE);
+        } else {
+            setVisibilityInGetStartedBtn(View.VISIBLE);
+        }
+    }
+
+    private void setVisibilityInGetStartedBtn(int visibility) {
+        binding.getStartedBtn.setVisibility(visibility);
     }
 
     /**

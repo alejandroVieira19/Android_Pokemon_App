@@ -1,11 +1,15 @@
 package com.pokemon_app.interactions
+import android.content.Context
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.domain.service.ConnectivityObserver
 
 
 sealed class GenericAction {
 
     sealed class PokemonAction {
         data class LoadPokemons(val limit: Int = 151) : GenericAction()
+
+        data class NetworkConnection(val context: Context) : GenericAction()
     }
 
     sealed class ListPokemonAction {
@@ -24,6 +28,8 @@ sealed class GenericAction {
 
 
 sealed class GenericStates {
+
+    data class NetworkConnection(var status : ConnectivityObserver.NetworkStatus) : GenericStates()
 
     data class ShowLoading(var isLoading: Boolean ? = false) : GenericStates()
 
