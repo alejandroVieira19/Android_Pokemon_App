@@ -10,7 +10,7 @@ import com.pokemon_app.database.PokemonEntity
 @Dao
 interface PokemonDbDao {
     @Insert
-   suspend fun insertPokemon(pokemon: PokemonEntity): Int
+   suspend fun insertPokemon(pokemon: PokemonEntity): Long
 
     @Query("Select * from poke_table WHERE pokemonId = :pokeKey ")
    suspend fun getPokemon(pokeKey: Int): PokemonEntity
@@ -19,5 +19,5 @@ interface PokemonDbDao {
     suspend fun deletePokemon(pokemon: PokemonEntity): Int
 
     @Query("SELECT * FROM POKE_TABLE")
-    suspend fun getAllPokemon(): LiveData<List<PokemonEntity>>
+    fun getAllPokemon(): LiveData<List<PokemonEntity>>
 }

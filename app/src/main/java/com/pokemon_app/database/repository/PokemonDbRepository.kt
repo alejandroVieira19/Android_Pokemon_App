@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import com.pokemon_app.database.PokemonEntity
 import com.pokemon_app.database.room.PokemonDB
 import com.pokemon_app.domain.repository.IPokemonDbRepository
+import javax.inject.Inject
 
-class PokemonDbRepository(private val pokemonDb: PokemonDB) : IPokemonDbRepository {
-    override suspend fun insertPokemon(pokemon: PokemonEntity): Int {
+class PokemonDbRepository @Inject constructor(private val pokemonDb: PokemonDB) : IPokemonDbRepository {
+    override suspend fun insertPokemon(pokemon: PokemonEntity): Long {
         return pokemonDb.pokemonDao().insertPokemon(pokemon)
     }
 

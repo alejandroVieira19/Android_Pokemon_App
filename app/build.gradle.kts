@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+    kapt("androidx.room:room-compiler:2.6.1") // ou a mesma versão que está usando nas outras libs Room
 
     //Compose ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
