@@ -41,8 +41,6 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
     private TextView tvNoPokemonFound, tvLoadingData;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    private ActionBarHelper actionBarHelper;
-
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;
     private Bundle bundle;
@@ -62,7 +60,6 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
-        actionBarHelper = new ActionBarHelper((AppCompatActivity) getActivity());
         bundle = new Bundle();
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(ListPokemonViewModel.class);
     }

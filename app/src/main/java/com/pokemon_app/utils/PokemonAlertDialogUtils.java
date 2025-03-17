@@ -33,4 +33,15 @@ public class PokemonAlertDialogUtils {
                 })
                 .create().show();
     }
+
+    public static void showConnectionLostAlertDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle(Config.POKE_EXPLORER_APP)
+                .setMessage(Config.CONNECTION_LOST_MESSAGE)
+                .setPositiveButton(Config.POKEMON_DIALOG_OK, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create().show();
+    }
 }
