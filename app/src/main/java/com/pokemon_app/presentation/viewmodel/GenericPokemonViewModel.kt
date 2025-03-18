@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.domain.model.mapper.PokeMapper
@@ -50,51 +51,71 @@ open class GenericPokemonViewModel @Inject constructor(
    }
 
     private fun deletePokemonAsFavorite(pokemon: Pokemon) {
-
+        when(checkIfRepositoryIsNull()) {
+            true -> genericStateMessage("Database is null at the moment. Please try again and check the code")
+            else -> deletePokemon(pokemon)
+        }
     }
 
-    private fun savePokemonAsFavorite(pokemon: Pokemon) {
-        viewModelScope.launch(Dispatchers.IO){
+    private fun deletePokemon(pokemon: Pokemon) {
+        viewModelScope.launch {
+           genericStateLoading(true)
             try {
-
-                if (pokemonDbRepository == null) {
-                    withContext(Dispatchers.Main) {
-                        Log.e("RESULT", "Database repository not available.")
-                        _state.value = GenericStates.ShowMessage("Database repository not available.")
-                    }
-                    return@launch
+                withContext(Dispatchers.IO) {
+                    pokemonDbRepository!!.deletePokemon(PokeMapper.mapFromDomainToEntity(pokemon))
                 }
-
-                val exists = pokemonDbRepository.checkIfPokemonExists(pokemon.pokemonId) ?: 0
-                if(exists > 0) {
-                    withContext(Dispatchers.Main) {
-                        _state.value = GenericStates.ShowMessage("Pokemon ${pokemon.pokemonName} already in your database.")
-                    }
-
-                } else {
-                    pokemon.isPokemonFavorite = true
-                    pokemonDbRepository.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon))
-
-                    withContext(Dispatchers.Main) {
-                        _state.value = GenericStates.ShowMessage("Pokemon ${pokemon.pokemonName} saved in database.")
-                        _state.value = GenericStates.PokemonFavorite(pokemon)
-                    }
-
-                }
-            }catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _state.value = GenericStates.ShowMessage("Error saving Pokemon in database.\n" +
-                            " Error: ${e.message}")
-                }
-            }finally {
-                withContext(Dispatchers.Main) {
-                    _state.value = GenericStates.ShowLoading(false)
-                }
-
+                genericStateMessage("Pokemon ${pokemon.pokemonName} deleted in database.")
+                // TODO ----> TALVEZ ESTE STATE NÃO SERÁ NECESÁRIO
+                genericStatePokemonDeleted(true)
+            } catch (e: Exception) {
+                genericStateMessage("Error saving Pokemon in database.\n" + " Error: ${e.message}")
+            } finally {
+                genericStateLoading(false)
             }
         }
     }
 
+    private fun genericStatePokemonDeleted(isErased: Boolean) {
+        _state.value = GenericStates.DeletedPokemon(isErased)
+    }
+
+    private fun savePokemonAsFavorite(pokemon:Pokemon) {
+        when(checkIfRepositoryIsNull()) {
+            true -> genericStateMessage("Database is null at the moment. Please try again and check the code")
+            else -> savePokemon(pokemon)
+        }
+    }
+
+    private fun savePokemon(pokemon: Pokemon) {
+        viewModelScope.launch {
+            genericStateLoading(true)
+            try {
+                withContext(Dispatchers.IO) {
+                    pokemon.isPokemonFavorite = true
+                    pokemonDbRepository!!.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon))
+                }
+                genericStateMessage("Pokemon ${pokemon.pokemonName} saved in database.")
+                _state.value = GenericStates.PokemonFavorite(pokemon)
+
+            }catch (e: Exception) {
+                genericStateMessage("Error saving Pokemon in database.\n" + " Error: ${e.message}")
+            } finally {
+                genericStateLoading(false)
+            }
+        }
+    }
+
+    protected fun genericStateMessage(message:String)  {
+        _state.value = GenericStates.ShowMessage(message)
+    }
+
+    protected fun genericStateLoading(isLoading: Boolean) {
+        _state.value = GenericStates.ShowLoading(isLoading)
+    }
+
+    private fun checkIfRepositoryIsNull() : Boolean {
+        return pokemonDbRepository == null
+    }
 
 
     private fun internetConnection(context: Context) {
