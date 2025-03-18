@@ -61,12 +61,12 @@ open class GenericPokemonViewModel @Inject constructor(
         viewModelScope.launch {
            genericStateLoading(true)
             try {
-                pokemon.isPokemonFavorite = false
                 withContext(Dispatchers.IO) {
                     pokemonDbRepository!!.deletePokemon(PokeMapper.mapFromDomainToEntity(pokemon))
                 }
                 genericStateMessage("Pokemon ${pokemon.pokemonName} deleted in database.")
-                genericStatePokemonDeleted(true)
+
+                genericStatePokemonDeleted(false)
             } catch (e: Exception) {
                 genericStateMessage("Error saving Pokemon in database.\n" + " Error: ${e.message}")
             } finally {
@@ -75,8 +75,8 @@ open class GenericPokemonViewModel @Inject constructor(
         }
     }
 
-    private fun genericStatePokemonDeleted(isErased: Boolean) {
-        _state.value = GenericStates.DeletedPokemon(isErased)
+    private fun genericStatePokemonDeleted(pokemonIsFavorite: Boolean) {
+        _state.value = GenericStates.DeletedPokemon(pokemonIsFavorite)
     }
 
     private fun savePokemonAsFavorite(pokemon:Pokemon) {
@@ -91,10 +91,10 @@ open class GenericPokemonViewModel @Inject constructor(
             genericStateLoading(true)
             try {
                 withContext(Dispatchers.IO) {
-                    pokemon.isPokemonFavorite = true
                     pokemonDbRepository!!.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon))
                 }
                 genericStateMessage("Pokemon ${pokemon.pokemonName} saved in database.")
+                pokemon.isPokemonFavorite = true
                 _state.value = GenericStates.PokemonFavorite(pokemon)
 
             }catch (e: Exception) {

@@ -9,9 +9,14 @@ import javax.inject.Inject
 class PokemonDbRepository @Inject constructor(private val pokemonDb: PokemonDB) : IPokemonDbRepository {
     override suspend fun insertPokemon(pokemon: PokemonEntity): Long {
         return when(checkIfPokemonExists(pokemon.pokemonId)) {
-           0 -> pokemonDb.pokemonDao().insertPokemon(pokemon)
+           0 -> insert(pokemon)
            else -> throw IllegalStateException("Pokemon ${pokemon.pokemonName} already in your database.")
        }
+    }
+
+    suspend fun insert(pokemon: PokemonEntity) : Long {
+        pokemon.isPokemonFavorite = true
+        return pokemonDb.pokemonDao().insertPokemon(pokemon)
     }
 
     override suspend fun getPokemon(pokeId: Int): PokemonEntity {

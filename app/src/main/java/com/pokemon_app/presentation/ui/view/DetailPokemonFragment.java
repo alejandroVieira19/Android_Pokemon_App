@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +118,7 @@ public class DetailPokemonFragment extends Fragment{
                 String message = ((GenericStates.ShowMessage) state).getMessage();
                 PokemonAlertDialogUtils.showMessageAlert(getContext(), message);
             } else if (state instanceof GenericStates.DeletedPokemon) {
-                updatePokemonIsFavoriteImage( ((GenericStates.DeletedPokemon) state).getDeleted());
+                updatePokemonIsFavoriteImage( ((GenericStates.DeletedPokemon) state).getPokemonIsFavorite());
             }
         });
 
@@ -158,6 +160,7 @@ public class DetailPokemonFragment extends Fragment{
         fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
     }
     private void updatePokemonIsFavoriteImage(Boolean isPokemonFavorite) {
+        Log.d("VALUE IS", isPokemonFavorite.toString());
         if (isPokemonFavorite) {
             ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
