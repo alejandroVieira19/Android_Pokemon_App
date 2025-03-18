@@ -61,11 +61,11 @@ open class GenericPokemonViewModel @Inject constructor(
         viewModelScope.launch {
            genericStateLoading(true)
             try {
+                pokemon.isPokemonFavorite = false
                 withContext(Dispatchers.IO) {
                     pokemonDbRepository!!.deletePokemon(PokeMapper.mapFromDomainToEntity(pokemon))
                 }
                 genericStateMessage("Pokemon ${pokemon.pokemonName} deleted in database.")
-                // TODO ----> TALVEZ ESTE STATE NÃO SERÁ NECESÁRIO
                 genericStatePokemonDeleted(true)
             } catch (e: Exception) {
                 genericStateMessage("Error saving Pokemon in database.\n" + " Error: ${e.message}")

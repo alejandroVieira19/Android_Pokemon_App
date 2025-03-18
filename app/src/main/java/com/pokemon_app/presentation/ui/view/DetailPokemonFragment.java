@@ -61,7 +61,7 @@ public class DetailPokemonFragment extends Fragment{
 
         if (bundle != null) {
             pokemon = (Pokemon) bundle.getSerializable(POKEMON_NAME_KEY);
-            updatePokemonIsFavoriteImage(pokemon);
+            updatePokemonIsFavoriteImage(pokemon.isPokemonFavorite());
             setPokemonViewModelObserver(pokemon);
         }
 
@@ -74,7 +74,7 @@ public class DetailPokemonFragment extends Fragment{
                     public void onConfirm() {
                         if (finalPokemon.isPokemonFavorite()) {
                             // TODO ----> PARA APAGAR
-                            //pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.SaveFavoritePokemon(pokemon));
+                            pokemonViewModel.interaction(new GenericAction.PokemonAction.DeleteFavoritePokemon(finalPokemon));
                         } else {
                             pokemonViewModel.interaction(new GenericAction.PokemonAction.SaveFavoritePokemon(finalPokemon));
                         }
@@ -110,11 +110,13 @@ public class DetailPokemonFragment extends Fragment{
                 updateDetailView(pokemonDetailState, pokemon);
 
             } else if (state instanceof GenericStates.PokemonFavorite) {
-                updatePokemonIsFavoriteImage( ((GenericStates.PokemonFavorite) state).getPokemon());
+                updatePokemonIsFavoriteImage( ((GenericStates.PokemonFavorite) state).getPokemon().isPokemonFavorite());
 
             } else if (state instanceof GenericStates.ShowMessage) {
                 String message = ((GenericStates.ShowMessage) state).getMessage();
                 PokemonAlertDialogUtils.showMessageAlert(getContext(), message);
+            } else if (state instanceof GenericStates.DeletedPokemon) {
+                updatePokemonIsFavoriteImage( ((GenericStates.DeletedPokemon) state).getDeleted());
             }
         });
 
@@ -155,8 +157,8 @@ public class DetailPokemonFragment extends Fragment{
         aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
         fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
     }
-    private void updatePokemonIsFavoriteImage(Pokemon pokemon) {
-        if (pokemon.isPokemonFavorite()) {
+    private void updatePokemonIsFavoriteImage(Boolean isPokemonFavorite) {
+        if (isPokemonFavorite) {
             ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
             ivFavoritePokemonIcon.setImageResource(android.R.drawable.star_off);
