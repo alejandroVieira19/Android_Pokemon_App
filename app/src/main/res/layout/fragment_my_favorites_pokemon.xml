@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -22,12 +22,15 @@
             android:visibility="visible"
             tools:iconifiedByDefault="false" />
 
-        <ProgressBar
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/favoritesProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            app:lottie_autoPlay="true"
             android:layout_marginTop="200dp"
+            app:lottie_rawRes="@raw/pokeball_animation"
+            app:lottie_loop="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
             android:visibility="gone" />
 
         <TextView
@@ -36,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Loading data"
+            android:text="@string/getting_your_pokefavorites"
             android:textColor="@color/my_dark_color_secondary"
             android:textSize="20sp"
             android:visibility="gone"

@@ -109,6 +109,10 @@ open class GenericPokemonViewModel @Inject constructor(
         _state.value = GenericStates.ShowLoadingForDB(isLoading, enum)
     }
 
+    protected fun genericStateLoading(isLoading: Boolean) {
+        _state.value = GenericStates.ShowLoading(isLoading)
+    }
+
     private fun checkIfRepositoryIsNull() : Boolean {
         return pokemonDbRepository == null
     }

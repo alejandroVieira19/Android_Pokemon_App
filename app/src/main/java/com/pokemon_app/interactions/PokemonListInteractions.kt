@@ -33,7 +33,7 @@ sealed class GenericStates {
 
     data class NetworkConnection(var status : ConnectivityObserver.NetworkStatus) : GenericStates()
 
-    data class ShowLoading(var isLoading: Boolean ? = false, var pokeEnum: PokeDbEnum? = null) : GenericStates()
+    data class ShowLoading(var isLoading: Boolean ? = false) : GenericStates()
 
     data class ShowLoadingForDB(var isLoading: Boolean ? = true, var pokeEnum: PokeDbEnum) : GenericStates()
 
@@ -56,5 +56,5 @@ sealed class GenericStates {
 }
 
 enum class PokeDbEnum {
-    SAVE, DELETE
+    SAVE, DELETE, GETTING
 }
