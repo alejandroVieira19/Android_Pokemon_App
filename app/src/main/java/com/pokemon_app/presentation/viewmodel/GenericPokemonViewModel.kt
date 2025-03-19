@@ -19,6 +19,7 @@ import com.pokemon_app.utils.NetworkConnectivityObserver
 import com.pokemon_app.utils.PokemonService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
@@ -61,27 +62,25 @@ open class GenericPokemonViewModel @Inject constructor(
         viewModelScope.launch {
            genericStateLoading(true)
             try {
-                withContext(Dispatchers.IO) {
-                    pokemonDbRepository!!.deletePokemon(PokeMapper.mapFromDomainToEntity(pokemon))
-                }
-                genericStateMessage("Pokemon ${pokemon.pokemonName} deleted in database.")
 
-                genericStatePokemonDeleted(false)
-            } catch (e: Exception) {
-                genericStateMessage("Error saving Pokemon in database.\n" + " Error: ${e.message}")
-            } finally {
+                withContext(Dispatchers.IO) { pokemonDbRepository!!.deletePokemon(PokeMapper.mapFromDomainToEntity(pokemon)) }
+                delay(3000)
                 genericStateLoading(false)
+
+                pokemon.isPokemonFavorite = false
+                genericPokemonDatabase(pokemon.isPokemonFavorite, "Pokemon ${pokemon.pokemonName} deleted from database.")
+
+            } catch (e: Exception) {
+                delay(3000)
+                genericStateLoading(false)
+                genericPokemonDatabase(pokemon.isPokemonFavorite, "Error: ${e.message}")
             }
         }
     }
 
-    private fun genericStatePokemonDeleted(pokemonIsFavorite: Boolean) {
-        _state.value = GenericStates.DeletedPokemon(pokemonIsFavorite)
-    }
-
     private fun savePokemonAsFavorite(pokemon:Pokemon) {
         when(checkIfRepositoryIsNull()) {
-            true -> genericStateMessage("Database is null at the moment. Please try again and check the code")
+            true -> genericPokemonDatabase(false,"Database is null at the moment. Please try again and check the code")
             else -> savePokemon(pokemon)
         }
     }
@@ -90,19 +89,22 @@ open class GenericPokemonViewModel @Inject constructor(
         viewModelScope.launch {
             genericStateLoading(true)
             try {
-                withContext(Dispatchers.IO) {
-                    pokemonDbRepository!!.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon))
-                }
-                genericStateMessage("Pokemon ${pokemon.pokemonName} saved in database.")
+                withContext(Dispatchers.IO) { pokemonDbRepository!!.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon)) }
+                delay(3000)
+                genericStateLoading(false)
                 pokemon.isPokemonFavorite = true
-                _state.value = GenericStates.PokemonFavorite(pokemon)
+                genericPokemonDatabase(pokemon.isPokemonFavorite, "Pokemon ${pokemon.pokemonName} saved in database.")
 
             }catch (e: Exception) {
-                genericStateMessage("Error saving Pokemon in database.\n" + " Error: ${e.message}")
-            } finally {
+                delay(3000)
                 genericStateLoading(false)
+                genericPokemonDatabase(pokemon.isPokemonFavorite, "Error: ${e.message}")
             }
         }
+    }
+
+    protected fun genericPokemonDatabase(isPokemonFavorite:Boolean,message: String) {
+        _state.value = GenericStates.PokemonDatabase(isPokemonFavorite, message)
     }
 
     protected fun genericStateMessage(message:String)  {

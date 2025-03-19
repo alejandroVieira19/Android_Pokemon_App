@@ -18,6 +18,46 @@
     tools:background="#EE8130"
     tools:context=".presentation.ui.view.DetailPokemonFragment">
 
+    <RelativeLayout
+        android:id="@+id/detailRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <!-- Fundo desfocado -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background_blur"
+            android:layout_centerInParent="true"
+            />
+
+        <!-- ProgressBar sobre o fundo -->
+        <ProgressBar
+            android:id="@+id/dbProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            android:indeterminate="true"
+            android:progressTint="@color/my_color_light" />
+
+        <!-- Texto 'Loading' abaixo do ProgressBar -->
+        <TextView
+            android:id="@+id/loadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_below="@id/dbProgressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            tools:text="Loading"/>
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -161,6 +201,8 @@
 
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>
