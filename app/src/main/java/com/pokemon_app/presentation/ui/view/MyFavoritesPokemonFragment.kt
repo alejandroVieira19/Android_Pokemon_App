@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,6 +35,8 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
     private var detailPokemonFragment : DetailPokemonFragment ? = null
 
     private var fragmentHelper : FragmentHelper ? = null
+
+    private var pokeCardAdapter : PokeCardAdapter ? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -76,6 +79,9 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
                 is GenericStates.ShowLoading -> {
                     state.isLoading?.let { showLoading(it) }
                 }
+                is GenericStates.SearchPokemons -> {
+                    updateSearchResult(state.filteredPokemons)
+                }
                 else -> {}
             }
         }
@@ -94,9 +100,11 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
             binding.favoritesPokemonRecyclerView.visibility = View.VISIBLE
             binding.favoritesSearchBar.visibility = View.VISIBLE
 
-            val pokeCardAdapter = PokeCardAdapter(this, ArrayList<Pokemon>(pokemons))
+            pokeCardAdapter = PokeCardAdapter(this, ArrayList<Pokemon>(pokemons))
+
             binding.favoritesPokemonRecyclerView.setAdapter(pokeCardAdapter)
-            // TODO ----> COLOCAR SUGGESTION BAR
+
+            setSuggestionsInFavoritesSearchBar(pokemons)
         }
     }
 
@@ -113,6 +121,41 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
                 binding.tvFavoritesLoadingData.visibility = View.GONE
             }
         }
+    }
+
+    private fun updateSearchResult(filteredPokemons: List<Pokemon>) {
+
+        pokeCardAdapter?.updateList(filteredPokemons)
+
+        if (filteredPokemons.isEmpty()) {
+            binding.favoritesPokemonRecyclerView.visibility = View.GONE
+
+            binding.tvFavoritesNoPokemonFound.text = "No Pokemons found."
+
+            binding.tvFavoritesNoPokemonFound.visibility = View.VISIBLE
+        } else {
+            binding.tvFavoritesNoPokemonFound.visibility = View.GONE
+
+            binding.favoritesPokemonRecyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setSuggestionsInFavoritesSearchBar(pokemons: List<Pokemon>) {
+        binding.favoritesSearchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                _myFavoritesPokemonViewModel.interaction(
+                    GenericAction.PokemonAction.SearchPokemons(
+                        newText,
+                        pokemons.toMutableList()
+                    )
+                )
+                return true
+            }
+        })
     }
 
     override fun onClick(pokemon: Pokemon?) {
