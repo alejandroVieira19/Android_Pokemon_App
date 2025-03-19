@@ -22,4 +22,8 @@
     <string name="type">Type: </string>
     <string name="weight">Weight: </string>
     <string name="no_pokemons_found">No pokemons found.</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="mode">Mode:</string>
+    <string name="getting_your_pokefavorites">Getting Your PokeFavorites...</string>
 </resources>

@@ -57,10 +57,15 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
+    implementation("com.airbnb.android:lottie:6.1.0")
+
     // Dependências do Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0") // Removido o hilt-navigation-fragment
     implementation("com.google.dagger:hilt-android:2.48")
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+    kapt("androidx.room:room-compiler:2.6.1") // ou a mesma versão que está usando nas outras libs Room
 
     //Compose ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")

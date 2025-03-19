@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.ui.view.MyFavoritesPokemonFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/favoritesRelativeLayout"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/my_color_light"
+        android:orientation="vertical"
 
-</FrameLayout>
+        tools:context=".presentation.ui.view.MyFavoritesPokemonFragment">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/favoritesSearchBar"
+            style="@style/SearchViewCustom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:iconifiedByDefault="true"
+            android:queryHint="Search for Pokemons"
+            android:visibility="visible"
+            tools:iconifiedByDefault="false"
+            tools:visibility="gone"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/favoritesProgressBar"
+            app:lottie_autoPlay="true"
+            android:layout_marginTop="200dp"
+            app:lottie_rawRes="@raw/pokeball_animation"
+            app:lottie_loop="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvFavoritesLoadingData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/getting_your_pokefavorites"
+            android:textColor="@color/my_dark_color_secondary"
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favoritesPokemonRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvFavoritesNoPokemonFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_pokefavorites_saved_yet"
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+
+    </LinearLayout>
+
+</layout>
+

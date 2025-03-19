@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Verifique se o fragmento é o desejado e só então exibe o botão de voltar
         if (fragmentManager.findFragmentById(R.id.mainFrag) instanceof PokemonIntroductionScreen) {
-            getSupportActionBar().setTitle(POKE_EXPLORER_APP);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }else {
           getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -1,6 +1,8 @@
 package com.pokemon_app.presentation.viewmodel
 
 import android.graphics.Color
+import com.pokemon_app.database.repository.PokemonDbRepository
+import com.pokemon_app.database.room.PokemonDB
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
@@ -11,26 +13,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailPokemonViewModel @Inject constructor(private val pokemonService: PokemonService) :
-    GenericPokemonViewModel(pokemonService) {
+class DetailPokemonViewModel @Inject constructor(private val pokemonService: PokemonService,
+    private val pokemonDbRepository: PokemonDbRepository) :
+    GenericPokemonViewModel(pokemonService, pokemonDbRepository) {
+
+        private lateinit var _pokemon : Pokemon
 
 
     override fun interaction(action: GenericAction) {
         when (action) {
             is GenericAction.DetailPokemonAction.PokemonDetail -> showPokemonDetail(action.pokemon)
-            is GenericAction.DetailPokemonAction.SaveFavoritePokemon -> savePokemonAsFavorite(action.pokemon)
             else -> super.interaction(action)
         }
     }
 
-    private fun savePokemonAsFavorite(pokemon: Pokemon) {
-        pokemon.isPokemonFavorite = !pokemon.isPokemonFavorite
-
-        _state.value = GenericStates.PokemonFavorite(pokemon)
-        // TODO ----> GRAVAR NA DB USANDO ROOM.
-    }
-
     private fun showPokemonDetail(pokemon: Pokemon) {
+        _pokemon = pokemon
         _state.value = GenericStates.PokemonDetail(
             pokemon.getPokemonTypesImage(pokemon.pokemonType),
             pokemon.concatenateTypes(pokemon.pokemonType),
@@ -39,6 +37,10 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
             pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
             pokemon.pokemonMovesList
         )
+    }
+
+     fun refreshPokemonDetail() {
+        showPokemonDetail(_pokemon)
     }
 
     private fun Pokemon.getPokemonDoubleForView(double: Double, string: String): String {

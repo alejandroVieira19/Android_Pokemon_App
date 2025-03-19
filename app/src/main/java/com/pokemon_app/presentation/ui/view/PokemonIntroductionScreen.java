@@ -3,17 +3,29 @@ package com.pokemon_app.presentation.ui.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pokemon_app.R;
 import com.pokemon_app.databinding.FragmentPokemonIntroScreenBinding;
+import com.pokemon_app.domain.service.ConnectivityObserver;
+import com.pokemon_app.interactions.GenericAction;
+import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.utils.ActionBarHelper;
+import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
+import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 
 /**
@@ -21,11 +33,15 @@ import com.pokemon_app.utils.FragmentsTags;
  * Ele contém dois botões: "Get Started" e "My Favorites".
  * Ao clicar em cada um, ele substitui o fragmento atual com novos fragmentos.
  */
+
 public class PokemonIntroductionScreen extends Fragment {
     private FragmentPokemonIntroScreenBinding binding;
     FragmentHelper fragmentHelper;
 
     ActionBarHelper actionBarHelper;
+
+    GenericPokemonViewModel genericPokemonViewModel;
+
 
     /**
      * Cria e retorna a vista do fragmento, configurando os botões e o FragmentHelper.
@@ -41,15 +57,61 @@ public class PokemonIntroductionScreen extends Fragment {
 
         binding = FragmentPokemonIntroScreenBinding.inflate(inflater, container, false);
 
-        // serve para vincular a lógica do Fragmento com o layout de maneira dinâmica,
         binding.setIntroScreenFrag(this);
 
-        // buscar a actividade para usar o actionBarHelper
         actionBarHelper = new ActionBarHelper((AppCompatActivity) getActivity());
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
 
+        genericPokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
+
+
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        genericPokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            if (state instanceof GenericStates.NetworkConnection) {
+                checkAppNetworkConnectionState(((GenericStates.NetworkConnection) state).getStatus());
+            }
+        });
+        genericPokemonViewModel.interaction(new GenericAction.PokemonAction.NetworkConnection(getContext()));
+    }
+
+    private void checkAppNetworkConnectionState(ConnectivityObserver.NetworkStatus status) {
+        if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
+            PokemonAlertDialogUtils.showMessageAlert(getContext(), Config.CONNECTION_LOST_MESSAGE);
+            setVisibilityInGetStartedBtn(View.GONE);
+        } else {
+            setVisibilityInGetStartedBtn(View.VISIBLE);
+        }
+        updateModeText(status);
+    }
+
+    private void updateModeText(ConnectivityObserver.NetworkStatus status) {
+        if(status.equals(ConnectivityObserver.NetworkStatus.Available)) {
+            binding.tvMode.setText(R.string.online);
+            binding.tvMode.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOnline)); // Obtendo a cor diretamente
+        } else {
+            binding.tvMode.setText(R.string.offline);
+            binding.tvMode.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOffline)); // Obtendo a cor diretamente
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(Config.POKE_EXPLORER_APP);
+        }
+    }
+    private void setVisibilityInGetStartedBtn(int visibility) {
+        binding.getStartedBtn.setVisibility(visibility);
     }
 
     /**

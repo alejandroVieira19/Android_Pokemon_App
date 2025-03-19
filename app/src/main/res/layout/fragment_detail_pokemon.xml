@@ -18,6 +18,50 @@
     tools:background="#EE8130"
     tools:context=".presentation.ui.view.DetailPokemonFragment">
 
+    <RelativeLayout
+        android:id="@+id/detailRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <!-- Fundo desfocado -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background_blur"
+            android:layout_centerInParent="true"
+            />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/dbProgressBar"
+            app:lottie_autoPlay="true"
+            android:layout_marginTop="200dp"
+            app:lottie_rawRes="@raw/pokeball_animation"
+            app:lottie_loop="true"
+            android:layout_centerInParent="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible" />
+
+        <!-- Texto 'Loading' abaixo do ProgressBar -->
+        <TextView
+            android:id="@+id/loadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_below="@id/dbProgressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            tools:text="Loading"/>
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +89,6 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:clickable="true"
-            android:onClick="@{() -> detailPokemonFragment.onFavoritePokemonToggle()}"
             android:contentDescription="@string/favorite_star"
             app:srcCompat="@android:drawable/star_off"
             tools:ignore="TouchTargetSizeCheck,ImageContrastCheck"
@@ -162,6 +205,8 @@
 
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>

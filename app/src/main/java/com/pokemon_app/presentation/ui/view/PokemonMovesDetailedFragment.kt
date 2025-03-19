@@ -16,7 +16,7 @@ import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel
 class PokemonMovesDetailedFragment : Fragment() {
 
     private var _binding: FragmentPokemonMovesDetailedBinding? = null
-    private val binding get() = _binding!!  // Acesso seguro ao binding
+    private val binding get() = _binding!!
 
     private lateinit var adapter: MovesAdapter
 
@@ -25,7 +25,7 @@ class PokemonMovesDetailedFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflar o layout usando binding
+
         _binding = FragmentPokemonMovesDetailedBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,24 +33,19 @@ class PokemonMovesDetailedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inicializar o Adapter
+
         adapter = MovesAdapter()
 
-        // Configurar o RecyclerView com o Adapter e LayoutManager
         binding.pokemonMovesDetailsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.pokemonMovesDetailsRecyclerView.adapter = adapter
 
-        // Observar os dados do ViewModel
         _detailPokemonViewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is GenericStates.PokemonDetail -> {
-                    Log.d("Moves in VIEW", state.pokemonMovesList.toString())
                     state.pokemonMovesList?.let { adapter.submitList(it) }
                 }
-                else -> {}
+                else -> {_detailPokemonViewModel.refreshPokemonDetail()}
             }
         }
     }
-
-
 }
