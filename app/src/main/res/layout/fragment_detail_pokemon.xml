@@ -32,15 +32,18 @@
             android:layout_centerInParent="true"
             />
 
-        <!-- ProgressBar sobre o fundo -->
-        <ProgressBar
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/dbProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            app:lottie_autoPlay="true"
+            android:layout_marginTop="200dp"
+            app:lottie_rawRes="@raw/pokeball_animation"
+            app:lottie_loop="true"
             android:layout_centerInParent="true"
-            android:visibility="visible"
-            android:indeterminate="true"
-            android:progressTint="@color/my_color_light" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="visible" />
 
         <!-- Texto 'Loading' abaixo do ProgressBar -->
         <TextView
@@ -49,10 +52,11 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_below="@id/dbProgressBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             tools:text="Loading"/>
 
 

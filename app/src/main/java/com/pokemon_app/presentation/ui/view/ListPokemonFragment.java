@@ -19,6 +19,8 @@ import androidx.appcompat.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.pokemon_app.R;
 import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
@@ -39,7 +41,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
     private ListPokemonViewModel pokemonViewModel;
     private SearchView searchBar;
     private TextView tvNoPokemonFound, tvLoadingData;
-    private ProgressBar progressBar;
+    private LottieAnimationView progressBar;
     private RecyclerView recyclerView;
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;

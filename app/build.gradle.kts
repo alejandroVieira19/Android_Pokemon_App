@@ -57,6 +57,8 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
+    implementation("com.airbnb.android:lottie:6.1.0")
+
     // Dependências do Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0") // Removido o hilt-navigation-fragment
     implementation("com.google.dagger:hilt-android:2.48")
