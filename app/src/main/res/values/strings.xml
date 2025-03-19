@@ -26,4 +26,5 @@
     <string name="offline">Offline</string>
     <string name="mode">Mode:</string>
     <string name="getting_your_pokefavorites">Getting Your PokeFavorites...</string>
+    <string name="no_pokefavorites_saved_yet">No pokefavorites saved yet.</string>
 </resources>
