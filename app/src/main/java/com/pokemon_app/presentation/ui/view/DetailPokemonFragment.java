@@ -1,7 +1,5 @@
 package com.pokemon_app.presentation.ui.view;
 
-import static com.pokemon_app.utils.Config.POKEMON_NAME_KEY;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +29,7 @@ import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
+import com.pokemon_app.utils.StringUtils;
 
 
 public class DetailPokemonFragment extends Fragment {
@@ -64,7 +63,7 @@ public class DetailPokemonFragment extends Fragment {
         Pokemon pokemon = null;
 
         if (bundle != null) {
-            pokemon = (Pokemon) bundle.getSerializable(POKEMON_NAME_KEY);
+            pokemon = (Pokemon) bundle.getSerializable(getContext().getString(R.string.pokemon_key));
             updatePokemonIsFavoriteImage(pokemon.isPokemonFavorite());
             setPokemonViewModelObserver(pokemon);
         }
@@ -84,9 +83,17 @@ public class DetailPokemonFragment extends Fragment {
                     }
                 };
                 if (finalPokemon.isPokemonFavorite()) {
-                    PokemonAlertDialogUtils.showAlertDialog("Are you sure you want to remove " + finalPokemon.getPokemonName() + " as your pokefavorite", callback, getContext());
+                    PokemonAlertDialogUtils.
+                            showAlertDialog(
+                                    StringUtils.INSTANCE.buildMessage(getContext().getString(R.string.delete_question),
+                                            finalPokemon.getPokemonName(),
+                                            getContext().getString(R.string.as_your_pokeFavorite)), callback, getContext());
                 } else {
-                    PokemonAlertDialogUtils.showAlertDialog("Are you sure you want to save " + finalPokemon.getPokemonName() + " as your pokefavorite", callback, getContext());
+                    PokemonAlertDialogUtils.
+                            showAlertDialog(
+                                    StringUtils.INSTANCE.buildMessage(getContext().getString(R.string.save_question),
+                                            finalPokemon.getPokemonName(),
+                                            getContext().getString(R.string.as_your_pokeFavorite)), callback, getContext());
                 }
             }
         });
@@ -98,7 +105,7 @@ public class DetailPokemonFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle(Config.DETAIL_POKEMON_APP_NAME);
+            actionBar.setTitle(getContext().getString(R.string.detail_pokemon_app_name));
         }
     }
 
@@ -137,9 +144,9 @@ public class DetailPokemonFragment extends Fragment {
             binding.detailRelativeLayout.setVisibility(View.VISIBLE);
 
             if (pokeEnum.equals(PokeDbEnum.SAVE)) {
-                binding.loadingText.setText("Saving pokemon in database");
+                binding.loadingText.setText(getContext().getString(R.string.saving_in_db));
             } else {
-                binding.loadingText.setText("Deleting pokemon in database");
+                binding.loadingText.setText(getContext().getString(R.string.delete_from_db));
             }
 
         } else {

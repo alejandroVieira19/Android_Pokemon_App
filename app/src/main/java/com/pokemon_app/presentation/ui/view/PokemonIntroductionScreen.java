@@ -28,6 +28,7 @@ import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 
+
 /**
  * Fragmento que exibe a tela de introdução do Pokémon.
  * Ele contém dois botões: "Get Started" e "My Favorites".
@@ -83,7 +84,7 @@ public class PokemonIntroductionScreen extends Fragment {
 
     private void checkAppNetworkConnectionState(ConnectivityObserver.NetworkStatus status) {
         if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
-            PokemonAlertDialogUtils.showMessageAlert(getContext(), Config.CONNECTION_LOST_MESSAGE);
+            PokemonAlertDialogUtils.showMessageAlert(getContext(), getContext().getString(R.string.connection_lost_message));
             setVisibilityInGetStartedBtn(View.GONE);
         } else {
             setVisibilityInGetStartedBtn(View.VISIBLE);
@@ -107,7 +108,7 @@ public class PokemonIntroductionScreen extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle(Config.POKE_EXPLORER_APP);
+            actionBar.setTitle(getString(R.string.poke_explorer_app));
         }
     }
     private void setVisibilityInGetStartedBtn(int visibility) {

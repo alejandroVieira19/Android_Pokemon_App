@@ -3,6 +3,8 @@ package com.pokemon_app.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 
+import com.pokemon_app.R;
+
 public class PokemonAlertDialogUtils {
 
     Context context;
@@ -20,13 +22,13 @@ public class PokemonAlertDialogUtils {
     public static void showAlertDialog(String message, ConfirmationCallback callback, Context context ) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setTitle(Config.POKE_EXPLORER_APP)
+        builder.setTitle(context.getString(R.string.poke_explorer_app))
                 .setMessage(message)
-                .setPositiveButton(Config.POKEMON_DIALOG_CONFIRM, (dialog, which) -> {
+                .setPositiveButton(context.getString(R.string.pokemon_dialog_confirm), (dialog, which) -> {
                     callback.onConfirm();
                 })
-                .setNegativeButton(Config.POKEMON_DIALOG_NEGATIVE, (dialog, which) -> {
-                    dialog.dismiss(); // Fecha o diálogo se o usuário clicar em "No"
+                .setNegativeButton(context.getString(R.string.pokemon_dialog_negative), (dialog, which) -> {
+                    dialog.dismiss();
                 })
                 .create().show();
     }
@@ -34,9 +36,9 @@ public class PokemonAlertDialogUtils {
     public static void showMessageAlert(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setTitle(Config.POKE_EXPLORER_APP)
+        builder.setTitle(context.getString(R.string.poke_explorer_app))
                 .setMessage(message)
-                .setPositiveButton(Config.POKEMON_DIALOG_OK, (dialog, which) -> {
+                .setPositiveButton(context.getString(R.string.pokemon_dialog_ok), (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .create().show();

@@ -1,5 +1,4 @@
 package com.pokemon_app;
-import static com.pokemon_app.utils.Config.POKE_EXPLORER_APP;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;

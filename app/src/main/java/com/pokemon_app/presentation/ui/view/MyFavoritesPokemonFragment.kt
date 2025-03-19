@@ -130,7 +130,7 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
         if (filteredPokemons.isEmpty()) {
             binding.favoritesPokemonRecyclerView.visibility = View.GONE
 
-            binding.tvFavoritesNoPokemonFound.text = "No Pokemons found."
+            binding.tvFavoritesNoPokemonFound.text = context?.getString(R.string.no_pokemons_found)
 
             binding.tvFavoritesNoPokemonFound.visibility = View.VISIBLE
         } else {
@@ -159,7 +159,7 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
     }
 
     override fun onClick(pokemon: Pokemon?) {
-        bundle?.putSerializable(Config.POKEMON_NAME_KEY, pokemon)
+        bundle?.putSerializable(context?.getString(R.string.pokemon_key), pokemon)
         detailPokemonFragment?.arguments = bundle
         fragmentHelper?.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, FragmentsTags.TAG_FRAGMENT_DETAILS)
     }
@@ -170,7 +170,7 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
         val actionBar = (activity as AppCompatActivity).supportActionBar
 
         if (actionBar != null) {
-            actionBar.title = Config.FAVORITES_POKEMON_APP_NAME
+            actionBar.title = context?.getString(R.string.favorites_pokemon_app_name)
         }
     }
 }

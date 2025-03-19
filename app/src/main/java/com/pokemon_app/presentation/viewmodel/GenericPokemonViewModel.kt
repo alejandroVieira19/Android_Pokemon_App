@@ -48,6 +48,7 @@ open class GenericPokemonViewModel @Inject constructor(
         }
    }
 
+    // TODO -----> COMO BUSCAR O STRINGS.XML NA VIEWMODEL???
     private fun deletePokemonAsFavorite(pokemon: Pokemon) {
         when(checkIfRepositoryIsNull()) {
             true -> genericStateMessage("Database is null at the moment. Please try again and check the code")

@@ -30,6 +30,7 @@ import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
+import com.pokemon_app.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +159,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
 
     @Override
     public void onClick(Pokemon pokemon) {
-        bundle.putSerializable(Config.POKEMON_NAME_KEY, pokemon);
+        bundle.putSerializable(getContext().getString(R.string.pokemon_key), pokemon);
 
         detailPokemonFragment.setArguments(bundle);
 
@@ -171,7 +172,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle(Config.LIST_POKEMON_APP_NAME);
+            actionBar.setTitle(getContext().getString(R.string.list_pokemon_app_name));
         }
     }
 }
