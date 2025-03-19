@@ -39,12 +39,13 @@ class FavoritesPokemonViewModel @Inject constructor(private val pokemonService: 
                 withContext(Dispatchers.IO) {
                     pokemonList = pokemonDbRepository.getAllPokemon()
                }
-                _state.value = GenericStates.ListPokemons(pokemonList.map { PokeMapper.mapFromEntityToDomain(it)})
-            } catch (e: Exception) {
-                _state.value = GenericStates.ListPokemons(emptyList(), e.message.toString())
-            } finally {
                 delay(3000)
                 genericStateLoading(false)
+                _state.value = GenericStates.ListPokemons(pokemonList.map { PokeMapper.mapFromEntityToDomain(it)})
+            } catch (e: Exception) {
+                delay(3000)
+                genericStateLoading(false)
+                _state.value = GenericStates.ListPokemons(emptyList(), e.message.toString())
             }
         }
     }

@@ -3,11 +3,13 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/favoritesRelativeLayout"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/my_color_light"
         android:orientation="vertical"
+
         tools:context=".presentation.ui.view.MyFavoritesPokemonFragment">
 
         <androidx.appcompat.widget.SearchView
@@ -20,7 +22,8 @@
             android:iconifiedByDefault="true"
             android:queryHint="Search for Pokemons"
             android:visibility="visible"
-            tools:iconifiedByDefault="false" />
+            tools:iconifiedByDefault="false"
+            tools:visibility="gone"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/favoritesProgressBar"
@@ -43,7 +46,7 @@
             android:textColor="@color/my_dark_color_secondary"
             android:textSize="20sp"
             android:visibility="gone"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favoritesPokemonRecyclerView"
@@ -53,15 +56,15 @@
             tools:visibility="gone" />
 
         <TextView
-            android:id="@+id/tvNoPokemonFound"
+            android:id="@+id/tvFavoritesNoPokemonFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/no_pokemons_found"
+            android:layout_gravity="center"
+            android:text="@string/no_pokefavorites_saved_yet"
             android:textColor="#FF0000"
             android:textSize="20sp"
             android:visibility="gone"
-            tools:visibility="gone" />
+            tools:visibility="visible" />
 
 
     </LinearLayout>

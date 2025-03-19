@@ -8,6 +8,7 @@ object Config {
     const val POKE_EXPLORER_APP = "PokeExplorer App"
 
     const val LIST_POKEMON_APP_NAME = "PokeList"
+    const val FAVORITES_POKEMON_APP_NAME = "PokeFavorites"
 
     const val DETAIL_POKEMON_APP_NAME = "PokeDetail"
 
