@@ -19,7 +19,7 @@ interface PokemonDbDao {
     suspend fun deletePokemon(pokemon: PokemonEntity): Int
 
     @Query("SELECT * FROM POKE_TABLE")
-    fun getAllPokemon(): LiveData<List<PokemonEntity>>
+    fun getAllPokemon(): List<PokemonEntity>
 
     @Query("SELECT COUNT(*) FROM poke_table WHERE pokemonId = :pokeId")
     fun checkIfPokemonExists(pokeId: Int): Int

@@ -39,9 +39,7 @@ sealed class GenericStates {
 
     data class ListPokemons(val pokemons: List<Pokemon> = emptyList(), val error: String? = null) : GenericStates()
 
-    data class PokemonFavorite(val pokemon : Pokemon) : GenericStates()
-
-    data class DeletedPokemon(val pokemonIsFavorite: Boolean): GenericStates()
+    data class PokemonDatabase(val pokemonIsFavorite: Boolean?=false, var message: String? = null): GenericStates()
 
     data class SearchPokemons(var filteredPokemons: List<Pokemon> = emptyList()): GenericStates()
 

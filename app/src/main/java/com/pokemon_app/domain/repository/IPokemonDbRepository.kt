@@ -8,6 +8,6 @@ interface IPokemonDbRepository {
     suspend fun insertPokemon(pokemon: PokemonEntity): Long
     suspend fun getPokemon(pokeId: Int): PokemonEntity
     suspend fun deletePokemon(pokemon: PokemonEntity): Int
-    suspend fun getAllPokemon(): LiveData<List<PokemonEntity>>
+    suspend fun getAllPokemon(): List<PokemonEntity>
     suspend fun checkIfPokemonExists(pokeId: Int): Int
 }
