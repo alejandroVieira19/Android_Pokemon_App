@@ -75,7 +75,6 @@ public class DetailPokemonFragment extends Fragment{
                     @Override
                     public void onConfirm() {
                         if (finalPokemon.isPokemonFavorite()) {
-                            // TODO ----> PARA APAGAR
                             pokemonViewModel.interaction(new GenericAction.PokemonAction.DeleteFavoritePokemon(finalPokemon));
                         } else {
                             pokemonViewModel.interaction(new GenericAction.PokemonAction.SaveFavoritePokemon(finalPokemon));
@@ -110,19 +109,30 @@ public class DetailPokemonFragment extends Fragment{
                 GenericStates.PokemonDetail pokemonDetailState = (GenericStates.PokemonDetail) state;
 
                 updateDetailView(pokemonDetailState, pokemon);
+            } else if (state instanceof GenericStates.ShowLoading) {
 
-            } else if (state instanceof GenericStates.PokemonFavorite) {
-                updatePokemonIsFavoriteImage( ((GenericStates.PokemonFavorite) state).getPokemon().isPokemonFavorite());
+            fragmentShowLoadingForDB(((GenericStates.ShowLoading) state).isLoading());
 
-            } else if (state instanceof GenericStates.ShowMessage) {
-                String message = ((GenericStates.ShowMessage) state).getMessage();
+            } else if (state instanceof GenericStates.PokemonDatabase) {
+
+                updatePokemonIsFavoriteImage( ((GenericStates.PokemonDatabase) state).getPokemonIsFavorite());
+
+                String message = ((GenericStates.PokemonDatabase) state).getMessage();
+
                 PokemonAlertDialogUtils.showMessageAlert(getContext(), message);
-            } else if (state instanceof GenericStates.DeletedPokemon) {
-                updatePokemonIsFavoriteImage( ((GenericStates.DeletedPokemon) state).getPokemonIsFavorite());
             }
         });
 
         pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.PokemonDetail(pokemon));
+    }
+
+    private void fragmentShowLoadingForDB(Boolean loading) {
+        if(loading) {
+            binding.detailRelativeLayout.setVisibility(View.VISIBLE);
+            binding.loadingText.setText("database working...");
+        } else {
+            binding.detailRelativeLayout.setVisibility(View.GONE);
+        }
     }
 
     private void updateDetailView(GenericStates.PokemonDetail pokemonDetailState, Pokemon pokemon) {
@@ -160,7 +170,6 @@ public class DetailPokemonFragment extends Fragment{
         fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
     }
     private void updatePokemonIsFavoriteImage(Boolean isPokemonFavorite) {
-        Log.d("VALUE IS", isPokemonFavorite.toString());
         if (isPokemonFavorite) {
             ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
         } else {

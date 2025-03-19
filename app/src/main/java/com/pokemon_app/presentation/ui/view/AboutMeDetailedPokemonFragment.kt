@@ -22,7 +22,7 @@ class AboutMeDetailedPokemonFragment : Fragment() {
     private var _binding: FragmentAboutDetailedPokemonBinding? = null
     private val binding get() = _binding!!
 
-    // Use o viewModels passando o Fragment pai
+
     private val _detailPokemonViewModel: DetailPokemonViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,7 +41,7 @@ class AboutMeDetailedPokemonFragment : Fragment() {
                     binding.types = state.pokemonTypeText
                     updatePokemonTypesImage(state.pokemonTypesImage)
                 }
-                else -> {}
+                else -> {_detailPokemonViewModel.refreshPokemonDetail()}
             }
         }
     }

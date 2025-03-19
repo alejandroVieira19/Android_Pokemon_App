@@ -17,6 +17,8 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     private val pokemonDbRepository: PokemonDbRepository) :
     GenericPokemonViewModel(pokemonService, pokemonDbRepository) {
 
+        private lateinit var _pokemon : Pokemon
+
 
     override fun interaction(action: GenericAction) {
         when (action) {
@@ -26,6 +28,7 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     }
 
     private fun showPokemonDetail(pokemon: Pokemon) {
+        _pokemon = pokemon
         _state.value = GenericStates.PokemonDetail(
             pokemon.getPokemonTypesImage(pokemon.pokemonType),
             pokemon.concatenateTypes(pokemon.pokemonType),
@@ -34,6 +37,10 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
             pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
             pokemon.pokemonMovesList
         )
+    }
+
+     fun refreshPokemonDetail() {
+        showPokemonDetail(_pokemon)
     }
 
     private fun Pokemon.getPokemonDoubleForView(double: Double, string: String): String {
