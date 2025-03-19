@@ -1,20 +1,17 @@
 package com.pokemon_app.presentation.viewmodel
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.domain.model.mapper.PokeMapper
 import com.pokemon_app.domain.service.ConnectivityObserver
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
+import com.pokemon_app.interactions.PokeDbEnum
 import com.pokemon_app.utils.NetworkConnectivityObserver
 import com.pokemon_app.utils.PokemonService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,19 +56,17 @@ open class GenericPokemonViewModel @Inject constructor(
 
     private fun deletePokemon(pokemon: Pokemon) {
         viewModelScope.launch {
-           genericStateLoading(true)
+            genericStateLoadingForDb(true, PokeDbEnum.DELETE)
             try {
-
                 withContext(Dispatchers.IO) { pokemonDbRepository!!.deletePokemon(PokeMapper.mapFromDomainToEntity(pokemon)) }
                 delay(3000)
-                genericStateLoading(false)
-
+                genericStateLoadingForDb(false, PokeDbEnum.DELETE)
                 pokemon.isPokemonFavorite = false
                 genericPokemonDatabase(pokemon.isPokemonFavorite, "Pokemon ${pokemon.pokemonName} deleted from database.")
 
             } catch (e: Exception) {
                 delay(3000)
-                genericStateLoading(false)
+                genericStateLoadingForDb(false, PokeDbEnum.DELETE)
                 genericPokemonDatabase(pokemon.isPokemonFavorite, "Error: ${e.message}")
             }
         }
@@ -87,17 +81,17 @@ open class GenericPokemonViewModel @Inject constructor(
 
     private fun savePokemon(pokemon: Pokemon) {
         viewModelScope.launch {
-            genericStateLoading(true)
+            genericStateLoadingForDb(true, PokeDbEnum.SAVE)
             try {
                 withContext(Dispatchers.IO) { pokemonDbRepository!!.insertPokemon(PokeMapper.mapFromDomainToEntity(pokemon)) }
                 delay(3000)
-                genericStateLoading(false)
+                genericStateLoadingForDb(false, PokeDbEnum.SAVE)
                 pokemon.isPokemonFavorite = true
                 genericPokemonDatabase(pokemon.isPokemonFavorite, "Pokemon ${pokemon.pokemonName} saved in database.")
 
             }catch (e: Exception) {
                 delay(3000)
-                genericStateLoading(false)
+                genericStateLoadingForDb(false, PokeDbEnum.SAVE)
                 genericPokemonDatabase(pokemon.isPokemonFavorite, "Error: ${e.message}")
             }
         }
@@ -111,8 +105,8 @@ open class GenericPokemonViewModel @Inject constructor(
         _state.value = GenericStates.ShowMessage(message)
     }
 
-    protected fun genericStateLoading(isLoading: Boolean) {
-        _state.value = GenericStates.ShowLoading(isLoading)
+    protected fun genericStateLoadingForDb(isLoading: Boolean, enum: PokeDbEnum) {
+        _state.value = GenericStates.ShowLoadingForDB(isLoading, enum)
     }
 
     private fun checkIfRepositoryIsNull() : Boolean {

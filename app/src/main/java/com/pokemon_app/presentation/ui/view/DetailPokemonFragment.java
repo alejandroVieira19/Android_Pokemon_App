@@ -3,6 +3,7 @@ package com.pokemon_app.presentation.ui.view;
 import static com.pokemon_app.utils.Config.POKEMON_NAME_KEY;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -11,19 +12,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.pokemon_app.R;
 import com.pokemon_app.databinding.FragmentDetailPokemonBinding;
 import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.interactions.PokeDbEnum;
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
 import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
@@ -31,7 +33,7 @@ import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 
-public class DetailPokemonFragment extends Fragment{
+public class DetailPokemonFragment extends Fragment {
     private FragmentDetailPokemonBinding binding;
     TextView aboutMeBtn, movesBtn;
     ImageView ivFavoritePokemonIcon;
@@ -109,13 +111,17 @@ public class DetailPokemonFragment extends Fragment{
                 GenericStates.PokemonDetail pokemonDetailState = (GenericStates.PokemonDetail) state;
 
                 updateDetailView(pokemonDetailState, pokemon);
-            } else if (state instanceof GenericStates.ShowLoading) {
+            } else if (state instanceof GenericStates.ShowLoadingForDB) {
 
-            fragmentShowLoadingForDB(((GenericStates.ShowLoading) state).isLoading());
+                boolean isLoading = ((GenericStates.ShowLoadingForDB) state).isLoading();
+
+                PokeDbEnum pokeDbEnum = ((GenericStates.ShowLoadingForDB) state).getPokeEnum();
+
+                fragmentShowLoadingForDB(isLoading, pokeDbEnum);
 
             } else if (state instanceof GenericStates.PokemonDatabase) {
 
-                updatePokemonIsFavoriteImage( ((GenericStates.PokemonDatabase) state).getPokemonIsFavorite());
+                updatePokemonIsFavoriteImage(((GenericStates.PokemonDatabase) state).getPokemonIsFavorite());
 
                 String message = ((GenericStates.PokemonDatabase) state).getMessage();
 
@@ -126,10 +132,16 @@ public class DetailPokemonFragment extends Fragment{
         pokemonViewModel.interaction(new GenericAction.DetailPokemonAction.PokemonDetail(pokemon));
     }
 
-    private void fragmentShowLoadingForDB(Boolean loading) {
-        if(loading) {
+    private void fragmentShowLoadingForDB(Boolean loading, PokeDbEnum pokeEnum) {
+        if (loading) {
             binding.detailRelativeLayout.setVisibility(View.VISIBLE);
-            binding.loadingText.setText("database working...");
+
+            if (pokeEnum.equals(PokeDbEnum.SAVE)) {
+                binding.loadingText.setText("Saving pokemon in database");
+            } else {
+                binding.loadingText.setText("Deleting pokemon in database");
+            }
+
         } else {
             binding.detailRelativeLayout.setVisibility(View.GONE);
         }
@@ -169,6 +181,7 @@ public class DetailPokemonFragment extends Fragment{
         aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
         fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
     }
+
     private void updatePokemonIsFavoriteImage(Boolean isPokemonFavorite) {
         if (isPokemonFavorite) {
             ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);

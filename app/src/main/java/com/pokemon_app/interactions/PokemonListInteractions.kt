@@ -33,7 +33,9 @@ sealed class GenericStates {
 
     data class NetworkConnection(var status : ConnectivityObserver.NetworkStatus) : GenericStates()
 
-    data class ShowLoading(var isLoading: Boolean ? = false) : GenericStates()
+    data class ShowLoading(var isLoading: Boolean ? = false, var pokeEnum: PokeDbEnum? = null) : GenericStates()
+
+    data class ShowLoadingForDB(var isLoading: Boolean ? = true, var pokeEnum: PokeDbEnum) : GenericStates()
 
     data class ShowMessage(var message: String ? = null) : GenericStates()
 
@@ -51,4 +53,8 @@ sealed class GenericStates {
         val pokemonHeight: String?= null,
         val pokemonMovesList : List<String>?= null
         ) : GenericStates()
+}
+
+enum class PokeDbEnum {
+    SAVE, DELETE
 }
