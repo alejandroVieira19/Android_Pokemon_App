@@ -7,7 +7,7 @@
     <data>
         <variable
             name="detailPokemonFragment"
-            type="com.pokemon_app.presentation.ui.view.DetailPokemonFragment" />
+            type="com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment" />
     </data>
 
 <LinearLayout
@@ -16,7 +16,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:background="#EE8130"
-    tools:context=".presentation.ui.view.DetailPokemonFragment">
+    tools:context=".presentation.ui.view.detail.DetailPokemonFragment">
 
     <RelativeLayout
         android:id="@+id/detailRelativeLayout"
@@ -154,6 +154,25 @@
                 android:foreground="?attr/selectableItemBackground"
                 />
 
+
+            <TextView
+                android:id="@+id/statsBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:paddingVertical="12dp"
+                android:background="@color/transparent"
+                android:text="@string/stats"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+
+                android:foreground="?attr/selectableItemBackground"
+                />
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -180,7 +199,7 @@
                     android:id="@+id/fragmentContainerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_pokemon_moves_detailed" />
+                    tools:layout="@layout/fragment_pokemon_stats_detailed" />
 
 
                 <LinearLayout

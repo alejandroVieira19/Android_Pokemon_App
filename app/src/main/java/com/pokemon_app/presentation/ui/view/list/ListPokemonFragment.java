@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view;
+package com.pokemon_app.presentation.ui.view.list;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,16 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.SearchView;
 
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +23,10 @@ import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
+import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
 import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
-import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
-import com.pokemon_app.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

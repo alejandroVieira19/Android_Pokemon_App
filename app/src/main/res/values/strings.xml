@@ -54,6 +54,7 @@
     <string name="delete_from_db">Deleting pokemon in database</string>
 
     <string name="db_is_null">Database is null at the moment. Please try again and check the code</string>
+    <string name="stats">Stats</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view
+package com.pokemon_app.presentation.ui.view.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.transition.Visibility
 import com.bumptech.glide.Glide
-import com.pokemon_app.R
 import com.pokemon_app.databinding.FragmentAboutDetailedPokemonBinding
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel

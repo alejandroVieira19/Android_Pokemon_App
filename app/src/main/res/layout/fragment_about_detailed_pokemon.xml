@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.ui.view.AboutMeDetailedPokemonFragment"
+    tools:context=".presentation.ui.view.detail.AboutMeDetailedPokemonFragment"
     tools:background="@color/teal_700"
     >
 

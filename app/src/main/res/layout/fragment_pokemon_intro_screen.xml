@@ -8,7 +8,7 @@
     <data>
         <variable
             name="introScreenFrag"
-            type="com.pokemon_app.presentation.ui.view.PokemonIntroductionScreen" />
+            type="com.pokemon_app.presentation.ui.view.intro.PokemonIntroductionScreen" />
     </data>
 
     <LinearLayout
@@ -17,7 +17,7 @@
         android:background="@color/my_color_light"
         android:orientation="vertical"
         tools:background="@color/my_color_light"
-        tools:context=".presentation.ui.view.PokemonIntroductionScreen">
+        tools:context=".presentation.ui.view.intro.PokemonIntroductionScreen">
 
         <LinearLayout
             android:layout_width="match_parent"

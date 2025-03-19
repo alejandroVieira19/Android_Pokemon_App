@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view;
+package com.pokemon_app.presentation.ui.view.intro;
 
 
 import android.os.Bundle;
@@ -20,9 +20,10 @@ import com.pokemon_app.databinding.FragmentPokemonIntroScreenBinding;
 import com.pokemon_app.domain.service.ConnectivityObserver;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.presentation.ui.view.list.ListPokemonFragment;
+import com.pokemon_app.presentation.ui.view.favorite.MyFavoritesPokemonFragment;
 import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.utils.ActionBarHelper;
-import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;

@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view;
+package com.pokemon_app.presentation.ui.view.detail;
 
 import android.os.Bundle;
 
@@ -25,7 +25,6 @@ import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.interactions.PokeDbEnum;
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
-import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;

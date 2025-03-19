@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/my_color_light"
-    tools:context=".presentation.ui.view.ListPokemonFragment">
+    tools:context=".presentation.ui.view.list.ListPokemonFragment">
 
 
     <androidx.appcompat.widget.SearchView
