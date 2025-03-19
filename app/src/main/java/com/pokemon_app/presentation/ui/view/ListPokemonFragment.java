@@ -26,8 +26,7 @@ import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
-import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
-import com.pokemon_app.utils.ActionBarHelper;
+import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
@@ -38,7 +37,7 @@ import java.util.List;
 
 public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnPokemonCardClicked {
     private PokeCardAdapter pokeCardAdapter;
-    private ListPokemonViewModel pokemonViewModel;
+    private GenericPokemonViewModel pokemonViewModel;
     private SearchView searchBar;
     private TextView tvNoPokemonFound, tvLoadingData;
     private LottieAnimationView progressBar;
@@ -63,7 +62,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
         bundle = new Bundle();
-        pokemonViewModel = new ViewModelProvider(requireActivity()).get(ListPokemonViewModel.class);
+        pokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
     }
 
     @Override
@@ -149,7 +148,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                pokemonViewModel.interaction(new GenericAction.ListPokemonAction.SearchPokemons(newText, pokemons));
+                pokemonViewModel.interaction(new GenericAction.PokemonAction.SearchPokemons(newText, pokemons));
                 return true;
             }
         });

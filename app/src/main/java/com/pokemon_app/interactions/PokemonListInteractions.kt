@@ -11,16 +11,11 @@ sealed class GenericAction {
         data class NetworkConnection(val context: Context) : GenericAction()
         data class SaveFavoritePokemon(val pokemon: Pokemon) : GenericAction()
         data class DeleteFavoritePokemon(val pokemon: Pokemon) : GenericAction()
-    }
-
-    sealed class ListPokemonAction {
         data class SearchPokemons(val query: String, var pokemons: MutableList<Pokemon>) : GenericAction()
     }
 
     sealed class DetailPokemonAction {
         data class PokemonDetail(val pokemon: Pokemon) : GenericAction()
-
-        // data class RemoveFavoritePokemon(val pokemon: Pokemon, val message: String?= null)
     }
 
     sealed class FavoritePokemonAction {

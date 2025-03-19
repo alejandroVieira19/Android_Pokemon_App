@@ -12,17 +12,4 @@ class ListPokemonViewModel @Inject constructor(
     private val pokemonService: PokemonService
 ) : GenericPokemonViewModel(pokemonService) {
 
-     override fun interaction(action: GenericAction) {
-        when (action) {
-            is GenericAction.ListPokemonAction.SearchPokemons -> searchPokemons(action.query, action.pokemons)
-            else -> super.interaction((action))
-        }
-    }
-
-
-     fun searchPokemons(query: String, pokemons: List<Pokemon>) {
-         val filteredPokemons = pokemons.filter { it.pokemonName.lowercase().contains(query.lowercase()) }
-
-         _state.value = GenericStates.SearchPokemons(filteredPokemons)
-     }
 }

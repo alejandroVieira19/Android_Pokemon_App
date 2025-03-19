@@ -43,6 +43,7 @@ open class GenericPokemonViewModel @Inject constructor(
             is GenericAction.PokemonAction.NetworkConnection -> internetConnection(action.context)
             is GenericAction.PokemonAction.SaveFavoritePokemon -> savePokemonAsFavorite(action.pokemon)
             is GenericAction.PokemonAction.DeleteFavoritePokemon -> deletePokemonAsFavorite(action.pokemon)
+            is GenericAction.PokemonAction.SearchPokemons -> searchPokemons(action.query, action.pokemons)
             else -> {}
         }
    }
@@ -129,6 +130,12 @@ open class GenericPokemonViewModel @Inject constructor(
 
             }
         }
+    }
+
+    protected fun searchPokemons(query: String, pokemons: List<Pokemon>) {
+        val filteredPokemons = pokemons.filter { it.pokemonName.lowercase().contains(query.lowercase()) }
+
+        _state.value = GenericStates.SearchPokemons(filteredPokemons)
     }
 
     private fun loadPokemons(limit: Int) {
