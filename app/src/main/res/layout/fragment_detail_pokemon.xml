@@ -169,7 +169,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:clickable="true"
-
+                android:onClick="@{() -> detailPokemonFragment.onStatsClick()}"
                 android:foreground="?attr/selectableItemBackground"
                 />
 

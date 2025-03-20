@@ -10,12 +10,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.pokemon_app.R;
@@ -33,11 +32,15 @@ import com.pokemon_app.utils.StringUtils;
 
 public class DetailPokemonFragment extends Fragment {
     private FragmentDetailPokemonBinding binding;
-    TextView aboutMeBtn, movesBtn;
-    ImageView ivFavoritePokemonIcon;
-    LinearLayout detailFragmentLayout;
     DetailPokemonViewModel pokemonViewModel;
+
+    AboutMeDetailedPokemonFragment aboutMeDetailedPokemonFragment;
+
+    PokemonMovesDetailedFragment pokemonMovesDetailedFragment;
+
+    PokemonStatsDetailedFragment pokemonStatsDetailedFragment;
     FragmentHelper fragmentHelper;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,9 +51,7 @@ public class DetailPokemonFragment extends Fragment {
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
 
-        fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
 
-        initializateDetailFrag();
 
         return binding.getRoot();
     }
@@ -61,14 +62,18 @@ public class DetailPokemonFragment extends Fragment {
         Bundle bundle = getArguments();
         Pokemon pokemon = null;
 
+        pokemonViewModel = new ViewModelProvider(requireActivity()).get(DetailPokemonViewModel.class);
+
         if (bundle != null) {
             pokemon = (Pokemon) bundle.getSerializable(getContext().getString(R.string.pokemon_key));
             updatePokemonIsFavoriteImage(pokemon.isPokemonFavorite());
             setPokemonViewModelObserver(pokemon);
         }
 
+
+
         Pokemon finalPokemon = pokemon;
-        ivFavoritePokemonIcon.setOnClickListener(new View.OnClickListener() {
+        binding.ivDetailFavoritePokemonIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PokemonAlertDialogUtils.ConfirmationCallback callback = new PokemonAlertDialogUtils.ConfirmationCallback() {
@@ -98,16 +103,6 @@ public class DetailPokemonFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setTitle(getContext().getString(R.string.detail_pokemon_app_name));
-        }
-    }
-
     private void setPokemonViewModelObserver(Pokemon pokemon) {
 
         pokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
@@ -117,6 +112,7 @@ public class DetailPokemonFragment extends Fragment {
                 GenericStates.PokemonDetail pokemonDetailState = (GenericStates.PokemonDetail) state;
 
                 updateDetailView(pokemonDetailState, pokemon);
+
             } else if (state instanceof GenericStates.ShowLoadingForDB) {
 
                 boolean isLoading = ((GenericStates.ShowLoadingForDB) state).isLoading();
@@ -132,6 +128,7 @@ public class DetailPokemonFragment extends Fragment {
                 String message = ((GenericStates.PokemonDatabase) state).getMessage();
 
                 PokemonAlertDialogUtils.showMessageAlert(getContext(), message);
+
             }
         });
 
@@ -155,44 +152,95 @@ public class DetailPokemonFragment extends Fragment {
 
     private void updateDetailView(GenericStates.PokemonDetail pokemonDetailState, Pokemon pokemon) {
 
-        binding.detailFragmentLayout.setBackgroundColor(pokemonDetailState.getPokemonBackgroundColor());
+        setPokemonBackGroundColor(pokemonDetailState.getPokemonBackgroundColor());
 
-        Glide.with(binding.ivDetailPokemonImage)
-                .load(pokemon.getPokemonDetailImageUrlBackground())
-                .centerCrop().into(binding.ivDetailPokemonImage);
+        setPokemonFragmentTextColor(pokemonDetailState.getPokemonTextColor());
 
-        binding.tvPokemonName.setText(pokemon.getPokemonName());
+        loadPokemonImage(binding.ivDetailPokemonImage, pokemon.getPokemonDetailImageUrlBackground());
+
+        setPokemonName(pokemon.getPokemonName());
+
+        instanciateFragments(pokemonDetailState);
+
+        replaceFragment(aboutMeDetailedPokemonFragment, false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
+
     }
 
-    private void initializateDetailFrag() {
-        aboutMeBtn = binding.textAboutMe;
-        detailFragmentLayout = binding.detailFragmentLayout;
+    private void setPokemonFragmentTextColor(Integer pokemonTextColor) {
+        Log.d("FRAG", pokemonTextColor.toString());
+        binding.tvPokemonName.setTextColor(pokemonTextColor);
+        binding.textAboutMe.setTextColor(pokemonTextColor);
+        binding.movesBtn.setTextColor(pokemonTextColor);
+        binding.statsBtn.setTextColor(pokemonTextColor);
+    }
 
-        movesBtn = binding.movesBtn;
+    private void setPokemonName(String pokemonName) {
+        binding.tvPokemonName.setText(pokemonName);
+    }
 
-        ivFavoritePokemonIcon = binding.ivDetailFavoritePokemonIcon;
+    private void setPokemonBackGroundColor(Integer pokemonBackgroundColor) {
+        binding.detailFragmentLayout.setBackgroundColor(pokemonBackgroundColor);
+    }
 
-        pokemonViewModel = new ViewModelProvider(requireActivity()).get(DetailPokemonViewModel.class);
+    private void loadPokemonImage(ImageView ivDetailPokemonImage, String pokemonDetailImageUrlBackground) {
+        Glide.with(ivDetailPokemonImage)
+                .load(pokemonDetailImageUrlBackground)
+                .centerCrop().into(ivDetailPokemonImage);
+    }
+
+    private void replaceFragment(Fragment fragment, boolean addToBackStack, String tag) {
+        fragmentHelper.replaceFragment(R.id.fragmentContainerView, fragment, addToBackStack, tag);
+    }
+
+    private void instanciateFragments(GenericStates.PokemonDetail pokemonDetailState) {
+
+        aboutMeDetailedPokemonFragment = new AboutMeDetailedPokemonFragment().newInstance(pokemonDetailState);
+
+        pokemonMovesDetailedFragment = new PokemonMovesDetailedFragment().newInstance(pokemonDetailState);
+
+        pokemonStatsDetailedFragment = new PokemonStatsDetailedFragment().newInstance(pokemonDetailState);
 
     }
 
     public void onMovesClick() {
-        aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
-        movesBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
-        fragmentHelper.replaceFragment(R.id.fragmentContainerView, new PokemonMovesDetailedFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_MOVES);
+        updateSelectedButton(binding.movesBtn, binding.textAboutMe, binding.statsBtn);
+        replaceFragment(pokemonMovesDetailedFragment, false,  FragmentsTags.TAG_FRAGMENTS_POKEMON_MOVES);
+
     }
 
     public void onAboutMeClick() {
-        movesBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
-        aboutMeBtn.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
-        fragmentHelper.replaceFragment(R.id.fragmentContainerView, new AboutMeDetailedPokemonFragment(), false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
+        updateSelectedButton(binding.textAboutMe, binding.movesBtn, binding.statsBtn);
+        replaceFragment(aboutMeDetailedPokemonFragment, false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
+    }
+
+    public void onStatsClick() {
+        updateSelectedButton(binding.statsBtn, binding.movesBtn, binding.textAboutMe);
+        replaceFragment(pokemonStatsDetailedFragment, false, FragmentsTags.TAG_FRAGMENTS_POKEMON_STATS);
+    }
+
+    private void updateSelectedButton(View selected, View... others) {
+        selected.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
+        for (View other : others) {
+            other.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
+        }
     }
 
     private void updatePokemonIsFavoriteImage(Boolean isPokemonFavorite) {
         if (isPokemonFavorite) {
-            ivFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
+            binding.ivDetailFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
-            ivFavoritePokemonIcon.setImageResource(android.R.drawable.star_off);
+            binding.ivDetailFavoritePokemonIcon.setImageResource(android.R.drawable.star_off);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(getContext().getString(R.string.detail_pokemon_app_name));
         }
     }
 }
+
