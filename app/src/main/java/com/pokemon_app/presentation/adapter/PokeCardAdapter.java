@@ -45,6 +45,7 @@ public class PokeCardAdapter extends RecyclerView.Adapter<PokeCardAdapter.ViewHo
             tvPokemonName = binding.pokemonName;
             pokeCardView = binding.pokeCardView;
         }
+
         public void bind(Pokemon pokemon) {
             binding.setPokemon(pokemon);
 

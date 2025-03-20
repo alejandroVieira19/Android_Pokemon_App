@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -22,10 +23,13 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.pokemon_app.MainActivity;
 import com.pokemon_app.R;
+import com.pokemon_app.domain.model.Generation;
+import com.pokemon_app.domain.model.GenerationRepository;
 import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.domain.service.ConnectivityObserver;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.presentation.adapter.GenerationCardAdapter;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.ui.view.GenericFragment;
 import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
@@ -40,15 +44,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListPokemonFragment extends GenericFragment implements PokeCardAdapter.OnPokemonCardClicked {
+public class ListPokemonFragment extends GenericFragment implements PokeCardAdapter.OnPokemonCardClicked, GenerationCardAdapter.OnGenerationClicked{
     private PokeCardAdapter pokeCardAdapter;
     private GenericPokemonViewModel pokemonViewModel;
     private SearchView searchBar;
     private TextView tvNoPokemonFound, tvLoadingData;
     private LottieAnimationView progressBar;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, generationRecyclerView;
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;
+
+
 
     List<Pokemon> pokemonList;
 
@@ -66,6 +72,9 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
         tvLoadingData = view.findViewById(R.id.tvLoadingData);
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
+
+        generationRecyclerView = view.findViewById(R.id.recyclerGeneration);
+
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
@@ -154,15 +163,34 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         if ((pokemons == null || pokemons.isEmpty()) && error != null) {
             Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
         } else {
-
             pokeCardAdapter = new PokeCardAdapter(this, new ArrayList<>(pokemons));
 
             recyclerView.setAdapter(pokeCardAdapter);
+
+            setGenerationsCards();
+
             setSuggestionsInSearchBar(pokemons);
         }
     }
 
-    // Atualizar resultados da busca
+    private void setGenerationsCards() {
+
+        List<Generation> generations = GenerationRepository.INSTANCE.getGenerations();
+
+        generationRecyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        generationRecyclerView.setLayoutManager(layoutManager);
+
+        GenerationCardAdapter generationCardAdapter = new GenerationCardAdapter(generations, this);
+
+        generationRecyclerView.setAdapter(generationCardAdapter);
+
+        generationRecyclerView.setVisibility(View.VISIBLE);
+
+    }
+
     private void updateSearchResult(List<Pokemon> filteredPokemons) {
         if (pokeCardAdapter != null) {
             pokeCardAdapter.updateList(filteredPokemons);
@@ -215,5 +243,11 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         if (actionBar != null) {
             actionBar.setTitle(getContext().getString(R.string.list_pokemon_app_name));
         }
+    }
+
+    @Override
+    public void onClick(int generationId) {
+
+        Log.d("GENERATION ID", String.valueOf(generationId));
     }
 }

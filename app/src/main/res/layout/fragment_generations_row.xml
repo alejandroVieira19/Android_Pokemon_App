@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="generationCard"
+            type="com.pokemon_app.presentation.adapter.GenerationCardAdapter" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context=".presentation.ui.view.list.generations_row"
+        tools:background="@color/my_color_light">
+
+        <TextView
+            android:id="@+id/tvGeneration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textStyle="italic"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:clickable="true"
+
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/rounded_border"
+            android:padding="8dp"
+            android:layout_margin="10dp"
+            tools:text="Nºgeneration"/>
+
+    </LinearLayout>
+
+</layout>
