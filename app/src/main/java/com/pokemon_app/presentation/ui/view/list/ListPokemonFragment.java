@@ -58,7 +58,6 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
-        bundle = new Bundle();
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
     }
 
@@ -155,6 +154,10 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
 
     @Override
     public void onClick(Pokemon pokemon) {
+
+        // TODO -----> TESTAR AMANHÃ
+        bundle = new Bundle();
+
         bundle.putSerializable(getContext().getString(R.string.pokemon_key), pokemon);
 
         detailPokemonFragment.setArguments(bundle);
