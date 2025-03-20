@@ -30,10 +30,20 @@ public class PokemonEntity {
     @ColumnInfo(name = "pokeFavorite")
     private boolean isPokemonFavorite;
 
+    @ColumnInfo(name = "pokeAttack")
+    private int pokemonAttack;
+    @ColumnInfo(name = "pokeDefense")
+    private int pokemonDefense;
+    @ColumnInfo(name = "pokeHP")
+    private int pokemonHP;
+    @ColumnInfo(name = "pokeSpeed")
+    private int pokemonSpeed;
 
+    // Construtor com novos atributos
     public PokemonEntity(int pokemonId, String pokemonName, double pokemonHeight, double pokemonWeight,
                          List<String> pokemonType, String pokemonDetailImageUrlBackground,
-                         String pokemonImageUrlCard, List<String> pokemonMovesList, boolean isPokemonFavorite) {
+                         String pokemonImageUrlCard, List<String> pokemonMovesList, boolean isPokemonFavorite,
+                         int pokemonAttack, int pokemonDefense, int pokemonHP, int pokemonSpeed) {
         this.pokemonId = pokemonId;
         this.pokemonName = pokemonName;
         this.pokemonHeight = pokemonHeight;
@@ -43,6 +53,43 @@ public class PokemonEntity {
         this.pokemonImageUrlCard = pokemonImageUrlCard;
         this.pokemonMovesList = pokemonMovesList;
         this.isPokemonFavorite = isPokemonFavorite;
+        this.pokemonAttack = pokemonAttack;
+        this.pokemonDefense = pokemonDefense;
+        this.pokemonHP = pokemonHP;
+        this.pokemonSpeed = pokemonSpeed;
+    }
+
+    // Getters e Setters para os novos atributos
+    public int getPokemonAttack() {
+        return pokemonAttack;
+    }
+
+    public void setPokemonAttack(int pokemonAttack) {
+        this.pokemonAttack = pokemonAttack;
+    }
+
+    public int getPokemonDefense() {
+        return pokemonDefense;
+    }
+
+    public void setPokemonDefense(int pokemonDefense) {
+        this.pokemonDefense = pokemonDefense;
+    }
+
+    public int getPokemonHP() {
+        return pokemonHP;
+    }
+
+    public void setPokemonHP(int pokemonHP) {
+        this.pokemonHP = pokemonHP;
+    }
+
+    public int getPokemonSpeed() {
+        return pokemonSpeed;
+    }
+
+    public void setPokemonSpeed(int pokemonSpeed) {
+        this.pokemonSpeed = pokemonSpeed;
     }
 
     public boolean isPokemonFavorite() {

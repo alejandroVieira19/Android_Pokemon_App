@@ -4,6 +4,8 @@ import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.domain.service.ConnectivityObserver
 
 
+import java.io.Serializable
+
 sealed class GenericAction {
 
     sealed class PokemonAction {
@@ -16,6 +18,7 @@ sealed class GenericAction {
 
     sealed class DetailPokemonAction {
         data class PokemonDetail(val pokemon: Pokemon) : GenericAction()
+        data class PokemonDetailBackgroundColor(val pokemon: Pokemon): GenericAction()
     }
 
     sealed class FavoritePokemonAction {
@@ -40,14 +43,29 @@ sealed class GenericStates {
 
     data class SearchPokemons(var filteredPokemons: List<Pokemon> = emptyList()): GenericStates()
 
+
     data class PokemonDetail(
+
         val pokemonTypesImage : List<Int> ? = emptyList(),
         val pokemonTypeText: String ? = null,
+
+        val pokemonTextColor: Int,
+
         val pokemonBackgroundColor: Int ? = 0,
         val pokemonWeight: String ? = null,
         val pokemonHeight: String?= null,
-        val pokemonMovesList : List<String>?= null
+
+
+        val pokemonMovesList : List<String>?= null,
+
+        val pokemonAttack: Int,
+        val pokemonDefense:Int,
+        val pokemonHP: Int,
+        val pokemonSpeed:Int
+
         ) : GenericStates()
+
+
 }
 
 enum class PokeDbEnum {
