@@ -36,6 +36,7 @@ import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
 import com.pokemon_app.presentation.ui.view.favorite.MyFavoritesPokemonFragment;
 import com.pokemon_app.presentation.ui.view.intro.PokemonIntroductionScreen;
 import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
+import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
@@ -46,7 +47,7 @@ import java.util.List;
 
 public class ListPokemonFragment extends GenericFragment implements PokeCardAdapter.OnPokemonCardClicked, GenerationCardAdapter.OnGenerationClicked{
     private PokeCardAdapter pokeCardAdapter;
-    private GenericPokemonViewModel pokemonViewModel;
+    private ListPokemonViewModel pokemonViewModel;
     private SearchView searchBar;
     private TextView tvNoPokemonFound, tvLoadingData;
     private LottieAnimationView progressBar;
@@ -77,7 +78,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
-        pokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
+        pokemonViewModel = new ViewModelProvider(requireActivity()).get(ListPokemonViewModel.class);
     }
 
     @Override
@@ -101,6 +102,8 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
                 GenericStates.ListPokemons listState = (GenericStates.ListPokemons) state;
 
                 pokemonList = listState.getPokemons();
+
+                Log.d("LIST IS", pokemonList.toString());
 
                 showPokemonsList(listState.getPokemons(), listState.getError());
 
@@ -247,7 +250,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     @Override
     public void onClick(int generationId) {
-
         Log.d("GENERATION ID", String.valueOf(generationId));
+        pokemonViewModel.interaction(new GenericAction.ListPokemonAction.PokemonListByChosenGeneration(generationId));
     }
 }

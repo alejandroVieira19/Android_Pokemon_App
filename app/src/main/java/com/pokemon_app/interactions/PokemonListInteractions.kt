@@ -18,7 +18,11 @@ sealed class GenericAction {
 
     sealed class DetailPokemonAction {
         data class PokemonDetail(val pokemon: Pokemon) : GenericAction()
-        data class PokemonDetailBackgroundColor(val pokemon: Pokemon): GenericAction()
+
+    }
+
+    sealed class ListPokemonAction {
+        data class PokemonListByChosenGeneration(val genNumber: Int) : GenericAction()
     }
 
     sealed class FavoritePokemonAction {

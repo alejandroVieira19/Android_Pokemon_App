@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.pokemon_app.data.model.PokemonDetailResponse;
+import com.pokemon_app.data.model.PokemonGenerationResponse
 import com.pokemon_app.data.model.PokemonResponse;
 import com.pokemon_app.data.network.PokeApiService;
 import com.pokemon_app.domain.repository.IPokemonRepository;
@@ -30,6 +31,14 @@ class PokemonRepository @Inject constructor(
         }
     }
 
+    override suspend fun retrievePokemonByName(name:String) : PokemonDetailResponse {
+        return try {
+            val response = pokeApiService.getPokemonDetails(name);
+            return response
+        } catch (e: Exception) {
+            throw Exception("Error getting pokemon list by generation ${e.message}")
+        }
+    }
 
     override suspend fun retrievePokemonDetails(url: String): PokemonDetailResponse {
         return try {
@@ -37,6 +46,15 @@ class PokemonRepository @Inject constructor(
             return response
         } catch (e: Exception) {
             throw Exception("Error getting pokemon list by generation ${e.message}")
+        }
+    }
+
+    override suspend fun retrievePokemonsByGeneration(id:Int): PokemonGenerationResponse {
+        return try {
+            val response = pokeApiService.getPokemonByGeneration(id);
+            return response
+        } catch (e: Exception) {
+            throw Exception("Error getting pokemon list by his generation ${e.message}")
         }
     }
 }

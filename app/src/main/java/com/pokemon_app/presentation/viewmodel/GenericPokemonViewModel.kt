@@ -30,7 +30,7 @@ open class GenericPokemonViewModel @Inject constructor(
 
     protected val _state = MutableLiveData<GenericStates>()
 
-    private val _pokemonsList = mutableListOf<Pokemon>()
+    protected val _pokemonsList = mutableListOf<Pokemon>()
 
     val state: LiveData<GenericStates> get() = _state
 
