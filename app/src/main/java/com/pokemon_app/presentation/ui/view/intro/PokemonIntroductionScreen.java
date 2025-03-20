@@ -20,6 +20,7 @@ import com.pokemon_app.databinding.FragmentPokemonIntroScreenBinding;
 import com.pokemon_app.domain.service.ConnectivityObserver;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
+import com.pokemon_app.presentation.ui.view.GenericFragment;
 import com.pokemon_app.presentation.ui.view.list.ListPokemonFragment;
 import com.pokemon_app.presentation.ui.view.favorite.MyFavoritesPokemonFragment;
 import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
@@ -36,7 +37,7 @@ import com.pokemon_app.utils.PokemonAlertDialogUtils;
  * Ao clicar em cada um, ele substitui o fragmento atual com novos fragmentos.
  */
 
-public class PokemonIntroductionScreen extends Fragment {
+public class PokemonIntroductionScreen extends GenericFragment {
     private FragmentPokemonIntroScreenBinding binding;
     FragmentHelper fragmentHelper;
 
@@ -67,8 +68,6 @@ public class PokemonIntroductionScreen extends Fragment {
 
         genericPokemonViewModel = new ViewModelProvider(requireActivity()).get(GenericPokemonViewModel.class);
 
-
-
         return binding.getRoot();
     }
 
@@ -77,6 +76,7 @@ public class PokemonIntroductionScreen extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         genericPokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
             if (state instanceof GenericStates.NetworkConnection) {
+
                 checkAppNetworkConnectionState(((GenericStates.NetworkConnection) state).getStatus());
             }
         });
@@ -84,7 +84,16 @@ public class PokemonIntroductionScreen extends Fragment {
     }
 
     private void checkAppNetworkConnectionState(ConnectivityObserver.NetworkStatus status) {
-        if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
+        checkAppNetworkConnectionState(status, null);
+    }
+
+    private void checkAppNetworkConnectionState(ConnectivityObserver.NetworkStatus status, Boolean noData) {
+
+        if(status.equals(ConnectivityObserver.NetworkStatus.Lost)
+                || status.equals(ConnectivityObserver.NetworkStatus.Unavailable)
+                || status.equals(ConnectivityObserver.NetworkStatus.Losing)
+                || (noData != null) && noData
+        ) {
             PokemonAlertDialogUtils.showMessageAlert(getContext(), getContext().getString(R.string.connection_lost_message));
             setVisibilityInGetStartedBtn(View.GONE);
         } else {
@@ -100,6 +109,16 @@ public class PokemonIntroductionScreen extends Fragment {
         } else {
             binding.tvMode.setText(R.string.offline);
             binding.tvMode.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOffline)); // Obtendo a cor diretamente
+        }
+    }
+
+    @Override
+    public void onFragmentDataReceive(@NonNull Bundle data) {
+        super.onFragmentDataReceive(data);
+        if(data.containsKey(FragmentsTags.ARG_POKEMON_LIST_EMPTY)) {
+            Boolean noData = data.getBoolean(FragmentsTags.ARG_POKEMON_LIST_EMPTY);
+
+            checkAppNetworkConnectionState(null, noData);
         }
     }
 

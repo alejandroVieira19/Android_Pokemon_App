@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.google.gson.Gson
 import com.pokemon_app.R
@@ -44,26 +45,26 @@ class PokemonStatsDetailedFragment : Fragment() {
 
         binding.apply {
                 // HP
-                hp.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
-                pokemonHpNumber.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
+                hp.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+                pokemonHpNumber.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
                 pokemonHpNumber.text = _pokemonDetailState?.pokemonHP.toString()
                 progressBarHP.progress = _pokemonDetailState!!.pokemonHP
 
                 // Ataque
-                attack.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
-                 pokemonAttackNumber.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
+                attack.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+                 pokemonAttackNumber.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
                 pokemonAttackNumber.text = _pokemonDetailState?.pokemonAttack.toString()
                 favoritesProgressAttack.progress = _pokemonDetailState!!.pokemonAttack
 
                 // Defesa
-                defense.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
-                pokemonDefenseNumber.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
+                defense.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+                pokemonDefenseNumber.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
                 pokemonDefenseNumber.text = _pokemonDetailState?.pokemonDefense.toString()
                 favoritesProgressDefense.progress = _pokemonDetailState!!.pokemonDefense
 
                 // Velocidade
-                speed.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
-                 pokemonSpeedNumber.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
+                speed.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+                 pokemonSpeedNumber.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
                 pokemonSpeedNumber.text = _pokemonDetailState?.pokemonSpeed.toString()
                 favoritesProgressSpeed.progress = _pokemonDetailState!!.pokemonSpeed
 

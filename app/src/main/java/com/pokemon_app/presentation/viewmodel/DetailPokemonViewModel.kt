@@ -50,6 +50,7 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     }
 
   private fun Pokemon.getTextColorForPokemon(type:String?): Int {
+
       val backgroundColor = type?.let { getColorForPokemonByType(it) }
 
       return getTextColorByPokemonTypeColor(backgroundColor)

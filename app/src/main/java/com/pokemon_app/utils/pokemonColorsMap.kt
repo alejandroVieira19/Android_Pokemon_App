@@ -58,7 +58,7 @@ fun getPokemonDetailTypeImage(types:List<String>) : List<Int> {
 
  fun getTextColorByPokemonTypeColor(backgroundColor: String?): Int {
      return when(backgroundColor) {
-         colours["ice"], colours["electric"] -> Color.parseColor("#000000")
-         else -> Color.parseColor("#FFFFFFFF")
+         colours["ice"], colours["electric"] -> R.color.black_1
+         else -> R.color.white
      }
  }

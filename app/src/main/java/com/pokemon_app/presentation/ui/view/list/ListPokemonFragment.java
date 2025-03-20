@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +20,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.pokemon_app.MainActivity;
 import com.pokemon_app.R;
 import com.pokemon_app.domain.model.Pokemon;
+import com.pokemon_app.domain.service.ConnectivityObserver;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
+import com.pokemon_app.presentation.ui.view.GenericFragment;
 import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
+import com.pokemon_app.presentation.ui.view.favorite.MyFavoritesPokemonFragment;
+import com.pokemon_app.presentation.ui.view.intro.PokemonIntroductionScreen;
 import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
+import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnPokemonCardClicked {
+public class ListPokemonFragment extends GenericFragment implements PokeCardAdapter.OnPokemonCardClicked {
     private PokeCardAdapter pokeCardAdapter;
     private GenericPokemonViewModel pokemonViewModel;
     private SearchView searchBar;
@@ -41,7 +49,9 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
     private RecyclerView recyclerView;
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;
-    private Bundle bundle;
+
+    List<Pokemon> pokemonList;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,23 +85,55 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
 
     private void setPokemonLifeObserver() {
         pokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
-
             if (state instanceof GenericStates.ShowLoading) {
                 showLoading(((GenericStates.ShowLoading) state).isLoading());
 
             } else if (state instanceof GenericStates.ListPokemons) {
                 GenericStates.ListPokemons listState = (GenericStates.ListPokemons) state;
 
+                pokemonList = listState.getPokemons();
+
                 showPokemonsList(listState.getPokemons(), listState.getError());
 
             } else if (state instanceof GenericStates.SearchPokemons) {
                 updateSearchResult(((GenericStates.SearchPokemons) state).getFilteredPokemons());
-            }
 
+            } else if (state instanceof GenericStates.NetworkConnection) {
+                updateNetworkLostConnectionTest(((GenericStates.NetworkConnection) state).getStatus());
+            }
         });
 
         // Iniciar carregamento dos pokémons
-        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(30));
+        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(50));
+    }
+
+    private void updateNetworkLostConnectionTest(ConnectivityObserver.NetworkStatus status) {
+        if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
+            if(pokemonList == null) {
+
+                PokemonAlertDialogUtils.ConfirmationCallback callback = new PokemonAlertDialogUtils.ConfirmationCallback() {
+                    @Override
+                    public void onConfirm() {
+                        Bundle bundle = new Bundle();
+
+                        bundle.putBoolean(FragmentsTags.ARG_POKEMON_LIST_EMPTY,true);
+
+                        MainActivity activity = (MainActivity) getActivity();
+
+                        activity.sendDataToFragment(FragmentsTags.TAG_FRAGMENTS_INTRO, bundle);
+
+                       fragmentHelper.popStackBack(FragmentsTags.TAG_FRAGMENT_LIST);
+                    }
+                };
+                PokemonAlertDialogUtils.showAlertDialog(getString(R.string.poke_list_connection_lost_error), callback, getContext());
+            } else {
+                PokemonAlertDialogUtils.showMessageAlert(getContext(), getString(R.string.poke_list_connection_lost));
+            }
+        }
+    }
+    @Override
+    public void onFragmentDataReceive(@NonNull Bundle data) {
+        super.onFragmentDataReceive(data);
     }
 
     private void showLoading(boolean isLoading) {
@@ -156,7 +198,7 @@ public class ListPokemonFragment extends Fragment implements PokeCardAdapter.OnP
     public void onClick(Pokemon pokemon) {
 
         // TODO -----> TESTAR AMANHÃ
-        bundle = new Bundle();
+       Bundle bundle = new Bundle();
 
         bundle.putSerializable(getContext().getString(R.string.pokemon_key), pokemon);
 

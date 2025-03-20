@@ -167,11 +167,10 @@ public class DetailPokemonFragment extends Fragment {
     }
 
     private void setPokemonFragmentTextColor(Integer pokemonTextColor) {
-        Log.d("FRAG", pokemonTextColor.toString());
-        binding.tvPokemonName.setTextColor(pokemonTextColor);
-        binding.textAboutMe.setTextColor(pokemonTextColor);
-        binding.movesBtn.setTextColor(pokemonTextColor);
-        binding.statsBtn.setTextColor(pokemonTextColor);
+        binding.tvPokemonName.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
+        binding.textAboutMe.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
+        binding.movesBtn.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
+        binding.statsBtn.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
     }
 
     private void setPokemonName(String pokemonName) {

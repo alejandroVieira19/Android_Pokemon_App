@@ -144,6 +144,7 @@ open class GenericPokemonViewModel @Inject constructor(
             _state.value = GenericStates.ShowLoading(true)
             viewModelScope.launch {
                 try {
+                    delay(3000)
                     val result = pokemonService.getAllPokemons(limit)
                     _state.value = GenericStates.ListPokemons(pokemons = result)
                     _pokemonsList.addAll(result)

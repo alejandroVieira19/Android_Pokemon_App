@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -44,9 +45,13 @@ class AboutMeDetailedPokemonFragment : Fragment() {
     private fun updateAboutMeUI() {
         binding.apply {
 
-            tvDetailType.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
-            tvDetailType.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
-            tvDetailType.setTextColor(_pokemonDetailState?.pokemonTextColor!!)
+            tvHeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+            tvWeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+            tvType.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+
+            tvDetailPokemonHeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+            tvDetailPokemonWeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+            tvDetailType.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
 
             weight = _pokemonDetailState?.pokemonWeight
             height = _pokemonDetailState?.pokemonHeight
