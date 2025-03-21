@@ -24,7 +24,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.pokemon_app.MainActivity;
 import com.pokemon_app.R;
 import com.pokemon_app.domain.model.Generation;
-import com.pokemon_app.domain.model.GenerationRepository;
+
 import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.domain.service.ConnectivityObserver;
 import com.pokemon_app.interactions.GenericAction;
@@ -33,15 +33,13 @@ import com.pokemon_app.presentation.adapter.GenerationCardAdapter;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.ui.view.GenericFragment;
 import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
-import com.pokemon_app.presentation.ui.view.favorite.MyFavoritesPokemonFragment;
-import com.pokemon_app.presentation.ui.view.intro.PokemonIntroductionScreen;
-import com.pokemon_app.presentation.viewmodel.GenericPokemonViewModel;
 import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -102,8 +100,6 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
                 GenericStates.ListPokemons listState = (GenericStates.ListPokemons) state;
 
                 pokemonList = listState.getPokemons();
-
-                Log.d("LIST IS", pokemonList.toString());
 
                 showPokemonsList(listState.getPokemons(), listState.getError());
 
@@ -178,7 +174,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     private void setGenerationsCards() {
 
-        List<Generation> generations = GenerationRepository.INSTANCE.getGenerations();
+        List<Generation> generations = Arrays.asList(Generation.values());
 
         generationRecyclerView.setHasFixedSize(true);
 
@@ -228,8 +224,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     @Override
     public void onClick(Pokemon pokemon) {
 
-        // TODO -----> TESTAR AMANHÃ
-       Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle();
 
         bundle.putSerializable(getContext().getString(R.string.pokemon_key), pokemon);
 
@@ -250,7 +245,6 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     @Override
     public void onClick(int generationId) {
-        Log.d("GENERATION ID", String.valueOf(generationId));
         pokemonViewModel.interaction(new GenericAction.ListPokemonAction.PokemonListByChosenGeneration(generationId));
     }
 }

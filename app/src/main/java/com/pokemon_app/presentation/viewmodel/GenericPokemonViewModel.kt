@@ -159,7 +159,4 @@ open class GenericPokemonViewModel @Inject constructor(
         }
     }
 
-    fun getSelectedPokemon(pokemonName: String): Pokemon? {
-        return _pokemonsList.find { it.pokemonName.equals(pokemonName, ignoreCase = true) }
-    }
 }

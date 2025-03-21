@@ -25,10 +25,7 @@ class ListPokemonViewModel @Inject constructor(
     }
 
     private fun loadPokemonListByGeneration(genNumber: Int) {
-        Log.e("YO", "1")
-        Log.e("YO", _pokemonsList.size.toString())
-
-            genericStateLoading(true)
+        genericStateLoading(true)
             viewModelScope.launch {
                 try{
 

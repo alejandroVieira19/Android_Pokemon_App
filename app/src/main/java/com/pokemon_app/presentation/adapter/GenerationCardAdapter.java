@@ -48,12 +48,12 @@ public class GenerationCardAdapter extends RecyclerView.Adapter<GenerationCardAd
        }
 
        public void bind(Generation generation) {
-        tvGeneration.setText(generation.getGeneration());
+        tvGeneration.setText(generation.getTitle());
 
         tvGeneration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(generation.getGenerationNumber());
+                listener.onClick(generation.getNumber());
             }
         });
 

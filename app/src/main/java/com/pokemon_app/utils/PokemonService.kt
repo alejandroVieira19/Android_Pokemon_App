@@ -59,25 +59,14 @@ class PokemonService @Inject constructor(
 
     private suspend fun createPokemonObjectsFromChosenGeneration(id: Int) {
 
-        Log.e("YO", allPokemonsList.size.toString())
-
         allPokemonsList.clear()
-
-        Log.e("YO", allPokemonsList.size.toString())
-
         try {
             val pokemonGenerationResponse = pokemonRepository.retrievePokemonsByGeneration(id)
 
-            Log.e("YO", "2")
-
-            pokemonGenerationResponse?.pokemon_Species?.forEach{
-                specie ->
-
-                Log.e("YO", "3")
+            pokemonGenerationResponse?.pokemon_Species?.forEach{ specie ->
 
                 val pokemonDetailResponse = pokemonRepository.retrievePokemonByName(specie.name!!)
 
-                Log.d("POKEMON_RESPONSE", pokemonDetailResponse.toString())
 
                 pokemonDetailResponse?.let {
                     val pokemon = PokeMapper.mapToDomain(it)

@@ -79,12 +79,9 @@ public class MainActivity extends AppCompatActivity implements FragmentsMediator
     @Override
     public void sendDataToFragment(@NonNull String fragmentTag, @NonNull Bundle data) {
 
-        Log.d("HELLO", "HELLO");
-
-      Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
+        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
 
       if(fragment instanceof GenericFragment) {
-          Log.d("HELLO", "HELLO1");
           ((GenericFragment) fragment).onFragmentDataReceive(bundle);
       }
     }

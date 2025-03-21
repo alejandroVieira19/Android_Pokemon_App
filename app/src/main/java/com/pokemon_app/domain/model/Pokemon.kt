@@ -21,16 +21,4 @@ data class Pokemon(
     val pokemonSpeed:Int
 ): Serializable
 
-fun GenericStates.PokemonDetail.toString1(): String{
-    return  Gson().toJson(this, GenericStates.PokemonDetail::class.java)
-}
 
-/*
-fun GenericStates.PokemonDetail.toString(): GenericStates.PokemonDetail{
-    return Gson().fromJson(stringOneClick, GenericStates.PokemonDetail::class.java)}
-}
-*/
-
-
-
-// return Gson().fromJson(stringOneClick, OneClickContractData::class.java)}
