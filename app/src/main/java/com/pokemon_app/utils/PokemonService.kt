@@ -7,33 +7,32 @@ import com.pokemon_app.domain.model.mapper.PokeMapper
 import com.pokemon_app.domain.repository.IPokemonRepository
 import javax.inject.Inject
 
-class PokemonService @Inject constructor(
-    private val pokemonRepository: IPokemonRepository
-) {
+class PokemonService @Inject constructor(private val pokemonRepository: IPokemonRepository) {
 
     private val allPokemonsList = mutableListOf<Pokemon>()
 
-    private suspend fun getAllPokemonByGeneration(limit: Int = 151): PokemonResponse? {
+    private suspend fun getAllPokemonByGeneration(limit: Int, offset: Int): PokemonResponse? {
         try {
-            return pokemonRepository.retrievePokemonList(limit)
+            return pokemonRepository.retrievePokemonList(limit, offset )
         } catch (e: Exception) {
             Log.e("Error in getAllPokemonByGeneration", e.message.toString())
         }
         return null
     }
 
-
-    private suspend fun createPokemonObjects(limit: Int = 151) {
+    private suspend fun createPokemonObjects(limit: Int, offset: Int) {
         try {
 
-            val allPokemons = getAllPokemonByGeneration(limit)
+            allPokemonsList.clear()
+
+            val allPokemons = getAllPokemonByGeneration(limit, offset)
 
             allPokemons?.results?.forEach { pokemonSummary ->
 
                 val pokemonDetailResponse = pokemonRepository.retrievePokemonDetails(pokemonSummary.url!!)
 
                 pokemonDetailResponse?.let { val pokemon = PokeMapper.mapToDomain(it)
-                    Log.d("Pokemon", pokemon.pokemonType.toString())
+                    Log.d("Pokemon", pokemon.pokemonName.toString())
                     allPokemonsList.add(pokemon)
                 }
             }
@@ -43,23 +42,21 @@ class PokemonService @Inject constructor(
         }
     }
 
-   suspend fun getAllPokemons(limit: Int = 151): List<Pokemon> {
-        createPokemonObjects(limit)
+   suspend fun getAllPokemons(limit: Int, offset: Int): List<Pokemon> {
+        createPokemonObjects(limit, offset)
        return allPokemonsList;
     }
 
-    suspend fun getPokemonByChosenGeneration(id:Int): List<Pokemon> {
+    suspend fun getPokemonByChosenGeneration(id:Int, limit:Int, offset: Int): List<Pokemon> {
 
-
-
-        createPokemonObjectsFromChosenGeneration(id)
+        createPokemonObjectsFromChosenGeneration(id, limit, offset)
 
         return allPokemonsList;
     }
 
-    private suspend fun createPokemonObjectsFromChosenGeneration(id: Int) {
-
+    private suspend fun createPokemonObjectsFromChosenGeneration(id: Int, limit: Int, offset: Int) {
         allPokemonsList.clear()
+
         try {
             val pokemonGenerationResponse = pokemonRepository.retrievePokemonsByGeneration(id)
 

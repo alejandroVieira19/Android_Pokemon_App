@@ -34,6 +34,7 @@ import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.ui.view.GenericFragment;
 import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
 import com.pokemon_app.presentation.viewmodel.ListPokemonViewModel;
+import com.pokemon_app.utils.Config;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
@@ -89,7 +90,24 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (!recyclerView.canScrollVertically(1)) {
+
+                    if (pokemonList != null && pokemonList.size() < Config.FIRST_GENERATION_SIZE) {
+                        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(Config.FIRST_GENERATION_SIZE));
+                    }
+                }
+            }
+        });
     }
+
+
 
     private void setPokemonLifeObserver() {
         pokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
@@ -100,6 +118,8 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
                 GenericStates.ListPokemons listState = (GenericStates.ListPokemons) state;
 
                 pokemonList = listState.getPokemons();
+
+                Log.d("SIZE IS1", String.valueOf(pokemonList.size()));
 
                 showPokemonsList(listState.getPokemons(), listState.getError());
 
@@ -112,7 +132,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         });
 
         // Iniciar carregamento dos pokémons
-        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(50));
+        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(Config.FIRST_GENERATION_SIZE));
     }
 
     private void updateNetworkLostConnectionTest(ConnectivityObserver.NetworkStatus status) {

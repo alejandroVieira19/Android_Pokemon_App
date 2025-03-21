@@ -22,9 +22,9 @@ class PokemonRepository @Inject constructor(
 ) : IPokemonRepository {
 
 
-    override suspend fun retrievePokemonList(limit: Int): PokemonResponse {
+    override suspend fun retrievePokemonList(limit: Int, offset:Int): PokemonResponse {
         return try {
-            val response = pokeApiService.getPokemonList(limit);
+            val response = pokeApiService.getPokemonList(limit,offset);
             return response
         } catch (e: Exception) {
             throw Exception("Error getting pokemon list by generation ${e.message}")

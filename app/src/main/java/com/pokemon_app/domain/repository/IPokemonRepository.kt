@@ -6,7 +6,7 @@ import com.pokemon_app.data.model.PokemonResponse;
 
 interface IPokemonRepository {
     // Método para pegar a lista de Pokémons
-    suspend fun retrievePokemonList(limit: Int = 151): PokemonResponse
+    suspend fun retrievePokemonList(limit: Int, offset: Int): PokemonResponse
 
 
     // Método para pegar os detalhes de um Pokémon específico

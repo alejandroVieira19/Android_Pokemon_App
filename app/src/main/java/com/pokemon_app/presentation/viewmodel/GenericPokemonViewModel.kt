@@ -1,6 +1,7 @@
 package com.pokemon_app.presentation.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,10 @@ open class GenericPokemonViewModel @Inject constructor(
     protected val _state = MutableLiveData<GenericStates>()
 
     protected val _pokemonsList = mutableListOf<Pokemon>()
+
+    protected var _pokemon_offset : Int = 0
+
+    protected val _batch_size : Int = 20
 
     val state: LiveData<GenericStates> get() = _state
 
@@ -140,14 +145,34 @@ open class GenericPokemonViewModel @Inject constructor(
     }
 
     private fun loadPokemons(limit: Int) {
-        if(_pokemonsList.isEmpty()) {
+        val remainingPokemons = limit - _pokemon_offset
+
+        // Se ainda houver Pokémon para buscar
+        if (_pokemonsList.isEmpty() || _pokemon_offset < limit) {
             _state.value = GenericStates.ShowLoading(true)
+
             viewModelScope.launch {
                 try {
-                    delay(3000)
-                    val result = pokemonService.getAllPokemons(limit)
+                    delay(2000)
+
+                    val batchSize = if (remainingPokemons < _batch_size) remainingPokemons else _batch_size
+
+                    val result = pokemonService.getAllPokemons(batchSize, _pokemon_offset)
+
                     _state.value = GenericStates.ListPokemons(pokemons = result)
+
+                    _pokemon_offset += batchSize
+
                     _pokemonsList.addAll(result)
+
+                    Log.d("PokemonList", _pokemonsList.size.toString())
+
+                    _pokemonsList.forEach { pokemon ->
+                        Log.d("Pokemon Name", pokemon.pokemonName)  // Aqui `pokemon.name` assume que `name` é a propriedade do Pokémon que contém o nome
+                    }
+
+                    delay(1000)
+
                 } catch (e: Exception) {
                     _state.value = GenericStates.ListPokemons(error = e.message)
                 } finally {
@@ -155,8 +180,8 @@ open class GenericPokemonViewModel @Inject constructor(
                 }
             }
         } else {
+            Log.d("ELSE", _pokemonsList.size.toString())
             _state.value = GenericStates.ListPokemons(pokemons = _pokemonsList)
         }
     }
-
 }
