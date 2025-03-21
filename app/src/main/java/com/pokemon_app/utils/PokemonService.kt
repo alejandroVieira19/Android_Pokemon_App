@@ -48,5 +48,36 @@ class PokemonService @Inject constructor(
        return allPokemonsList;
     }
 
+    suspend fun getPokemonByChosenGeneration(id:Int): List<Pokemon> {
+
+
+
+        createPokemonObjectsFromChosenGeneration(id)
+
+        return allPokemonsList;
+    }
+
+    private suspend fun createPokemonObjectsFromChosenGeneration(id: Int) {
+
+        allPokemonsList.clear()
+        try {
+            val pokemonGenerationResponse = pokemonRepository.retrievePokemonsByGeneration(id)
+
+            pokemonGenerationResponse?.pokemon_Species?.forEach{ specie ->
+
+                val pokemonDetailResponse = pokemonRepository.retrievePokemonByName(specie.name!!)
+
+
+                pokemonDetailResponse?.let {
+                    val pokemon = PokeMapper.mapToDomain(it)
+                    allPokemonsList.add(pokemon)
+                }
+            }
+
+        }catch (e:Exception) {
+            Log.e("Error in getPokemonByChosenGeneration", e.message.toString())
+        }
+
+    }
 
 }

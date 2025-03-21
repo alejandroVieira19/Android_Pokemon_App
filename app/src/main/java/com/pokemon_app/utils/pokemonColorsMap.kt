@@ -1,6 +1,8 @@
 
 @file:JvmName("PokemonUtils")
 package com.pokemon_app.utils
+import android.graphics.Color
+import android.util.Log
 import com.pokemon_app.R
 
 val colours = mapOf(
@@ -53,3 +55,10 @@ fun getColorForPokemonByType(type: String) : String {
 fun getPokemonDetailTypeImage(types:List<String>) : List<Int> {
     return types.mapNotNull { type -> typeIcons[type.lowercase()] }
 }
+
+ fun getTextColorByPokemonTypeColor(backgroundColor: String?): Int {
+     return when(backgroundColor) {
+         colours["ice"], colours["electric"] -> R.color.black_1
+         else -> R.color.white
+     }
+ }

@@ -21,8 +21,12 @@ object PokeMapper {
             pokemonDetailImageUrlBackground = pokemonDetailResponse.sprites_images.other?.officialArtwork?.frontDefault ?: "error_url",
             pokemonImageUrlCard = pokemonDetailResponse.sprites_images.other?.home?.frontDefault ?: "error_url",
             pokemonMovesList = pokeMoves,
-            isPokemonFavorite = false
-        )
+            isPokemonFavorite = false,
+            pokemonHP = pokemonDetailResponse.stats.getOrNull(0)?.base_stat ?: 0,
+            pokemonDefense = pokemonDetailResponse.stats.getOrNull(1)?.base_stat ?: 0,
+            pokemonSpeed = pokemonDetailResponse.stats.getOrNull(2)?.base_stat ?: 0,
+            pokemonAttack = pokemonDetailResponse.stats.getOrNull(5)?.base_stat ?: 0
+            )
     }
 
     fun mapFromDomainToEntity(pokemon: Pokemon): PokemonEntity {
@@ -35,7 +39,11 @@ object PokeMapper {
             pokemon.pokemonDetailImageUrlBackground,
             pokemon.pokemonImageUrlCard,
             pokemon.pokemonMovesList,
-            pokemon.isPokemonFavorite
+            pokemon.isPokemonFavorite,
+            pokemon.pokemonAttack,     // Adicionando os novos atributos
+            pokemon.pokemonDefense,
+            pokemon.pokemonHP,
+            pokemon.pokemonSpeed
         )
     }
 
@@ -49,9 +57,14 @@ object PokeMapper {
             pokemon.pokemonDetailImageUrlBackground,
             pokemon.pokemonImageUrlCard,
             pokemon.pokemonMovesList,
-            pokemon.isPokemonFavorite
+            pokemon.isPokemonFavorite,
+            pokemon.pokemonAttack,      // Adicionando os novos atributos
+            pokemon.pokemonDefense,
+            pokemon.pokemonHP,
+            pokemon.pokemonSpeed
         )
     }
+
 
     private fun retrievePokemonMovesList(moves: List<PokeMoves>): List<String> {
         return moves.mapNotNull { it.move?.name } // Removendo nulos

@@ -9,4 +9,10 @@ public class FragmentsTags {
     public static final String TAG_FRAGMENTS_POKEMON_MOVES = "TAG_FRAGMENTS_POKEMON_MOVES";
 
     public static final String TAG_FRAGMENTS_POKEMON_ABOUT_ME = "TAG_FRAGMENTS_POKEMON_ABOUT_ME";
+
+    public static final String TAG_FRAGMENTS_POKEMON_STATS = "TAG_FRAGMENTS_POKEMON_STATS";
+
+    public static final String ARG_POKEMON_DETAIL = "ARG_POKEMON_DETAIL";
+
+    public static final String ARG_POKEMON_LIST_EMPTY = "ARG_POKEMON_LIST_NOT_EMPTY";
 }

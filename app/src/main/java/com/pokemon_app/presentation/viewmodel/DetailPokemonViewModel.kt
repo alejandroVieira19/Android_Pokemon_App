@@ -7,8 +7,10 @@ import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.utils.PokemonService
+import com.pokemon_app.utils.colours
 import com.pokemon_app.utils.getColorForPokemonByType
 import com.pokemon_app.utils.getPokemonDetailTypeImage
+import com.pokemon_app.utils.getTextColorByPokemonTypeColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,19 +31,31 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
 
     private fun showPokemonDetail(pokemon: Pokemon) {
         _pokemon = pokemon
+
+        _state.value
+
         _state.value = GenericStates.PokemonDetail(
             pokemon.getPokemonTypesImage(pokemon.pokemonType),
             pokemon.concatenateTypes(pokemon.pokemonType),
+            pokemon.getTextColorForPokemon(pokemon.pokemonType.get(0)),
             pokemon.getPokemonBackgroundColor(pokemon.pokemonType.get(0)),
             pokemon.getPokemonDoubleForView(pokemon.pokemonWeight, "KG"),
             pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
-            pokemon.pokemonMovesList
+            pokemon.pokemonMovesList,
+            pokemon.pokemonAttack,
+            pokemon.pokemonDefense,
+            pokemon.pokemonHP,
+            pokemon.pokemonSpeed
         )
     }
 
-     fun refreshPokemonDetail() {
-        showPokemonDetail(_pokemon)
-    }
+  private fun Pokemon.getTextColorForPokemon(type:String?): Int {
+
+      val backgroundColor = type?.let { getColorForPokemonByType(it) }
+
+      return getTextColorByPokemonTypeColor(backgroundColor)
+  }
+
 
     private fun Pokemon.getPokemonDoubleForView(double: Double, string: String): String {
         return "$double $string"

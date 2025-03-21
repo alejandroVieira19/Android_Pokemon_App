@@ -10,7 +10,7 @@
         android:background="@color/my_color_light"
         android:orientation="vertical"
 
-        tools:context=".presentation.ui.view.MyFavoritesPokemonFragment">
+        tools:context=".presentation.ui.view.favorite.MyFavoritesPokemonFragment">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/favoritesSearchBar"

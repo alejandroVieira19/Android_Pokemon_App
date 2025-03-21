@@ -1,6 +1,7 @@
 package com.pokemon_app.data.network
 
 import com.pokemon_app.data.model.PokemonDetailResponse
+import com.pokemon_app.data.model.PokemonGenerationResponse
 import com.pokemon_app.data.model.PokemonResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,9 +15,12 @@ interface PokeApiService {
     suspend fun getPokemonList(@Query("limit") limit: Int = 151): PokemonResponse
 
     // Endpoint para pegar os detalhes de um Pokémon específico pelo ID
-    @GET("pokemon/{idOrName}")
-    suspend fun getPokemonDetails(@Path("id") id: Int): PokemonDetailResponse
+    @GET("pokemon/{id}")
+    suspend fun getPokemonDetails(@Path("id") id: String): PokemonDetailResponse
 
     @GET()
     suspend fun getPokemonByUrl(@Url url: String): PokemonDetailResponse
+
+    @GET("generation/{id}")
+    suspend fun getPokemonByGeneration(@Path("id") id: Int): PokemonGenerationResponse
 }

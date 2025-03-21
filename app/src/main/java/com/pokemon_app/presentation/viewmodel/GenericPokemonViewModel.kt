@@ -30,7 +30,7 @@ open class GenericPokemonViewModel @Inject constructor(
 
     protected val _state = MutableLiveData<GenericStates>()
 
-    private val _pokemonsList = mutableListOf<Pokemon>()
+    protected val _pokemonsList = mutableListOf<Pokemon>()
 
     val state: LiveData<GenericStates> get() = _state
 
@@ -144,6 +144,7 @@ open class GenericPokemonViewModel @Inject constructor(
             _state.value = GenericStates.ShowLoading(true)
             viewModelScope.launch {
                 try {
+                    delay(3000)
                     val result = pokemonService.getAllPokemons(limit)
                     _state.value = GenericStates.ListPokemons(pokemons = result)
                     _pokemonsList.addAll(result)
@@ -158,7 +159,4 @@ open class GenericPokemonViewModel @Inject constructor(
         }
     }
 
-    fun getSelectedPokemon(pokemonName: String): Pokemon? {
-        return _pokemonsList.find { it.pokemonName.equals(pokemonName, ignoreCase = true) }
-    }
 }

@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view
+package com.pokemon_app.presentation.ui.view.favorite
 
 import android.os.Bundle
 import android.view.Gravity
@@ -16,8 +16,8 @@ import com.pokemon_app.domain.model.Pokemon
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.presentation.adapter.PokeCardAdapter
+import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment
 import com.pokemon_app.presentation.viewmodel.FavoritesPokemonViewModel
-import com.pokemon_app.utils.Config
 import com.pokemon_app.utils.FragmentHelper
 import com.pokemon_app.utils.FragmentsTags
 import com.pokemon_app.utils.PokemonAlertDialogUtils
@@ -32,7 +32,7 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
 
     private var bundle : Bundle? = null
 
-    private var detailPokemonFragment : DetailPokemonFragment ? = null
+    private var detailPokemonFragment : DetailPokemonFragment? = null
 
     private var fragmentHelper : FragmentHelper ? = null
 
@@ -66,7 +66,8 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
         _myFavoritesPokemonViewModel = ViewModelProvider(requireActivity()).get(FavoritesPokemonViewModel::class.java)
         bundle = Bundle()
         fragmentHelper = FragmentHelper(activity?.supportFragmentManager)
-        detailPokemonFragment = DetailPokemonFragment()
+        detailPokemonFragment =
+            DetailPokemonFragment()
     }
 
     private fun setPokemonLifeObserver() {

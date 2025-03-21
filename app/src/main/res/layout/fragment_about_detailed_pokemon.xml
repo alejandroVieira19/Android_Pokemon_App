@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.ui.view.AboutMeDetailedPokemonFragment"
+    tools:context=".presentation.ui.view.detail.AboutMeDetailedPokemonFragment"
     tools:background="@color/teal_700"
     >
 
@@ -32,6 +32,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
@@ -63,6 +64,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvHeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
@@ -95,6 +97,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"

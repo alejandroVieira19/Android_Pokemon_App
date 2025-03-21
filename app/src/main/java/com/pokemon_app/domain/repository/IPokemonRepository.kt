@@ -1,6 +1,7 @@
 package com.pokemon_app.domain.repository;
 
 import com.pokemon_app.data.model.PokemonDetailResponse;
+import com.pokemon_app.data.model.PokemonGenerationResponse
 import com.pokemon_app.data.model.PokemonResponse;
 
 interface IPokemonRepository {
@@ -10,5 +11,9 @@ interface IPokemonRepository {
 
     // Método para pegar os detalhes de um Pokémon específico
     suspend fun retrievePokemonDetails(url: String): PokemonDetailResponse
+
+    suspend fun retrievePokemonsByGeneration(id: Int): PokemonGenerationResponse
+
+    suspend fun retrievePokemonByName(name:String): PokemonDetailResponse
 }
 

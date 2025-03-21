@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="black_1">#000000</color> <!-- Preto -->
+    <color name="white_1">#FFFFFF</color> <!-- Branco -->
+
     <color name="my_dark_color">#2C3930</color>
     <color name="my_dark_color_secondary">#3F4F44</color>
     <color name="my_color_brown">#A27B5C</color>

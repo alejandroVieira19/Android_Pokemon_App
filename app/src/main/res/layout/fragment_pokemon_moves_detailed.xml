@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        tools:context=".presentation.ui.view.PokemonMovesDetailedFragment">
+        tools:context=".presentation.ui.view.detail.PokemonMovesDetailedFragment">
 
 
         <androidx.recyclerview.widget.RecyclerView
