@@ -9,7 +9,7 @@ import java.io.Serializable
 sealed class GenericAction {
 
     sealed class PokemonAction {
-        data class LoadPokemons(val limit: Int = 151) : GenericAction()
+        object LoadPokemons : GenericAction()
         data class NetworkConnection(val context: Context) : GenericAction()
         data class SaveFavoritePokemon(val pokemon: Pokemon) : GenericAction()
         data class DeleteFavoritePokemon(val pokemon: Pokemon) : GenericAction()

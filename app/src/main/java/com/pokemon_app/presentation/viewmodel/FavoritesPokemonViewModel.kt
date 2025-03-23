@@ -1,5 +1,6 @@
 package com.pokemon_app.presentation.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -21,8 +22,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesPokemonViewModel @Inject constructor(private val pokemonService: PokemonService,
-                                                    private val pokemonDbRepository: PokemonDbRepository
-): GenericPokemonViewModel(pokemonService, pokemonDbRepository) {
+                                                    private val pokemonDbRepository: PokemonDbRepository,
+    private val context:Context
+): GenericPokemonViewModel(pokemonService, context, pokemonDbRepository) {
 
     override fun interaction(action: GenericAction) {
         when (action) {

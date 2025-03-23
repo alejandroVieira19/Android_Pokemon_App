@@ -53,8 +53,6 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;
 
-
-
     List<Pokemon> pokemonList;
 
 
@@ -112,7 +110,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         });
 
         // Iniciar carregamento dos pokémons
-        pokemonViewModel.interaction(new GenericAction.PokemonAction.LoadPokemons(50));
+        pokemonViewModel.interaction(GenericAction.PokemonAction.LoadPokemons.INSTANCE);
     }
 
     private void updateNetworkLostConnectionTest(ConnectivityObserver.NetworkStatus status) {
@@ -160,7 +158,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     private void showPokemonsList(List<Pokemon> pokemons, String error) {
         if ((pokemons == null || pokemons.isEmpty()) && error != null) {
-            Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            PokemonAlertDialogUtils.showMessageAlert(getContext(), error);
         } else {
             pokeCardAdapter = new PokeCardAdapter(this, new ArrayList<>(pokemons));
 

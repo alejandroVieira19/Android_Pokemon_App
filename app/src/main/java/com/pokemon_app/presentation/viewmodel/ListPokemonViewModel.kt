@@ -1,4 +1,5 @@
 package com.pokemon_app.presentation.viewmodel
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.pokemon_app.domain.model.Pokemon
@@ -13,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ListPokemonViewModel @Inject constructor(
-    private val pokemonService: PokemonService
-) : GenericPokemonViewModel(pokemonService) {
+    private val pokemonService: PokemonService, private val context : Context
+) : GenericPokemonViewModel(pokemonService, context) {
 
     override fun interaction(action: GenericAction) {
         when(action) {

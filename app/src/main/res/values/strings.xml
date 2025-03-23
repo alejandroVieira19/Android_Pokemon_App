@@ -59,4 +59,18 @@
     <string name="poke_list_connection_lost">Great news! Your Pokémon have been successfully loaded, and even if your internet takes a nap after that, you’re all set! Feel free to explore and enjoy PokeExplorer without a worry—your adventure continues offline!</string>
 
     <string name="poke_list_connection_lost_error">Oops! It looks like you lost connection, and the data could not be loaded. You will be redirected to your PokeFavorites page until the connection is restored. Hang tight!</string>
+
+
+    <string name="database_is_null_message">Database is null at the moment. Please try again and check the code</string>
+    <string name="pokemon_saved_message">Pokemon %1$s saved in database.</string>
+    <string name="pokemon_deleted_message">Pokemon %1$s deleted from database.</string>
+    <string name="error_message">Error: %1$s</string>
+    <string name="loading_message">Loading...</string>
+
+
+    <string name="unknown_pokemon_type">Unknown</string>
+    <string name="weight_label">KG</string>
+    <string name="height_label">M</string>
+
+
 </resources>

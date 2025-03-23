@@ -1,6 +1,8 @@
 package com.pokemon_app.presentation.viewmodel
 
+import android.content.Context
 import android.graphics.Color
+import com.pokemon_app.R
 import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.database.room.PokemonDB
 import com.pokemon_app.domain.model.Pokemon
@@ -16,8 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailPokemonViewModel @Inject constructor(private val pokemonService: PokemonService,
-    private val pokemonDbRepository: PokemonDbRepository) :
-    GenericPokemonViewModel(pokemonService, pokemonDbRepository) {
+    private val pokemonDbRepository: PokemonDbRepository,
+    private val context: Context
+) :
+    GenericPokemonViewModel(pokemonService, context, pokemonDbRepository) {
 
         private lateinit var _pokemon : Pokemon
 
@@ -72,9 +76,9 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     // NO MAXIMO UM POKEMON TEM 2 TIPOS
     private fun Pokemon.concatenateTypes(pokemonType: List<String?>): String {
         return if (pokemonType.size == 2) {
-            "${pokemonType[0] ?: "Unknown"} / ${pokemonType[1] ?: "Unknown"}"
+            "${pokemonType[0] ?: context.getString(R.string.unknown_pokemon_type)} / ${pokemonType[1] ?:  context.getString(R.string.unknown_pokemon_type)}"
         } else {
-            pokemonType[0] ?: "Unknown"
+            pokemonType[0] ?:  context.getString(R.string.unknown_pokemon_type)
         }
     }
 
