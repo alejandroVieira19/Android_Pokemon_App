@@ -72,7 +72,7 @@
     <string name="weight_label">KG</string>
     <string name="height_label">M</string>
 
-    <string name="loading_data">Loading data</string>
+    <string name="loading_data">Loading pokemons...</string>
 
 
 </resources>

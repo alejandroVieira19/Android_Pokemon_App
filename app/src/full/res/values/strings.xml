@@ -1,78 +1,80 @@
 <resources>
-    <string name="app_name">Pokemon_App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="content_description">content_description</string>
-    <string name="pikachu">Pikachu</string>
-    <string name="home_page_logo">home page logo</string>
-    <string name="welcome_to">Welcome to</string>
-    <string name="logo_name">PokeDemoExplorer</string>
-    <string name="get_started">get started</string>
-    <string name="my_favorites">my favorites</string>
-    <string name="intro_text">Try the demo and explore a selection of Pokémon with limited details!</string>
-    <string name="version_app">v.1.0.9</string>
-    <string name="another_image">another image</string>
-    <string name="favorite_star">favorite star</string>
-    <string name="pokemon_type_1">pokemon_type_1</string>
-    <string name="pokemon_type_2">pokemon_type_2</string>
-    <string name="pokemon_image">pokemon image</string>
-    <string name="about_me">About me</string>
-    <string name="moves">Moves</string>
-    <string name="height">Height: </string>
-    <string name="type">Type: </string>
-    <string name="weight">Weight: </string>
-    <string name="no_pokemons_found">No pokemons found.</string>
-    <string name="online">Online</string>
-    <string name="offline">Offline</string>
-    <string name="mode">Mode:</string>
-    <string name="getting_your_pokefavorites">Getting Your PokeFavorites...</string>
-    <string name="no_pokefavorites_saved_yet">No pokefavorites saved yet.</string>
 
-    <!-- From App -->
+        <string name="app_name">Pokemon_App</string>
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="hello_blank_fragment">Hello blank fragment</string>
+        <string name="content_description">content_description</string>
+        <string name="pikachu">Pikachu</string>
+        <string name="home_page_logo">home page logo</string>
+        <string name="welcome_to">Welcome to</string>
+        <string name="logo_name">PokeExplorer</string>
+        <string name="get_started">get started</string>
+        <string name="my_favorites">my favorites</string>
+        <string name="intro_text">Discover and learn about your favorite Pokémon! Explore all their details, types, abilities, and more.</string>
+        <string name="version_app">v.1.0.1</string>
+        <string name="another_image">another image</string>
+        <string name="favorite_star">favorite star</string>
+        <string name="pokemon_type_1">pokemon_type_1</string>
+        <string name="pokemon_type_2">pokemon_type_2</string>
+        <string name="pokemon_image">pokemon image</string>
+        <string name="about_me">About me</string>
+        <string name="moves">Moves</string>
+        <string name="height">Height: </string>
+        <string name="type">Type: </string>
+        <string name="weight">Weight: </string>
+        <string name="no_pokemons_found">No pokemons found.</string>
+        <string name="online">Online</string>
+        <string name="offline">Offline</string>
+        <string name="mode">Mode:</string>
+        <string name="getting_your_pokefavorites">Getting Your PokeFavorites...</string>
+        <string name="no_pokefavorites_saved_yet">No pokefavorites saved yet.</string>
 
+        <!-- From App -->
 
+        <string name="pokeapi_base_url">https://pokeapi.co/api/v2/</string>
 
-    <string name="poke_explorer_app">PokeDemoExplorer</string>
-    <string name="list_pokemon_app_name">PokeDemoList</string>
-    <string name="favorites_pokemon_app_name">PokeDemoFavorites</string>
-    <string name="detail_pokemon_app_name">PokeDemoDetail</string>
+        <string name="poke_explorer_app">PokeExplorer App</string>
+        <string name="list_pokemon_app_name">PokeList</string>
+        <string name="favorites_pokemon_app_name">PokeFavorites</string>
+        <string name="detail_pokemon_app_name">PokeDetail</string>
 
-    <!-- Chaves e mensagens -->
-    <string name="pokemon_key">POKEMON</string>
+        <!-- Chaves e mensagens -->
+        <string name="pokemon_key">POKEMON</string>
 
-    <string name="pokemon_dialog_confirm">YES</string>
-    <string name="pokemon_dialog_negative">NO</string>
-    <string name="pokemon_dialog_ok">OK</string>
+        <string name="pokemon_dialog_confirm">YES</string>
+        <string name="pokemon_dialog_negative">NO</string>
+        <string name="pokemon_dialog_ok">OK</string>
 
-    <string name="connection_lost_message">Unfortunately, your network connection has been lost. Please try reconnecting to continue using PokeExplorer.</string>
+        <string name="connection_lost_message">Unfortunately, your network connection has been lost. Please try reconnecting to continue using PokeExplorer.</string>
 
-    <string name="delete_question">Are you sure you want to delete </string>
-    <string name="save_question">Are you sure you want to save </string>
-    <string name="as_your_pokeFavorite">as your pokefavorite?</string>
+        <string name="delete_question">Are you sure you want to delete </string>
+        <string name="save_question">Are you sure you want to save </string>
+        <string name="as_your_pokeFavorite">as your pokefavorite?</string>
 
-    <string name="saving_in_db">"Saving pokemon in database"</string>
-    <string name="delete_from_db">Removing pokemon from database</string>
+        <string name="saving_in_db">"Saving pokemon in database"</string>
+        <string name="delete_from_db">Removing pokemon from database</string>
 
-    <string name="db_is_null">Database is null at the moment. Please try again and check the code</string>
-    <string name="stats">Stats</string>
+        <string name="db_is_null">Database is null at the moment. Please try again and check the code</string>
+        <string name="stats">Stats</string>
 
-    <string name="poke_list_connection_lost">Great news! Your Pokémon have been successfully loaded, and even if your internet takes a nap after that, you’re all set! Feel free to explore and enjoy PokeExplorer without a worry—your adventure continues offline!</string>
+        <string name="poke_list_connection_lost">Great news! Your Pokémon have been successfully loaded, and even if your internet takes a nap after that, you’re all set! Feel free to explore and enjoy PokeExplorer without a worry—your adventure continues offline!</string>
 
-    <string name="poke_list_connection_lost_error">Oops! It looks like you lost connection, and the data could not be loaded. You will be redirected to your PokeFavorites page until the connection is restored. Hang tight!</string>
-
-
-    <string name="database_is_null_message">Database is null at the moment. Please try again and check the code</string>
-    <string name="pokemon_saved_message">Pokemon %1$s saved in database.</string>
-    <string name="pokemon_deleted_message">Pokemon %1$s deleted from database.</string>
-    <string name="error_message">Error: %1$s</string>
-    <string name="loading_message">Loading...</string>
+        <string name="poke_list_connection_lost_error">Oops! It looks like you lost connection, and the data could not be loaded. You will be redirected to your PokeFavorites page until the connection is restored. Hang tight!</string>
 
 
-    <string name="unknown_pokemon_type">Unknown</string>
-    <string name="weight_label">KG</string>
-    <string name="height_label">M</string>
+        <string name="database_is_null_message">Database is null at the moment. Please try again and check the code</string>
+        <string name="pokemon_saved_message">Pokemon %1$s saved in database.</string>
+        <string name="pokemon_deleted_message">Pokemon %1$s deleted from database.</string>
+        <string name="error_message">Error: %1$s</string>
+        <string name="loading_message">Loading...</string>
 
-    <string name="loading_data">Loading data</string>
+
+        <string name="unknown_pokemon_type">Unknown</string>
+        <string name="weight_label">KG</string>
+        <string name="height_label">M</string>
+
+
+        <string name="loading_data">Loading data</string>
 
 
 </resources>

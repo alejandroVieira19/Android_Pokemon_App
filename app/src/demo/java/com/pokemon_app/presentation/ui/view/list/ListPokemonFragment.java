@@ -4,21 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.SearchView;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.pokemon_app.MainActivity;
@@ -43,13 +39,13 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class ListPokemonFragment extends GenericFragment implements PokeCardAdapter.OnPokemonCardClicked, GenerationCardAdapter.OnGenerationClicked{
+public class ListPokemonFragment extends GenericFragment implements PokeCardAdapter.OnPokemonCardClicked{
     private PokeCardAdapter pokeCardAdapter;
     private ListPokemonViewModel pokemonViewModel;
-    private SearchView searchBar;
-    private TextView tvNoPokemonFound, tvLoadingData;
+
+    private TextView  tvLoadingData;
     private LottieAnimationView progressBar;
-    private RecyclerView recyclerView, generationRecyclerView;
+    private RecyclerView recyclerView;
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;
 
@@ -64,13 +60,9 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     }
 
     private void initialize(View view) {
-        searchBar = view.findViewById(R.id.searchBarView);
         progressBar = view.findViewById(R.id.loading_progress);
-        tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
         tvLoadingData = view.findViewById(R.id.tvLoadingData);
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
-
-        generationRecyclerView = view.findViewById(R.id.recyclerGeneration);
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
@@ -92,6 +84,7 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     private void setPokemonLifeObserver() {
         pokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
             if (state instanceof GenericStates.ShowLoading) {
+
                 showLoading(((GenericStates.ShowLoading) state).isLoading());
 
             } else if (state instanceof GenericStates.ListPokemons) {
@@ -100,12 +93,6 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
                 pokemonList = listState.getPokemons();
 
                 showPokemonsList(listState.getPokemons(), listState.getError());
-
-            } else if (state instanceof GenericStates.SearchPokemons) {
-                updateSearchResult(((GenericStates.SearchPokemons) state).getFilteredPokemons());
-
-            } else if (state instanceof GenericStates.NetworkConnection) {
-                updateNetworkLostConnectionTest(((GenericStates.NetworkConnection) state).getStatus());
             }
         });
 
@@ -113,46 +100,16 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         pokemonViewModel.interaction(GenericAction.PokemonAction.LoadPokemons.INSTANCE);
     }
 
-    private void updateNetworkLostConnectionTest(ConnectivityObserver.NetworkStatus status) {
-        if(status.equals(ConnectivityObserver.NetworkStatus.Lost) || status.equals(ConnectivityObserver.NetworkStatus.Unavailable) || status.equals(ConnectivityObserver.NetworkStatus.Losing)) {
-            if(pokemonList == null) {
-
-                PokemonAlertDialogUtils.ConfirmationCallback callback = new PokemonAlertDialogUtils.ConfirmationCallback() {
-                    @Override
-                    public void onConfirm() {
-                        Bundle bundle = new Bundle();
-
-                        bundle.putBoolean(FragmentsTags.ARG_POKEMON_LIST_EMPTY,true);
-
-                        MainActivity activity = (MainActivity) getActivity();
-
-                        activity.sendDataToFragment(FragmentsTags.TAG_FRAGMENTS_INTRO, bundle);
-
-                       fragmentHelper.popStackBack(FragmentsTags.TAG_FRAGMENT_LIST);
-                    }
-                };
-                PokemonAlertDialogUtils.showAlertDialog(getString(R.string.poke_list_connection_lost_error), callback, getContext());
-            } else {
-                PokemonAlertDialogUtils.showMessageAlert(getContext(), getString(R.string.poke_list_connection_lost));
-            }
-        }
-    }
-    @Override
-    public void onFragmentDataReceive(@NonNull Bundle data) {
-        super.onFragmentDataReceive(data);
-    }
-
     private void showLoading(boolean isLoading) {
         if (isLoading) {
             progressBar.setVisibility(View.VISIBLE);
             tvLoadingData.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-            searchBar.setVisibility(View.GONE);
+
         } else {
             progressBar.setVisibility(View.GONE);
             tvLoadingData.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            searchBar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -161,63 +118,9 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
             PokemonAlertDialogUtils.showMessageAlert(getContext(), error);
         } else {
             pokeCardAdapter = new PokeCardAdapter(this, new ArrayList<>(pokemons));
-
             recyclerView.setAdapter(pokeCardAdapter);
-
-            setGenerationsCards();
-
-            setSuggestionsInSearchBar(pokemons);
         }
     }
-
-    private void setGenerationsCards() {
-
-        List<Generation> generations = Arrays.asList(Generation.values());
-
-        generationRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
-        generationRecyclerView.setLayoutManager(layoutManager);
-
-        GenerationCardAdapter generationCardAdapter = new GenerationCardAdapter(generations, this);
-
-        generationRecyclerView.setAdapter(generationCardAdapter);
-
-        generationRecyclerView.setVisibility(View.VISIBLE);
-
-    }
-
-    private void updateSearchResult(List<Pokemon> filteredPokemons) {
-        if (pokeCardAdapter != null) {
-            pokeCardAdapter.updateList(filteredPokemons);
-        }
-
-        if (filteredPokemons.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            tvNoPokemonFound.setVisibility(View.VISIBLE);
-        } else {
-            tvNoPokemonFound.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void setSuggestionsInSearchBar(List<Pokemon> pokemons) {
-        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                pokemonViewModel.interaction(new GenericAction.PokemonAction.SearchPokemons(newText, pokemons));
-                return true;
-            }
-        });
-    }
-
-
 
     @Override
     public void onClick(Pokemon pokemon) {
@@ -241,8 +144,4 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         }
     }
 
-    @Override
-    public void onClick(int generationId) {
-        pokemonViewModel.interaction(new GenericAction.ListPokemonAction.PokemonListByChosenGeneration(generationId));
-    }
 }
