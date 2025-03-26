@@ -6,26 +6,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.appcompat.widget.SearchView;
 
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.pokemon_app.MainActivity;
 import com.pokemon_app.R;
-import com.pokemon_app.domain.model.Generation;
 
 import com.pokemon_app.domain.model.Pokemon;
-import com.pokemon_app.domain.service.ConnectivityObserver;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
-import com.pokemon_app.presentation.adapter.GenerationCardAdapter;
 import com.pokemon_app.presentation.adapter.PokeCardAdapter;
 import com.pokemon_app.presentation.ui.view.GenericFragment;
 import com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment;
@@ -35,7 +29,6 @@ import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
