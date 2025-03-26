@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="introScreenFrag"
+            type="com.pokemon_app.presentation.ui.view.intro.PokemonIntroductionScreen" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_color_light"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:background="@color/my_color_light"
+        tools:context=".presentation.ui.view.intro.PokemonIntroductionScreen">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/home_page_logo"
+            app:srcCompat="@drawable/pokemon_ash"
+            tools:srcCompat="@drawable/pokemon_ash" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/welcomeTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_horizontal"
+                android:text="@string/welcome_to"
+                android:textColor="@color/my_color_brown"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/appName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_horizontal"
+                android:text="@string/logo_name"
+                android:textColor="@color/my_color_brown"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- Descrição da Aplicação -->
+            <TextView
+                android:id="@+id/appDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_horizontal"
+                android:text="@string/intro_text"
+                android:textColor="@color/my_color_brown"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- TODO. ASSOCIADO O DATABINDING COM O FRAGMENTO E USAR O ONCLICK PARA ASSOCIAR AOS METODOS DO FRAGMENTO-->
+
+            <Button
+                android:id="@+id/getStartedBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/buttons_style"
+                android:onClick="@{() -> introScreenFrag.onGetStartedClick()}"
+                android:text="@string/get_started"
+                android:textColor="@color/my_color_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:text="Download the full version for more content!"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:text="@string/version_app"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

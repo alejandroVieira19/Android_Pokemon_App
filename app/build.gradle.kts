@@ -11,6 +11,8 @@ android {
     namespace = "com.pokemon_app"
     compileSdk = 35
 
+
+
     defaultConfig {
         applicationId = "com.pokemon_app"
         minSdk = 30
@@ -20,15 +22,42 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+            // Já está em modo release
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
+
+
+        // Criando o modo debug onde o id é o .debug para permitir ter várias versões sem afetar a final (release)
+        // versionName é o nome da versão do aplicativo (que é mostrado para o usuário no seu dispositivo).
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            isDebuggable = true
+        }
+
+
     }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("demo") {
+            dimension = "version"
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+        }
+        create("full") {
+            dimension = "version"
+            applicationIdSuffix = ".full"
+            versionNameSuffix = "-full"
+        }
+    }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

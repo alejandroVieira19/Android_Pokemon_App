@@ -1,6 +1,5 @@
 package com.pokemon_app;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.activity.EdgeToEdge;
@@ -12,8 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.pokemon_app.presentation.ui.view.GenericFragment;
-import com.pokemon_app.presentation.ui.view.list.ListPokemonFragment;
 import com.pokemon_app.presentation.ui.view.intro.PokemonIntroductionScreen;
+import com.pokemon_app.presentation.ui.view.list.ListPokemonFragment;
 import com.pokemon_app.utils.ActionBarHelper;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsMediator;
