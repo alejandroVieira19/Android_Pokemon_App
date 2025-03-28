@@ -10,192 +10,195 @@
             type="com.pokemon_app.presentation.ui.view.detail.DetailPokemonFragment" />
     </data>
 
-<LinearLayout
-    android:id="@+id/detailFragmentLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:background="#EE8130"
-    tools:context=".presentation.ui.view.detail.DetailPokemonFragment">
-
-    <RelativeLayout
-        android:id="@+id/detailRelativeLayout"
+    <LinearLayout
+        android:id="@+id/detailFragmentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:orientation="vertical"
+        tools:background="#EE8130"
+        tools:context=".presentation.ui.view.detail.DetailPokemonFragment">
 
-        <!-- Fundo desfocado -->
-        <View
+        <RelativeLayout
+            android:id="@+id/detailRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card_background_blur"
-            android:layout_centerInParent="true"
-            />
+            android:visibility="gone">
+
+            <!-- Fundo desfocado -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/card_background_blur"
+                android:layout_centerInParent="true"
+                />
 
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/dbProgressBar"
-            app:lottie_autoPlay="true"
-            android:layout_marginTop="200dp"
-            app:lottie_rawRes="@raw/pokeball_animation"
-            app:lottie_loop="true"
-            android:layout_centerInParent="true"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:visibility="visible" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/dbProgressBar"
+                app:lottie_autoPlay="true"
+                android:layout_marginTop="200dp"
+                app:lottie_rawRes="@raw/pokeball_animation"
+                app:lottie_loop="true"
+                android:layout_centerInParent="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="visible" />
 
-        <!-- Texto 'Loading' abaixo do ProgressBar -->
-        <TextView
-            android:id="@+id/loadingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_below="@id/dbProgressBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            tools:text="Loading"/>
+            <!-- Texto 'Loading' abaixo do ProgressBar -->
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dbProgressBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                tools:text="Loading"/>
 
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvPokemonName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:text=""
-            android:gravity="center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            android:textStyle="bold"
-            android:clickable="true"
-            tools:text="Bulbasaur" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/ivDetailPokemonImage"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/pokemon_image"
-            android:src="@drawable/charizard"
-            tools:ignore="ImageContrastCheck" />
-
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
             android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textAboutMe"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:background="@drawable/card_background_blur"
-                android:text="@string/about_me"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:onClick="@{() -> detailPokemonFragment.onAboutMeClick()}"
-                android:foreground="?attr/selectableItemBackground"
-                />
 
             <TextView
-                android:id="@+id/movesBtn"
-                android:layout_width="0dp"
+                android:id="@+id/tvPokemonName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:paddingVertical="12dp"
-                android:background="@color/transparent"
-                android:text="@string/moves"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:text=""
+                android:gravity="center_horizontal"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:clickable="true"
-                android:onClick="@{() -> detailPokemonFragment.onMovesClick()}"
-                android:foreground="?attr/selectableItemBackground"
-                />
-
+                tools:text="Bulbasaur" />
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="12dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivDetailPokemonImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="475dp"
+                android:maxWidth="475dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/pokemon_image"
+                android:src="@drawable/charizard"
+                tools:ignore="ImageContrastCheck" />
 
 
-
-
-            <!-- Fundo interno com blur/sombra simulada -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/card_background_blur"
-                android:orientation="vertical">
-
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragmentContainerView"
-                    android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textAboutMe"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_pokemon_stats_detailed" />
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:background="@drawable/card_background_blur"
+                    android:text="@string/about_me"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:onClick="@{() -> detailPokemonFragment.onAboutMeClick()}"
+                    android:foreground="?attr/selectableItemBackground"
+                    />
+
+                <TextView
+                    android:id="@+id/movesBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:paddingVertical="12dp"
+                    android:background="@color/transparent"
+                    android:text="@string/moves"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:onClick="@{() -> detailPokemonFragment.onMovesClick()}"
+                    android:foreground="?attr/selectableItemBackground"
+                    />
 
 
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="12dp">
+
+
+
+
+                <!-- Fundo interno com blur/sombra simulada -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_background_blur"
+                    android:orientation="vertical">
 
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout="@layout/fragment_pokemon_stats_detailed" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        >
+
+
+
+                    </LinearLayout>
 
 
                 </LinearLayout>
 
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
 
 
     </LinearLayout>
-
-
-
-
-</LinearLayout>
 
 </layout>

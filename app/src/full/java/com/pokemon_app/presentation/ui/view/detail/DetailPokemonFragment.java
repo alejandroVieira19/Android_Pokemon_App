@@ -137,6 +137,7 @@ public class DetailPokemonFragment extends Fragment {
 
     private void fragmentShowLoadingForDB(Boolean loading, PokeDbEnum pokeEnum) {
         if (loading) {
+            binding.allDataInLayout.setVisibility(View.INVISIBLE);
             binding.detailRelativeLayout.setVisibility(View.VISIBLE);
 
             if (pokeEnum.equals(PokeDbEnum.SAVE)) {
@@ -147,6 +148,7 @@ public class DetailPokemonFragment extends Fragment {
 
         } else {
             binding.detailRelativeLayout.setVisibility(View.GONE);
+            binding.allDataInLayout.setVisibility(View.VISIBLE);
         }
     }
 

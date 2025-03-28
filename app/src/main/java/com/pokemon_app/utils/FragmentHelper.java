@@ -25,7 +25,6 @@ public class FragmentHelper {
 
         transaction.commit();
     }
-
     public void popStackBack(String fragmentTag) {
         fragmentManager.popBackStackImmediate(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }

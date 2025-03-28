@@ -1,19 +1,25 @@
 package com.pokemon_app.presentation.ui.view.list;
+
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.SearchView;
 
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -45,6 +51,18 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     private SearchView searchBar;
     private TextView tvNoPokemonFound, tvLoadingData;
     private LottieAnimationView progressBar;
+
+    private GridLayoutManager gridLayoutManager;
+
+    private ConstraintLayout.LayoutParams listLayoutParams;
+
+    private View listLayout;
+
+    View detailFragContainerView;
+
+    ScrollView scrollView;
+
+    private Boolean isLandScape = false;
     private RecyclerView recyclerView, generationRecyclerView;
     DetailPokemonFragment detailPokemonFragment;
     private FragmentHelper fragmentHelper;
@@ -54,12 +72,21 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
+        View view;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            view = inflater.inflate(R.layout.fragment_list_pokemon_land, container, false);
+        } else {
+            view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
+        }
         initialize(view);
         return view;
     }
 
     private void initialize(View view) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            isLandScape = true;
+        }
+
         searchBar = view.findViewById(R.id.searchBarView);
         progressBar = view.findViewById(R.id.loading_progress);
         tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
@@ -68,10 +95,15 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
         generationRecyclerView = view.findViewById(R.id.recyclerGeneration);
 
+        listLayout = view.findViewById(R.id.layout_include_list);
+
+            detailFragContainerView = view.findViewById(R.id.layout_include_detail);
+
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
         pokemonViewModel = new ViewModelProvider(requireActivity()).get(ListPokemonViewModel.class);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -79,11 +111,20 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
         setRecyclerViewLayout();
         setPokemonLifeObserver();
     }
+
     private void setRecyclerViewLayout() {
+
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+
+
+        if (isLandScape){
+            gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        } else {
+            gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        }
         recyclerView.setLayoutManager(gridLayoutManager);
     }
+
 
     private void setPokemonLifeObserver() {
         pokemonViewModel.getState().observe(getViewLifecycleOwner(), state -> {
@@ -180,8 +221,12 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
         generationRecyclerView.setAdapter(generationCardAdapter);
 
-        generationRecyclerView.setVisibility(View.VISIBLE);
+        setGenerationRecyclerViewVisibility(View.VISIBLE);
 
+    }
+
+    private void setGenerationRecyclerViewVisibility(int visibility) {
+        generationRecyclerView.setVisibility(visibility);
     }
 
     private void updateSearchResult(List<Pokemon> filteredPokemons) {
@@ -214,17 +259,30 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     }
 
 
-
     @Override
     public void onClick(Pokemon pokemon) {
 
         Bundle bundle = new Bundle();
 
+        DetailPokemonFragment detailPokemonFragment = new DetailPokemonFragment();
+
         bundle.putSerializable(getContext().getString(R.string.pokemon_key), pokemon);
 
         detailPokemonFragment.setArguments(bundle);
 
-        fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, FragmentsTags.TAG_FRAGMENT_DETAILS);
+        if (isLandScape) {
+
+            scrollView = getView().findViewById(R.id.scroll);
+
+            fragmentHelper.replaceFragment(R.id.layout_include_detail, detailPokemonFragment, false, FragmentsTags.TAG_FRAGMENT_DETAILS);
+
+            listLayoutParams = (ConstraintLayout.LayoutParams) listLayout.getLayoutParams();
+
+            detailFragmentLandScape(View.VISIBLE, 0.5f);
+
+        } else {
+            fragmentHelper.replaceFragment(R.id.mainFrag, detailPokemonFragment, true, FragmentsTags.TAG_FRAGMENT_DETAILS);
+        }
     }
 
     @Override
@@ -239,6 +297,22 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     @Override
     public void onClick(int generationId) {
+        setGenerationRecyclerViewVisibility(View.GONE);
+        if(isLandScape && detailFragContainerView.getVisibility() == View.VISIBLE) {
+            detailFragmentLandScape(View.GONE, 1f);
+        }
         pokemonViewModel.interaction(new GenericAction.ListPokemonAction.PokemonListByChosenGeneration(generationId));
+    }
+
+    private void detailFragmentLandScape(int visibility, float constraintWidthPercentage) {
+
+        detailFragContainerView.setVisibility(visibility);
+
+        scrollView.setVisibility(visibility);
+
+        listLayoutParams.matchConstraintPercentWidth = constraintWidthPercentage;
+
+        listLayout.setLayoutParams(listLayoutParams);
+
     }
 }

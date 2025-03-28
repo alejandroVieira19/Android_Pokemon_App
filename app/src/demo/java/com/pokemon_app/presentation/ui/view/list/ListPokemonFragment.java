@@ -1,4 +1,5 @@
 package com.pokemon_app.presentation.ui.view.list;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,10 +9,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -36,10 +39,13 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     private PokeCardAdapter pokeCardAdapter;
     private ListPokemonViewModel pokemonViewModel;
 
+    private GridLayoutManager gridLayoutManager;
+
+    private Boolean isLandScape = false;
     private TextView  tvLoadingData;
     private LottieAnimationView progressBar;
     private RecyclerView recyclerView;
-    DetailPokemonFragment detailPokemonFragment;
+
     private FragmentHelper fragmentHelper;
 
     List<Pokemon> pokemonList;
@@ -53,9 +59,13 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     }
 
     private void initialize(View view) {
+        searchBar = view.findViewById(R.id.searchBarView);
         progressBar = view.findViewById(R.id.loading_progress);
+        tvNoPokemonFound = view.findViewById(R.id.tvNoPokemonFound);
         tvLoadingData = view.findViewById(R.id.tvLoadingData);
         recyclerView = view.findViewById(R.id.pokemonRecyclerView);
+
+        generationRecyclerView = view.findViewById(R.id.recyclerGeneration);
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
         detailPokemonFragment = new DetailPokemonFragment();
@@ -120,6 +130,8 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
         Bundle bundle = new Bundle();
 
+        DetailPokemonFragment detailPokemonFragment = new DetailPokemonFragment();
+
         bundle.putSerializable(getContext().getString(R.string.pokemon_key), pokemon);
 
         detailPokemonFragment.setArguments(bundle);
@@ -138,3 +150,8 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
     }
 
 }
+
+
+
+
+
