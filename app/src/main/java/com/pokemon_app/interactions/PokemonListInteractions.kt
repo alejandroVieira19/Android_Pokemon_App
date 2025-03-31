@@ -2,6 +2,7 @@ package com.pokemon_app.interactions
 
 import android.content.Context
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.domain.model.PokemonAboutMeDTO
 import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.domain.service.ConnectivityObserver
 
@@ -157,12 +158,9 @@ sealed class GenericStates {
      * @param pokemonSpeed Velocidade do Pokémon.
      */
     data class PokemonDetail(
-        val pokemonTypesImage: List<Int>? = emptyList(),
-        val pokemonTypeText: String? = null,
+        val pokemonAboutMeDTO: PokemonAboutMeDTO,
         val pokemonTextColor: Int,
         val pokemonBackgroundColor: Int? = 0,
-        val pokemonWeight: String? = null,
-        val pokemonHeight: String? = null,
         val pokemonMovesList: List<String>? = null,
         val pokemonStatsDTO: PokemonStatsDTO? = null,
 

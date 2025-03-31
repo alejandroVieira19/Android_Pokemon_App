@@ -53,10 +53,10 @@ class AboutMeDetailedPokemonFragment : Fragment() {
             tvDetailPokemonWeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
             tvDetailType.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
 
-            weight = _pokemonDetailState?.pokemonWeight
-            height = _pokemonDetailState?.pokemonHeight
-            types = _pokemonDetailState?.pokemonTypeText
-            updatePokemonTypesImage(_pokemonDetailState?.pokemonTypesImage)
+            weight = _pokemonDetailState?.pokemonAboutMeDTO?.pokemonWeight
+            height = _pokemonDetailState?.pokemonAboutMeDTO?.pokemonHeight
+            types = _pokemonDetailState?.pokemonAboutMeDTO?.pokemonTypeConcatenate
+            updatePokemonTypesImage(_pokemonDetailState?.pokemonAboutMeDTO?.pokemonTypesImage)
         }
     }
 

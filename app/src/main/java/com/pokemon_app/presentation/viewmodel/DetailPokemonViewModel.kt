@@ -6,6 +6,7 @@ import com.pokemon_app.R
 import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.database.room.PokemonDB
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.domain.model.PokemonAboutMeDTO
 import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
@@ -40,12 +41,16 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
         _state.value
 
         _state.value = GenericStates.PokemonDetail(
-            pokemon.getPokemonTypesImage(pokemon.pokemonType),
-            pokemon.concatenateTypes(pokemon.pokemonType),
+
+            PokemonAboutMeDTO(
+                pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
+                pokemon.getPokemonDoubleForView(pokemon.pokemonWeight, "KG"),
+                pokemon.concatenateTypes(pokemon.pokemonType),
+                pokemon.getPokemonTypesImage(pokemon.pokemonType),
+            ),
+
             pokemon.getTextColorForPokemon(pokemon.pokemonType.get(0)),
-            pokemon.getPokemonBackgroundColor(pokemon.pokemonType.get(0)),
-            pokemon.getPokemonDoubleForView(pokemon.pokemonWeight, "KG"),
-            pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
+             pokemon.getPokemonBackgroundColor(pokemon.pokemonType.get(0)),
             pokemon.pokemonMovesList,
 
             PokemonStatsDTO(
