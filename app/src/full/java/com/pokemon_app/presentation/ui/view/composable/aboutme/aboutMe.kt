@@ -26,28 +26,27 @@ import com.pokemon_app.presentation.ui.view.composable.stats.PokemonStatsDetaile
 @Composable
 fun PokemonAboutMeDetailedView(pokemonAboutMeDto: PokemonAboutMeDTO) {
 
-    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {  }
+    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        AboutMeRow(
+            aboutMeText = R.string.weight,
+            pokemonAboutMeValue = pokemonAboutMeDto.pokemonWeight
+        )
 
-    AboutMeRow(
-        aboutMeText = R.string.weight,
-        pokemonAboutMeValue = pokemonAboutMeDto.pokemonWeight
-    )
+        AboutMeRow(
+            aboutMeText = R.string.height,
+            pokemonAboutMeValue = pokemonAboutMeDto.pokemonHeight
+        )
 
-    AboutMeRow(
-        aboutMeText = R.string.height,
-        pokemonAboutMeValue = pokemonAboutMeDto.pokemonHeight
-    )
+        AboutMeRow(
+            aboutMeText = R.string.type,
+            pokemonAboutMeValue = pokemonAboutMeDto.pokemonTypeConcatenate
+        )
 
-    AboutMeRow(
-        aboutMeText = R.string.type,
-        pokemonAboutMeValue = pokemonAboutMeDto.pokemonTypeConcatenate
-    )
+        AboutMePokemonTypesImage(
+            pokemonTypeImage = pokemonAboutMeDto.pokemonTypesImage
+        )
 
-    AboutMePokemonTypesImage(
-        pokemonTypeImage = pokemonAboutMeDto.pokemonTypesImage
-    )
-
-
+    }
 }
 
 @Composable

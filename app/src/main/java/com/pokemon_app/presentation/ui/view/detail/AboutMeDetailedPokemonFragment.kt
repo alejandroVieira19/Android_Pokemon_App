@@ -1,19 +1,20 @@
 package com.pokemon_app.presentation.ui.view.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.pokemon_app.databinding.FragmentAboutDetailedPokemonBinding
+import com.pokemon_app.domain.model.PokemonAboutMeDTO
 import com.pokemon_app.interactions.GenericStates
-import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel
+import com.pokemon_app.presentation.ui.view.composable.aboutme.PokemonAboutMeDetailedView
+import com.pokemon_app.presentation.ui.view.composable.stats.PokemonStatsDetailedView
 import com.pokemon_app.utils.FragmentsTags
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +24,8 @@ class AboutMeDetailedPokemonFragment : Fragment() {
     private var _binding: FragmentAboutDetailedPokemonBinding? = null
 
     private val binding get() = _binding!!
+
+    private lateinit var _composeView: ComposeView
 
     private var _pokemonDetailState : GenericStates.PokemonDetail ? = null
 
@@ -39,40 +42,27 @@ class AboutMeDetailedPokemonFragment : Fragment() {
 
             _pokemonDetailState = Gson().fromJson(string, GenericStates.PokemonDetail::class.java)
         }
-        updateAboutMeUI()
+        _composeView = binding.aboutMeComposeView
+
+        _pokemonDetailState?.let { updateAboutMeUI(it.pokemonAboutMeDTO) }
     }
 
-    private fun updateAboutMeUI() {
-        binding.apply {
+    private fun updateAboutMeUI(pokemonAboutMeDTO: PokemonAboutMeDTO) {
 
-            tvHeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
-            tvWeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
-            tvType.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
+        _composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-            tvDetailPokemonHeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
-            tvDetailPokemonWeight.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
-            tvDetailType.setTextColor(ContextCompat.getColor(requireContext(), _pokemonDetailState?.pokemonTextColor!!))
-
-            weight = _pokemonDetailState?.pokemonAboutMeDTO?.pokemonWeight
-            height = _pokemonDetailState?.pokemonAboutMeDTO?.pokemonHeight
-            types = _pokemonDetailState?.pokemonAboutMeDTO?.pokemonTypeConcatenate
-            updatePokemonTypesImage(_pokemonDetailState?.pokemonAboutMeDTO?.pokemonTypesImage)
+            setContent {
+                pokemonAboutMeDTO?.let { PokemonAboutMeDetailedView(it) }
+            }
         }
+
     }
 
 
 
     private fun updatePokemonTypesImage(pokemonTypesImage: List<Int>?) {
-        when(pokemonTypesImage?.size) {
-            1 -> {
-                binding.ivType2.visibility = View.GONE
-                uploadImagewithGlide(binding.ivType1, pokemonTypesImage.get(0))
-            }
-            2 -> {
-                pokemonTypesImage?.let { uploadImagewithGlide(binding.ivType1, it.get(0))
-                    uploadImagewithGlide(binding.ivType2, it.get(1))}
-            }
-        }
+
     }
 
     private fun uploadImagewithGlide(ivPokemonType: ImageView, get: Int) {
