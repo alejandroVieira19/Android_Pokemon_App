@@ -55,6 +55,11 @@ android {
             dimension = "version"
             applicationIdSuffix = ".full"
             versionNameSuffix = "-full"
+
+            dependencies {
+                implementation(platform(libs.androidx.compose.bom))
+            }
+
         }
     }
 

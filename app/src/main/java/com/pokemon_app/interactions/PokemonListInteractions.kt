@@ -2,6 +2,7 @@ package com.pokemon_app.interactions
 
 import android.content.Context
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.domain.service.ConnectivityObserver
 
 import java.io.Serializable
@@ -163,10 +164,8 @@ sealed class GenericStates {
         val pokemonWeight: String? = null,
         val pokemonHeight: String? = null,
         val pokemonMovesList: List<String>? = null,
-        val pokemonAttack: Int,
-        val pokemonDefense: Int,
-        val pokemonHP: Int,
-        val pokemonSpeed: Int
+        val pokemonStatsDTO: PokemonStatsDTO? = null,
+
     ) : GenericStates()
 }
 

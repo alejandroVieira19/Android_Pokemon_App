@@ -6,6 +6,7 @@ import com.pokemon_app.R
 import com.pokemon_app.database.repository.PokemonDbRepository
 import com.pokemon_app.database.room.PokemonDB
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.utils.PokemonService
@@ -46,10 +47,14 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
             pokemon.getPokemonDoubleForView(pokemon.pokemonWeight, "KG"),
             pokemon.getPokemonDoubleForView(pokemon.pokemonHeight, "M"),
             pokemon.pokemonMovesList,
-            pokemon.pokemonAttack,
-            pokemon.pokemonDefense,
-            pokemon.pokemonHP,
-            pokemon.pokemonSpeed
+
+            PokemonStatsDTO(
+                pokemon.pokemonAttack,
+                pokemon.pokemonDefense,
+                pokemon.pokemonHP,
+                pokemon.pokemonSpeed
+            )
+
         )
     }
 

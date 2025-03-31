@@ -74,6 +74,10 @@
     <string name="weight_label"></string>
     <string name="height_label"></string>
     <string name="loading_data"></string>
+    <string name="hp">HP</string>
+    <string name="attack">Attack</string>
+    <string name="defense">Defense</string>
+    <string name="speed">Speed</string>
 
 
 </resources>

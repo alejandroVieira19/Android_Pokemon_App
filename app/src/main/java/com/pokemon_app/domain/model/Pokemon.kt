@@ -40,3 +40,11 @@ data class Pokemon(
     val pokemonHP: Int,
     val pokemonSpeed: Int
 ) : Serializable
+
+
+data class PokemonStatsDTO(
+    val pokemonAttack: Int,
+    val pokemonDefense: Int,
+    val pokemonHP: Int,
+    val pokemonSpeed: Int
+)

@@ -114,14 +114,12 @@ public class ListPokemonFragment extends GenericFragment implements PokeCardAdap
 
     private void setRecyclerViewLayout() {
 
-        recyclerView.setHasFixedSize(true);
-
-
         if (isLandScape){
             gridLayoutManager = new GridLayoutManager(getContext(), 3);
         } else {
             gridLayoutManager = new GridLayoutManager(getContext(), 2);
         }
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
     }
 

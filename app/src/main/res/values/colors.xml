@@ -32,5 +32,8 @@
 
     <!-- Cor para offline -->
     <color name="colorOffline">#F44336</color>
+    <color name="stats_attack">#F44336</color>
+    <color name="stats_defense">#2196F3</color>
+    <color name="stats_speed">#FFEB3B</color>
 
 </resources>

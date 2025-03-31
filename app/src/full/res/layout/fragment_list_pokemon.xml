@@ -58,9 +58,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemonRecyclerView"
         android:layout_width="match_parent"
+        android:background="@color/teal_700"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        tools:visibility="gone">
+        android:layout_margin="20dp"
+        android:layout_gravity="center_horizontal"
+        tools:visibility="visible"
+        tools:listitem= "@layout/row_pokemon_card"
+        >
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView

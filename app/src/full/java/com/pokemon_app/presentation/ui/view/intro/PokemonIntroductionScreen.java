@@ -102,6 +102,8 @@ public class PokemonIntroductionScreen extends GenericFragment {
         updateModeText(status);
     }
 
+
+
     private void updateModeText(ConnectivityObserver.NetworkStatus status) {
         if(status.equals(ConnectivityObserver.NetworkStatus.Available)) {
             binding.tvMode.setText(R.string.online);
