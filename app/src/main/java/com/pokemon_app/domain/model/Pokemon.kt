@@ -48,3 +48,10 @@ data class PokemonStatsDTO(
     val pokemonHP: Int,
     val pokemonSpeed: Int
 )
+
+data class PokemonAboutMeDTO(
+    val pokemonHeight: String,
+    val pokemonWeight: String,
+    val pokemonTypeConcatenate: String,
+    val pokemonTypesImage: List<Int>
+)
