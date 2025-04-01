@@ -11,7 +11,7 @@ import com.google.gson.Gson
 import com.pokemon_app.databinding.FragmentPokemonStatsDetailedBinding
 import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.interactions.GenericStates
-import com.pokemon_app.presentation.ui.view.composable.stats.PokemonStatsDetailedView
+import com.pokemon_app.presentation.ui.view.composable.detail.stats.PokemonStatsDetailedView
 import com.pokemon_app.utils.FragmentsTags
 
 

@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view.composable.aboutme
+package com.pokemon_app.presentation.ui.view.composable.detail.aboutme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.pokemon_app.R
 import com.pokemon_app.domain.model.PokemonAboutMeDTO
 import com.pokemon_app.domain.model.PokemonStatsDTO
-import com.pokemon_app.presentation.ui.view.composable.stats.PokemonStatsDetailedView
+import com.pokemon_app.presentation.ui.view.composable.detail.stats.PokemonStatsDetailedView
 
 @Composable
 fun PokemonAboutMeDetailedView(pokemonAboutMeDto: PokemonAboutMeDTO) {

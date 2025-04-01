@@ -1,4 +1,4 @@
-package com.pokemon_app.presentation.ui.view.composable.stats
+package com.pokemon_app.presentation.ui.view.composable.detail.stats
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -67,7 +67,7 @@ fun StatRow(statText: String, progressBar: Int, progressColor: Int, progressValu
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            ,
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
 

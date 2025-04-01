@@ -13,8 +13,8 @@ import com.google.gson.Gson
 import com.pokemon_app.databinding.FragmentAboutDetailedPokemonBinding
 import com.pokemon_app.domain.model.PokemonAboutMeDTO
 import com.pokemon_app.interactions.GenericStates
-import com.pokemon_app.presentation.ui.view.composable.aboutme.PokemonAboutMeDetailedView
-import com.pokemon_app.presentation.ui.view.composable.stats.PokemonStatsDetailedView
+import com.pokemon_app.presentation.ui.view.composable.detail.aboutme.PokemonAboutMeDetailedView
+import com.pokemon_app.presentation.ui.view.composable.detail.stats.PokemonStatsDetailedView
 import com.pokemon_app.utils.FragmentsTags
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.pokemon_app.databinding.FragmentPokemonMovesDetailedBinding
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.presentation.adapter.MovesAdapter
-import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel
+import com.pokemon_app.presentation.ui.view.composable.detail.moves.PokemonMovesView
 import com.pokemon_app.utils.FragmentsTags
 
 class PokemonMovesDetailedFragment : Fragment() {
@@ -20,6 +21,8 @@ class PokemonMovesDetailedFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: MovesAdapter
+
+    private lateinit var _composeView: ComposeView
 
     private var _pokemonDetailState : GenericStates.PokemonDetail ? = null
 
@@ -37,17 +40,19 @@ class PokemonMovesDetailedFragment : Fragment() {
 
             _pokemonDetailState = Gson().fromJson(string, GenericStates.PokemonDetail::class.java)
         }
-        updatePokemonMovesUI()
+        _composeView = binding.movesComposeView
+
+        UpdatePokemonMovesUI(_pokemonDetailState?.pokemonMovesList)
     }
 
-    fun updatePokemonMovesUI() {
-        adapter = MovesAdapter()
+    private fun UpdatePokemonMovesUI(pokemonMovesList: List<String>?) {
 
-        binding.pokemonMovesDetailsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        binding.pokemonMovesDetailsRecyclerView.adapter = adapter
-
-        _pokemonDetailState?.pokemonMovesList?.let { adapter.submitList(it) }
+        _composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                pokemonMovesList?.let { PokemonMovesView(it) }
+            }
+        }
     }
 
     fun newInstance(pokemonDetailState: GenericStates.PokemonDetail) = PokemonMovesDetailedFragment().apply {
