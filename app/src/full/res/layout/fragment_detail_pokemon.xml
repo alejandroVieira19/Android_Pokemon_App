@@ -112,7 +112,7 @@
 
 
 
-                <ImageView
+               <!-- <ImageView
                     android:id="@+id/ivDetailPokemonImage"
                     android:layout_width="375dp"
                     android:layout_height="375dp"
@@ -122,7 +122,12 @@
                     android:contentDescription="@string/pokemon_image"
                     android:scaleType="fitCenter"
                     android:src="@drawable/charizard"
-                    tools:ignore="ImageContrastCheck" />
+                    tools:ignore="ImageContrastCheck" />-->
+
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/pokemonDetailImageCompose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
 
                 <LinearLayout

@@ -1,20 +1,22 @@
 package com.pokemon_app.presentation.ui.view.detail;
 
+
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.compose.ui.platform.ComposeView;
+import androidx.compose.ui.platform.ViewCompositionStrategy;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.pokemon_app.R;
@@ -23,6 +25,11 @@ import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.interactions.PokeDbEnum;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokeDetailKt;
+
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailImage;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonImage;
+import com.pokemon_app.presentation.ui.view.composable.manager.ComposeViewManager;
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
@@ -158,7 +165,7 @@ public class DetailPokemonFragment extends Fragment {
 
         setPokemonFragmentTextColor(pokemonDetailState.getPokemonTextColor());
 
-        loadPokemonImage(binding.ivDetailPokemonImage, pokemon.getPokemonDetailImageUrlBackground());
+        loadPokemonImage(binding.pokemonDetailImageCompose, pokemon.getPokemonDetailImageUrlBackground());
 
         setPokemonName(pokemon.getPokemonName());
 
@@ -183,10 +190,12 @@ public class DetailPokemonFragment extends Fragment {
         binding.detailFragmentLayout.setBackgroundColor(pokemonBackgroundColor);
     }
 
-    private void loadPokemonImage(ImageView ivDetailPokemonImage, String pokemonDetailImageUrlBackground) {
-        Glide.with(ivDetailPokemonImage)
-                .load(pokemonDetailImageUrlBackground)
-                .centerCrop().into(ivDetailPokemonImage);
+    private void loadPokemonImage(ComposeView ivDetailPokemonImage, String pokemonDetailImageUrlBackground) {
+
+        ComposeViewManager.INSTANCE.setComposableContent(
+                ivDetailPokemonImage,
+                new PokemonImage(pokemonDetailImageUrlBackground)
+        );
     }
 
     private void replaceFragment(Fragment fragment, boolean addToBackStack, String tag) {
