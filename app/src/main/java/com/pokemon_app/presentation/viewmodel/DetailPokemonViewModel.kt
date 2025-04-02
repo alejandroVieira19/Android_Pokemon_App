@@ -10,6 +10,7 @@ import com.pokemon_app.domain.model.PokemonAboutMeDTO
 import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
+import com.pokemon_app.interactions.PokemonTabList
 import com.pokemon_app.utils.PokemonService
 import com.pokemon_app.utils.colours
 import com.pokemon_app.utils.getColorForPokemonByType
@@ -62,6 +63,10 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
 
         )
     }
+
+    fun getPokemonTabBarList() : List<PokemonTabList> {
+      return PokemonTabList.values().toList()
+  }
 
   private fun Pokemon.getTextColorForPokemon(type:String?): Int {
 

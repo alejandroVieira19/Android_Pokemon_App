@@ -20,7 +20,21 @@ object ComposeViewManager {
     }
 }
 
-fun setComposableContentForKotlin(
+interface ComposableProvider {
+    @Composable
+    fun ProvideComposableContent()
+}
+
+
+/*
+private class ComposableProviderImpl : ComposableProvider {
+    @Composable
+    override fun ProvideComposableContent() {
+    }
+}
+*/
+
+/*fun setComposableContentForKotlin(
     composeView: ComposeView,
     content: @Composable ComposableProvider.() -> Unit,
 ) {
@@ -30,15 +44,4 @@ fun setComposableContentForKotlin(
             ComposableProviderImpl().content()
         }
     }
-}
-
-interface ComposableProvider {
-    @Composable
-    fun ProvideComposableContent()
-}
-
-private class ComposableProviderImpl : ComposableProvider {
-    @Composable
-    override fun ProvideComposableContent() {
-    }
-}
+}*/

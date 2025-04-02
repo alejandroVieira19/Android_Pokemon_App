@@ -1,6 +1,9 @@
 package com.pokemon_app.presentation.ui.view.detail;
 
 
+import static com.pokemon_app.utils.FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME;
+import static com.pokemon_app.utils.FragmentsTags.TAG_FRAGMENTS_POKEMON_MOVES;
+import static com.pokemon_app.utils.FragmentsTags.TAG_FRAGMENTS_POKEMON_STATS;
 
 import android.os.Bundle;
 
@@ -9,32 +12,36 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.compose.ui.platform.ComposeView;
-import androidx.compose.ui.platform.ViewCompositionStrategy;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.pokemon_app.R;
 import com.pokemon_app.databinding.FragmentDetailPokemonBinding;
 import com.pokemon_app.domain.model.Pokemon;
 import com.pokemon_app.interactions.GenericAction;
 import com.pokemon_app.interactions.GenericStates;
 import com.pokemon_app.interactions.PokeDbEnum;
-import com.pokemon_app.presentation.ui.view.composable.detail.PokeDetailKt;
+import com.pokemon_app.interactions.PokemonTabList;
+import com.pokemon_app.presentation.ui.view.composable.detail.FavoritePokemonIcon;
 
-import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailImage;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTaBar;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBarProps;
 import com.pokemon_app.presentation.ui.view.composable.detail.PokemonImage;
+import com.pokemon_app.presentation.ui.view.composable.manager.ComposableProvider;
 import com.pokemon_app.presentation.ui.view.composable.manager.ComposeViewManager;
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
 import com.pokemon_app.utils.FragmentHelper;
 import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
 import com.pokemon_app.utils.StringUtils;
+
+import java.util.List;
 
 
 public class DetailPokemonFragment extends Fragment {
@@ -53,12 +60,9 @@ public class DetailPokemonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDetailPokemonBinding.inflate(inflater, container, false);
 
-        // GARANTIR QUE O FRAGMENTO ESTEJA VINCULADO AO LAYOUT!!!!!
         binding.setDetailPokemonFragment(this);
 
         fragmentHelper = new FragmentHelper(getActivity().getSupportFragmentManager());
-
-
 
         return binding.getRoot();
     }
@@ -77,10 +81,8 @@ public class DetailPokemonFragment extends Fragment {
             setPokemonViewModelObserver(pokemon);
         }
 
-
-
         Pokemon finalPokemon = pokemon;
-        binding.ivDetailFavoritePokemonIcon.setOnClickListener(new View.OnClickListener() {
+        binding.favoriteIconCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PokemonAlertDialogUtils.ConfirmationCallback callback = new PokemonAlertDialogUtils.ConfirmationCallback() {
@@ -117,6 +119,7 @@ public class DetailPokemonFragment extends Fragment {
             if (state instanceof GenericStates.PokemonDetail) {
 
                 GenericStates.PokemonDetail pokemonDetailState = (GenericStates.PokemonDetail) state;
+
 
                 updateDetailView(pokemonDetailState, pokemon);
 
@@ -171,15 +174,47 @@ public class DetailPokemonFragment extends Fragment {
 
         instanciateFragments(pokemonDetailState);
 
-        replaceFragment(aboutMeDetailedPokemonFragment, false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
+        replaceFragment(aboutMeDetailedPokemonFragment, false, TAG_FRAGMENTS_POKEMON_ABOUT_ME);
 
     }
 
     private void setPokemonFragmentTextColor(Integer pokemonTextColor) {
-        binding.tvPokemonName.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
-        binding.textAboutMe.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
-        binding.movesBtn.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
-        binding.statsBtn.setTextColor(ContextCompat.getColor(getContext(),pokemonTextColor));
+
+        binding.tvPokemonName.setTextColor(ContextCompat.getColor(getContext(), pokemonTextColor));
+
+        createPokemonDetailTab(pokemonTextColor);
+
+    }
+
+    private void createPokemonDetailTab(Integer pokemonTextColor) {
+        List<PokemonTabList> tabBarList = pokemonViewModel.getPokemonTabBarList();
+        setComposableContent(binding.pokemonDetailTabBarCompose, new PokemonDetailTaBar(
+                new PokemonDetailTabBarProps(
+                        tabBarList,
+                        tabBarList.get(0),
+                        pokemonTextColor,
+
+                        selectedTab -> {
+                            switch (selectedTab) {
+                                case MOVES:
+                                    replaceFragment(pokemonMovesDetailedFragment, false, TAG_FRAGMENTS_POKEMON_MOVES);
+                                    break;
+
+                                case STATS:
+                                    replaceFragment(pokemonStatsDetailedFragment, false, TAG_FRAGMENTS_POKEMON_STATS);
+                                    break;
+
+                                default:
+                                    replaceFragment(aboutMeDetailedPokemonFragment, false, TAG_FRAGMENTS_POKEMON_ABOUT_ME);
+                                    break;
+                            }
+                            return null;
+                        })
+        ));
+    }
+
+    private void pokemonTabBarPropertiesFunction(){
+
     }
 
     private void setPokemonName(String pokemonName) {
@@ -192,11 +227,12 @@ public class DetailPokemonFragment extends Fragment {
 
     private void loadPokemonImage(ComposeView ivDetailPokemonImage, String pokemonDetailImageUrlBackground) {
 
-        ComposeViewManager.INSTANCE.setComposableContent(
+        setComposableContent(
                 ivDetailPokemonImage,
                 new PokemonImage(pokemonDetailImageUrlBackground)
         );
     }
+
 
     private void replaceFragment(Fragment fragment, boolean addToBackStack, String tag) {
         fragmentHelper.replaceFragment(R.id.fragmentContainerView, fragment, addToBackStack, tag);
@@ -212,36 +248,21 @@ public class DetailPokemonFragment extends Fragment {
 
     }
 
-    public void onMovesClick() {
-        updateSelectedButton(binding.movesBtn, binding.textAboutMe, binding.statsBtn);
-        replaceFragment(pokemonMovesDetailedFragment, false,  FragmentsTags.TAG_FRAGMENTS_POKEMON_MOVES);
-
-    }
-
-    public void onAboutMeClick() {
-        updateSelectedButton(binding.textAboutMe, binding.movesBtn, binding.statsBtn);
-        replaceFragment(aboutMeDetailedPokemonFragment, false, FragmentsTags.TAG_FRAGMENTS_POKEMON_ABOUT_ME);
-    }
-
-    public void onStatsClick() {
-        updateSelectedButton(binding.statsBtn, binding.movesBtn, binding.textAboutMe);
-        replaceFragment(pokemonStatsDetailedFragment, false, FragmentsTags.TAG_FRAGMENTS_POKEMON_STATS);
-    }
-
-    private void updateSelectedButton(View selected, View... others) {
-        selected.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_blur));
-        for (View other : others) {
-            other.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.card_background_transparent));
-        }
-    }
-
     private void updatePokemonIsFavoriteImage(Boolean isPokemonFavorite) {
         if (isPokemonFavorite) {
-            binding.ivDetailFavoritePokemonIcon.setImageResource(android.R.drawable.btn_star_big_on);
+            setComposableContent(binding.favoriteIconCompose, new FavoritePokemonIcon(android.R.drawable.btn_star_big_on));
         } else {
-            binding.ivDetailFavoritePokemonIcon.setImageResource(android.R.drawable.star_off);
+            setComposableContent(binding.favoriteIconCompose, new FavoritePokemonIcon(android.R.drawable.star_off));
         }
     }
+
+    private void setComposableContent(ComposeView composeView, ComposableProvider classToUse) {
+        ComposeViewManager.INSTANCE.setComposableContent(
+                composeView,
+                classToUse
+        );
+    }
+
 
     @Override
     public void onStart() {
