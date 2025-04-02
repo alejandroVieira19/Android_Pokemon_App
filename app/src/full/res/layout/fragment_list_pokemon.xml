@@ -11,9 +11,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerGeneration"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_margin="10dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         tools:layout="@layout/fragment_generations_row"
         android:visibility="gone"/>
 
@@ -57,8 +58,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pokemonRecyclerView"
-        android:layout_width="match_parent"
-        android:background="@color/teal_700"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:layout_gravity="center_horizontal"

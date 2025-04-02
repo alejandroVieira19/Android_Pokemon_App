@@ -27,9 +27,9 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginHorizontal="20dp"
                 android:text="@string/mode"
                 android:textColor="@color/my_color_brown"
                 android:textSize="24sp"
@@ -37,9 +37,8 @@
 
             <TextView
                 android:id="@+id/tvMode"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
                 tools:text="Online"
                 tools:textColor="@color/colorOnline"
                 android:textSize="22sp"
