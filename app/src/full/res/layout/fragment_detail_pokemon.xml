@@ -42,7 +42,8 @@
                 android:visibility="visible"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/pokeball_animation" />
+                app:lottie_rawRes="@raw/pokeball_animation"
+                />
 
             <!-- Texto 'Loading' abaixo do ProgressBar -->
             <TextView

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
@@ -50,7 +51,7 @@ data class PokemonImage(val pokemonImageUrl: String) : PokemonDetailComposable()
 data class FavoritePokemonIcon(val iconResId: Int) : PokemonDetailComposable() {
     @Composable
     override fun ProvideComposableContent() {
-        PokemonDetailFavoriteIcon(iconResId)
+        PokemonDetailDrawableImage(iconResId)
     }
 }
 
@@ -75,11 +76,15 @@ fun PokemonImageDetail(pokemonImageUrl: String) {
 }
 
 @Composable
-fun PokemonDetailFavoriteIcon(icon: Int) {
+fun PokemonDetailDrawableImage(icon: Int, height: Int? = null, width: Int? = null) {
     Image(
         painter = painterResource(icon),
         contentDescription = stringResource(R.string.content_description),
-        modifier = Modifier.height(40.dp).padding(top = 10.dp)
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .height(height?.dp ?: 40.dp) // Define altura padrão se `height` for nulo
+            .width(width?.dp ?: 40.dp)   // Define largura padrão se `width` for nulo
+            .padding(top = 10.dp)        // Corrigido o erro de sintaxe
     )
 }
 
@@ -140,7 +145,7 @@ fun PreviewPokemonImageDetail() {
 @Preview
 @Composable
 fun PreviewPokemonFavoriteIcon() {
-    PokemonDetailFavoriteIcon(android.R.drawable.btn_star_big_on)
+    PokemonDetailDrawableImage(android.R.drawable.btn_star_big_on)
 }
 
 @Preview(showBackground = true)
