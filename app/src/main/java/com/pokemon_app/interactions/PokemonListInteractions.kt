@@ -186,3 +186,16 @@ enum class PokeDbEnum {
      */
     GETTING
 }
+
+enum class PokemonTabList{
+    ABOUT_ME, MOVES,  STATS;
+
+    override fun toString(): String {
+        return when(this) {
+            ABOUT_ME -> "About me"
+            MOVES -> "Moves"
+            STATS -> "Stats"
+        }
+    }
+}
+
