@@ -58,6 +58,7 @@ android {
 
             dependencies {
                 implementation(platform(libs.androidx.compose.bom))
+                implementation("com.airbnb.android:lottie-compose:4.0.0")
             }
 
         }

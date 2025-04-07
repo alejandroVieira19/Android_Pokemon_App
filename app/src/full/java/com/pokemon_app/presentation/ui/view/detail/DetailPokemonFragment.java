@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,18 +29,21 @@ import com.pokemon_app.interactions.PokeDbEnum;
 import com.pokemon_app.interactions.PokemonTabList;
 import com.pokemon_app.presentation.ui.view.composable.detail.FavoritePokemonIcon;
 
-import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTaBar;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailDBLoading;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBar;
 import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBarProps;
 import com.pokemon_app.presentation.ui.view.composable.detail.PokemonImage;
+import com.pokemon_app.presentation.ui.view.composable.geral.PokemonLoadingDTO;
 import com.pokemon_app.presentation.ui.view.composable.manager.ComposableProvider;
 import com.pokemon_app.presentation.ui.view.composable.manager.ComposeViewManager;
 import com.pokemon_app.presentation.viewmodel.DetailPokemonViewModel;
 import com.pokemon_app.utils.FragmentHelper;
-import com.pokemon_app.utils.FragmentsTags;
 import com.pokemon_app.utils.PokemonAlertDialogUtils;
 import com.pokemon_app.utils.StringUtils;
 
 import java.util.List;
+
+import kotlin.Unit;
 
 
 public class DetailPokemonFragment extends Fragment {
@@ -151,9 +153,14 @@ public class DetailPokemonFragment extends Fragment {
             binding.detailRelativeLayout.setVisibility(View.VISIBLE);
 
             if (pokeEnum.equals(PokeDbEnum.SAVE)) {
-                binding.loadingText.setText(getContext().getString(R.string.saving_in_db));
+                setComposableContent(binding.pokemonLoadingCompose, new PokemonDetailDBLoading(
+                        new PokemonLoadingDTO( getString(R.string.saving_in_db), 80, R.raw.pokeball_animation)
+                ));
+
             } else {
-                binding.loadingText.setText(getContext().getString(R.string.delete_from_db));
+                setComposableContent(binding.pokemonLoadingCompose, new PokemonDetailDBLoading(
+                        new PokemonLoadingDTO( getString(R.string.saving_in_db), 80, R.raw.pokeball_animation)
+                ));
             }
 
         } else {
@@ -188,33 +195,28 @@ public class DetailPokemonFragment extends Fragment {
 
     private void createPokemonDetailTab(Integer pokemonTextColor) {
         List<PokemonTabList> tabBarList = pokemonViewModel.getPokemonTabBarList();
-        setComposableContent(binding.pokemonDetailTabBarCompose, new PokemonDetailTaBar(
-                new PokemonDetailTabBarProps(
-                        tabBarList,
-                        tabBarList.get(0),
-                        pokemonTextColor,
+        PokemonDetailTabBarProps pokemonDetailTabBarProps= pokemonViewModel.createPokemonDetailTabBar(tabBarList,
+                tabBarList.get(0),
+                pokemonTextColor,
+                this::handleTabSelection);
 
-                        selectedTab -> {
-                            switch (selectedTab) {
-                                case MOVES:
-                                    replaceFragment(pokemonMovesDetailedFragment, false, TAG_FRAGMENTS_POKEMON_MOVES);
-                                    break;
 
-                                case STATS:
-                                    replaceFragment(pokemonStatsDetailedFragment, false, TAG_FRAGMENTS_POKEMON_STATS);
-                                    break;
-
-                                default:
-                                    replaceFragment(aboutMeDetailedPokemonFragment, false, TAG_FRAGMENTS_POKEMON_ABOUT_ME);
-                                    break;
-                            }
-                            return null;
-                        })
-        ));
+        setComposableContent(binding.pokemonDetailTabBarCompose, new PokemonDetailTabBar(pokemonDetailTabBarProps));
     }
 
-    private void pokemonTabBarPropertiesFunction(){
-
+    private Unit handleTabSelection(PokemonTabList selectedTab) {
+        switch (selectedTab) {
+            case MOVES:
+                replaceFragment(pokemonMovesDetailedFragment, false, TAG_FRAGMENTS_POKEMON_MOVES);
+                break;
+            case STATS:
+                replaceFragment(pokemonStatsDetailedFragment, false, TAG_FRAGMENTS_POKEMON_STATS);
+                break;
+            default:
+                replaceFragment(aboutMeDetailedPokemonFragment, false, TAG_FRAGMENTS_POKEMON_ABOUT_ME);
+                break;
+        }
+        return null;
     }
 
     private void setPokemonName(String pokemonName) {

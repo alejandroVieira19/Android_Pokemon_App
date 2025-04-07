@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.pokemon_app.R
 import com.pokemon_app.interactions.PokemonTabList
+import com.pokemon_app.presentation.ui.view.composable.geral.LoadingPokemonView
+import com.pokemon_app.presentation.ui.view.composable.geral.PokemonLoadingDTO
 import com.pokemon_app.presentation.ui.view.composable.manager.ComposableProvider
 
 
@@ -55,10 +57,17 @@ data class FavoritePokemonIcon(val iconResId: Int) : PokemonDetailComposable() {
     }
 }
 
-data class PokemonDetailTaBar(val tabBarProps: PokemonDetailTabBarProps) : PokemonDetailComposable() {
+data class PokemonDetailTabBar(val tabBarProps: PokemonDetailTabBarProps) : PokemonDetailComposable() {
     @Composable
     override fun ProvideComposableContent() {
-        PokemonDetailTabBar(tabBarProps)
+        PokemonDetailTabBarView(tabBarProps)
+    }
+}
+
+data class PokemonDetailDBLoading(val pokemonLoadingDTO: PokemonLoadingDTO): PokemonDetailComposable() {
+    @Composable
+    override fun ProvideComposableContent() {
+        LoadingPokemonView(pokemonLoadingDTO)
     }
 }
 
@@ -92,11 +101,11 @@ data class PokemonDetailTabBarProps(
     val tabBarList: List<PokemonTabList>,
     val selectedTab: PokemonTabList,
     val textColor: Int,
-    val onTabClicked: (PokemonTabList) -> Unit,
+    val onTabClicked: (PokemonTabList) -> Unit
 )
 
 @Composable
-fun PokemonDetailTabBar(pokemonDetailTabProps: PokemonDetailTabBarProps) {
+fun PokemonDetailTabBarView(pokemonDetailTabProps: PokemonDetailTabBarProps) {
 
     val selectedTab = remember { mutableStateOf(pokemonDetailTabProps.selectedTab) }
 
@@ -158,7 +167,7 @@ fun PreviewPokemonDetailTabBar() {
         PokemonDetailTabBar(
             PokemonDetailTabBarProps(
                 tabBarList = tabList, selectedTab = tabList.get(0),
-                onTabClicked = {}, textColor = textColor
+                textColor = textColor, onTabClicked = {}
             ))
     }
 }

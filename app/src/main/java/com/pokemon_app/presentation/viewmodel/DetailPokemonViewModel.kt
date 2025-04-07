@@ -11,6 +11,8 @@ import com.pokemon_app.domain.model.PokemonStatsDTO
 import com.pokemon_app.interactions.GenericAction
 import com.pokemon_app.interactions.GenericStates
 import com.pokemon_app.interactions.PokemonTabList
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBar
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBarProps
 import com.pokemon_app.utils.PokemonService
 import com.pokemon_app.utils.colours
 import com.pokemon_app.utils.getColorForPokemonByType
@@ -32,8 +34,13 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
     override fun interaction(action: GenericAction) {
         when (action) {
             is GenericAction.DetailPokemonAction.PokemonDetail -> showPokemonDetail(action.pokemon)
+            is GenericAction.DetailPokemonAction.PokemonSelectedTab -> selectedPokemonTab(action.pokemonTabList)
             else -> super.interaction(action)
         }
+    }
+
+    private fun selectedPokemonTab(pokemonTabList: PokemonTabList) {
+
     }
 
     private fun showPokemonDetail(pokemon: Pokemon) {
@@ -96,5 +103,17 @@ class DetailPokemonViewModel @Inject constructor(private val pokemonService: Pok
             pokemonType[0] ?:  context.getString(R.string.unknown_pokemon_type)
         }
     }
+
+    fun createPokemonDetailTabBar(tabBarList: MutableList<PokemonTabList>,
+                                  selectedTab: PokemonTabList, pokemonTextColor: Int,
+                                  handleTabSelection: (PokemonTabList) -> Unit): PokemonDetailTabBarProps {
+        return PokemonDetailTabBarProps(
+            tabBarList = tabBarList,
+            selectedTab = selectedTab,
+            textColor = pokemonTextColor,
+            onTabClicked = handleTabSelection
+        )
+    }
+
 
 }

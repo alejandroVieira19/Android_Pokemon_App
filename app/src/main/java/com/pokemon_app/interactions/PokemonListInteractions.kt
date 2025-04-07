@@ -57,6 +57,9 @@ sealed class GenericAction {
          * Ação para mostrar os detalhes de um Pokémon.
          */
         data class PokemonDetail(val pokemon: Pokemon) : GenericAction()
+
+        data class PokemonSelectedTab(val pokemonTabList: PokemonTabList): GenericAction()
+
     }
 
     /**
@@ -165,7 +168,12 @@ sealed class GenericStates {
         val pokemonStatsDTO: PokemonStatsDTO? = null,
 
     ) : GenericStates()
+
+    data class PokemonSelectedTab(
+        val selectedTab : PokemonTabList
+    ) : GenericStates()
 }
+
 
 /**
  * Enumeração para definir as ações realizadas na base de dados em relação aos Pokémons.
