@@ -2,4 +2,5 @@
 <resources>
     <integer name="max_poxemon_list">151</integer>
     <integer name="max_poxemon_list_demo">20</integer>
+    <integer name="pokemon_animation_size">80</integer>
 </resources>

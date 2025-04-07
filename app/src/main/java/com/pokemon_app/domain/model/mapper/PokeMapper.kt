@@ -1,10 +1,10 @@
 package com.pokemon_app.domain.model.mapper
 
-import android.util.Log
 import com.pokemon_app.data.model.PokeMoves
 import com.pokemon_app.data.model.PokemonDetailResponse
 import com.pokemon_app.database.PokemonEntity
 import com.pokemon_app.domain.model.Pokemon
+import com.pokemon_app.presentation.ui.view.composable.geral.PokemonLoadingDTO
 
 /**
  * Objeto responsável por realizar a conversão entre modelos de dados de diferentes camadas.
@@ -113,5 +113,9 @@ object PokeMapper {
      */
     private fun retrievePokemonMovesList(moves: List<PokeMoves>): List<String> {
         return moves.mapNotNull { it.move?.name } // Removendo valores nulos
+    }
+
+    fun GetPokemonLoadingAnimationDTO(string: String, int: Int, pokeball_animation: Int, textColor: Int): PokemonLoadingDTO {
+        return PokemonLoadingDTO(string, int, pokeball_animation, textColor)
     }
 }

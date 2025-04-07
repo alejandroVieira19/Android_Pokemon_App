@@ -64,7 +64,7 @@ data class PokemonDetailTabBar(val tabBarProps: PokemonDetailTabBarProps) : Poke
     }
 }
 
-data class PokemonDetailDBLoading(val pokemonLoadingDTO: PokemonLoadingDTO): PokemonDetailComposable() {
+data class PokemonDetailLoading(val pokemonLoadingDTO: PokemonLoadingDTO): PokemonDetailComposable() {
     @Composable
     override fun ProvideComposableContent() {
         LoadingPokemonView(pokemonLoadingDTO)

@@ -1,7 +1,6 @@
 package com.pokemon_app.presentation.ui.view.composable.geral
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,26 +19,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.airbnb.lottie.LottieAnimationView
+import androidx.core.content.ContextCompat
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.pokemon_app.R
-import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailDrawableImage
 
 
 data class PokemonLoadingDTO(
     val text: String,
     val animationSize: Int,
     val animationImage: Int ? = R.raw.pokeball_animation,
+    val textColor: Int = R.color.white
     )
 
 @Composable
 fun LoadingPokemonView(pokemonLoadingDTO: PokemonLoadingDTO) {
-
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -52,15 +49,17 @@ fun LoadingPokemonView(pokemonLoadingDTO: PokemonLoadingDTO) {
 
             pokemonLoadingDTO.animationImage?.let { LottieAnimationView(it, pokemonLoadingDTO.animationSize) }
 
-            // Texto abaixo da animação
-            Text(
-                text = pokemonLoadingDTO.text,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 20.dp)
-            )
+
+
+                Text(
+                    text = pokemonLoadingDTO.text,
+                    color = colorResource(pokemonLoadingDTO.textColor),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+
         }
     }
 }

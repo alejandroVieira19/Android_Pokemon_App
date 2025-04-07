@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.parser.ColorParser;
 import com.pokemon_app.R;
 import com.pokemon_app.databinding.FragmentDetailPokemonBinding;
 import com.pokemon_app.domain.model.Pokemon;
@@ -29,7 +30,7 @@ import com.pokemon_app.interactions.PokeDbEnum;
 import com.pokemon_app.interactions.PokemonTabList;
 import com.pokemon_app.presentation.ui.view.composable.detail.FavoritePokemonIcon;
 
-import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailDBLoading;
+import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailLoading;
 import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBar;
 import com.pokemon_app.presentation.ui.view.composable.detail.PokemonDetailTabBarProps;
 import com.pokemon_app.presentation.ui.view.composable.detail.PokemonImage;
@@ -153,13 +154,13 @@ public class DetailPokemonFragment extends Fragment {
             binding.detailRelativeLayout.setVisibility(View.VISIBLE);
 
             if (pokeEnum.equals(PokeDbEnum.SAVE)) {
-                setComposableContent(binding.pokemonLoadingCompose, new PokemonDetailDBLoading(
-                        new PokemonLoadingDTO( getString(R.string.saving_in_db), 80, R.raw.pokeball_animation)
+                setComposableContent(binding.pokemonLoadingCompose, new PokemonDetailLoading(
+                        new PokemonLoadingDTO( getString(R.string.saving_in_db),  getResources().getInteger(R.integer.pokemon_animation_size), R.raw.pokeball_animation, R.color.white)
                 ));
 
             } else {
-                setComposableContent(binding.pokemonLoadingCompose, new PokemonDetailDBLoading(
-                        new PokemonLoadingDTO( getString(R.string.saving_in_db), 80, R.raw.pokeball_animation)
+                setComposableContent(binding.pokemonLoadingCompose, new PokemonDetailLoading(
+                        new PokemonLoadingDTO( getString(R.string.saving_in_db),  getResources().getInteger(R.integer.pokemon_animation_size),  R.raw.pokeball_animation,  R.color.white)
                 ));
             }
 

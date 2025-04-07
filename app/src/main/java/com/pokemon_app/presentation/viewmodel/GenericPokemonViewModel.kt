@@ -1,6 +1,7 @@
 package com.pokemon_app.presentation.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -139,10 +140,13 @@ open class GenericPokemonViewModel @Inject constructor(
                     delay(3000)
                     val result = pokemonService.getAllPokemons(context.resources.getInteger(R.integer.max_poxemon_list_demo))
                     _state.value = GenericStates.ListPokemons(pokemons = result)
+
                     _pokemonsList.addAll(result)
                 } catch (e: Exception) {
+                    Log.e("PokemonLoadingError", "Error fetching pokemons", e);
                     _state.value = GenericStates.ListPokemons(error = e.message)
                 } finally {
+                    Log.d("LoadingState", "Finally block executed");
                     _state.value = GenericStates.ShowLoading(false)
                 }
             }

@@ -98,9 +98,6 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
         } else if (error != null) {
             PokemonAlertDialogUtils.showMessageAlert(context, error)
         } else {
-            binding.favoritesPokemonRecyclerView.visibility = View.VISIBLE
-            binding.favoritesSearchBar.visibility = View.VISIBLE
-
             pokeCardAdapter = PokeCardAdapter(this, ArrayList<Pokemon>(pokemons))
 
             binding.favoritesPokemonRecyclerView.setAdapter(pokeCardAdapter)
@@ -120,6 +117,8 @@ class MyFavoritesPokemonFragment : Fragment(), PokeCardAdapter.OnPokemonCardClic
             else -> {
                 binding.favoritesProgressBar.visibility = View.GONE
                 binding.tvFavoritesLoadingData.visibility = View.GONE
+                binding.favoritesPokemonRecyclerView.visibility = View.VISIBLE
+                binding.favoritesSearchBar.visibility = View.VISIBLE
             }
         }
     }
